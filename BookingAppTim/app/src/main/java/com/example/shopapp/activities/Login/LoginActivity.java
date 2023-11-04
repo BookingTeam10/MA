@@ -1,4 +1,4 @@
-package com.example.shopapp.activities;
+package com.example.shopapp.activities.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,30 +9,41 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.shopapp.R;
+import com.example.shopapp.activities.GuestScreen.GuestMainActivity;
 
-public class RegisterActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-
-        Button btnRegister= findViewById(R.id.btnRegister);
-        btnRegister.setOnClickListener(new View.OnClickListener(){
+        setContentView(R.layout.activity_login);
+        Button btnLogin= findViewById(R.id.btnLogin);
+        btnLogin.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RegisterActivity.this, GuestMainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, GuestMainActivity.class);
                 startActivity(intent);
 
             }
         });
-    }
 
+        Button btnRegister= findViewById(R.id.tvRegister);
+        btnRegister.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+    }
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("BookingAppTim", "RegisterActivity onStart()");
+        Log.d("BookingAppTim", "LoginActivity onStart()");
     }
     /*
      * onResume se poziva kada je aktivnost u fokusu i korisnik
@@ -41,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        Log.d("BookingAppTim", "RegisterActivity onResume()");
+        Log.d("BookingAppTim", "LoginActivity onResume()");
     }
 
     /*
@@ -50,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("BookingAppTim", "RegisterActivity onPause()");
+        Log.d("BookingAppTim", "LoginActivity onPause()");
     }
     /*
      * onStop se poziva kada je aktivnost u potpunosti prekrivena nekom drugom aktivnošću
@@ -58,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d("BookingAppTim", "RegisterActivity onStop()");
+        Log.d("BookingAppTim", "LoginActivity onStop()");
     }
     /*
      * onDestory se poziva kada je aktivnost u potpunosti unistena,
@@ -68,12 +79,12 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("BookingAppTim", "RegisterActivity onDestroy()");
+        Log.d("BookingAppTim", "LoginActivity onDestroy()");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d("BookingAppTim", "RegisterActivity onRestart()");
+        Log.d("BookingAppTim", "LoginActivity onRestart()");
     }
 }

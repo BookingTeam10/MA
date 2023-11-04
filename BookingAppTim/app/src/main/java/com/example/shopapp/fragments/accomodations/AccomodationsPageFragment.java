@@ -1,11 +1,8 @@
-package com.example.shopapp.fragments.products;
+package com.example.shopapp.fragments.accomodations;
 
-import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.example.shopapp.R;
 import com.example.shopapp.databinding.FragmentProductsPageBinding;
@@ -71,31 +67,28 @@ public class AccomodationsPageFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-                dialog.setMessage("Change the sort option?")
-                        .setCancelable(false)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Log.v("ShopApp", (String) parent.getItemAtPosition(position));
-                                ((TextView) parent.getChildAt(0)).setTextColor(Color.MAGENTA);
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog alert = dialog.create();
-                alert.show();
             }
-
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // TODO Auto-generated method stub
             }
         });
 
+        Spinner spinnerType = binding.btnType;
+        ArrayAdapter<String> arrayType = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_item,
+                getResources().getStringArray(R.array.type_accomodations));
+        arrayType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerType.setAdapter(arrayType);
+        spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+            }
+        });
 
         FragmentTransition.to(AccomodationsListFragment.newInstance(accomodations), getActivity(), false, R.id.scroll_products_list);
 
@@ -112,6 +105,6 @@ public class AccomodationsPageFragment extends Fragment {
         products.add(new Accomodation(1L, "Aparment in Novi Sad, Gunduliceva 21a", "This aparment in Novi Sad.", R.drawable.apartment1));
         products.add(new Accomodation(2L, "Aparment in Belgrade, Sanska 17", "This aparment in Belgrade.", R.drawable.apartment2));
         products.add(new Accomodation(3L, "Aparment Novi Sad, Gunduliceva 21a", "This aparment in Novi Sad.", R.drawable.apartment1));
-        products.add(new Accomodation(4L, "Samsung S23 Ultra Gray", "This aparment in Belgrade.", R.drawable.apartment2));
+        products.add(new Accomodation(4L, "Aparment in Belgrade, Sanska 17", "This aparment in Belgrade.", R.drawable.apartment2));
     }
 }

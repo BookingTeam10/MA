@@ -1,4 +1,4 @@
-package com.example.shopapp.activities;
+package com.example.shopapp.activities.Login;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +20,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            Intent intent = new Intent(SplashScreenActivity.this,LoginActivity.class);
+            Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
         }

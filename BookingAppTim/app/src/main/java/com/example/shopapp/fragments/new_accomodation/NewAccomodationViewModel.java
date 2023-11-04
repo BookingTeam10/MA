@@ -1,4 +1,4 @@
-package com.example.shopapp.fragments.new_product;
+package com.example.shopapp.fragments.new_accomodation;
 
 import androidx.lifecycle.ViewModel;
 

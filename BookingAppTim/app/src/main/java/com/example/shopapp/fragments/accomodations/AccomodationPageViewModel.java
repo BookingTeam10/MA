@@ -1,4 +1,4 @@
-package com.example.shopapp.fragments.products;
+package com.example.shopapp.fragments.accomodations;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
