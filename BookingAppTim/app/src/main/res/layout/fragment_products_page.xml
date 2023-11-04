@@ -12,23 +12,25 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".fragments.products.AccomodationsPageFragment"
-        >
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-59dp">
+
         <LinearLayout
             android:id="@+id/linear1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp">
+            android:orientation="horizontal">
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/search_text"
-                app:queryHint="Search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/border_background"
                 android:theme="@style/Theme.ShopApp"
+                app:queryHint="Search"
 
                 />
         </LinearLayout>
@@ -36,41 +38,45 @@
             android:id="@+id/linear2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            >
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
 
             <Button
                 android:id="@+id/btnFilters"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.7"
-                android:background="#4CAF50"
-                android:text="@string/filters"
-                tools:ignore="TextContrastCheck" />
-
+                android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#4CAF50"
+            android:text="@string/filters"
+            tools:ignore="TextContrastCheck" />
 
             <Spinner
                 android:id="@+id/btnSort"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_weight="0.3"
-                android:text="@string/sort"
-                android:tooltipText="@string/sort"
+                android:layout_weight="1"
                 android:contentDescription="@string/sort"
-                />
+                android:layout_marginStart="10dp"/>
+
+            <Spinner
+                android:id="@+id/btnType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:contentDescription="@string/type"/>
 
         </LinearLayout>
 
+
         <RelativeLayout
+            android:id="@+id/scroll_products_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:id="@+id/scroll_products_list"
-            />
+            android:layout_margin="10dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

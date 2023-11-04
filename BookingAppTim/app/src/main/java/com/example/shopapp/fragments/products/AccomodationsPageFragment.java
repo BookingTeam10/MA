@@ -71,31 +71,44 @@ public class AccomodationsPageFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-                dialog.setMessage("Change the sort option?")
-                        .setCancelable(false)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Log.v("ShopApp", (String) parent.getItemAtPosition(position));
-                                ((TextView) parent.getChildAt(0)).setTextColor(Color.MAGENTA);
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog alert = dialog.create();
-                alert.show();
+//                AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+//                dialog.setMessage("Change the sort option?")
+//                        .setCancelable(false)
+//                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int id) {
+//                                Log.v("ShopApp", (String) parent.getItemAtPosition(position));
+//                                ((TextView) parent.getChildAt(0)).setTextColor(Color.MAGENTA);
+//                            }
+//                        })
+//                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int id) {
+//                                dialog.cancel();
+//                            }
+//                        });
+//                AlertDialog alert = dialog.create();
+//                alert.show();
             }
-
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // TODO Auto-generated method stub
             }
         });
 
+        Spinner spinnerType = binding.btnType;
+        ArrayAdapter<String> arrayType = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_item,
+                getResources().getStringArray(R.array.type_accomodations));
+        arrayType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerType.setAdapter(arrayType);
+        spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+            }
+        });
 
         FragmentTransition.to(AccomodationsListFragment.newInstance(accomodations), getActivity(), false, R.id.scroll_products_list);
 
