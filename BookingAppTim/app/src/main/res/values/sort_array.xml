@@ -4,6 +4,5 @@
         <item>Price ASC</item>
         <item>Price DSC</item>
         <item>Rating</item>
-        <item>Decreasing price</item>
     </string-array>
 </resources>

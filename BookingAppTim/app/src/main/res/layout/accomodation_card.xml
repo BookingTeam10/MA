@@ -51,6 +51,7 @@
                 android:layout_weight="1" />
 
             <ImageButton
+                android:id="@+id/buttonDetails"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/round_border_background"

@@ -1,4 +1,4 @@
-package com.example.shopapp.fragments.products;
+package com.example.shopapp.fragments.accomodations;
 
 import android.os.Bundle;
 import android.util.Log;

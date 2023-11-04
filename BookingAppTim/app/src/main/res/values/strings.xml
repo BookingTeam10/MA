@@ -30,4 +30,6 @@
     <string name="navigation">Navigation</string>
     <string name="type" translatable="false">Type</string>
     <string name="language">Language</string>
+    <string name="book_now" translatable="false">Book now</string>
+    <string name="description_apartment" translatable="false">Apartmani su opremljeni svim modernim pogodnostima tako da možete uživati u veoma privatnoj ili nezavisnoj atmosferi, bez obzira na to da li rezervišete boravak sa porodicom ili grupom prijatelja. Sama zgrada ima lift i veličanstvenu terasu za zajedničko korišćenje na kojoj možete organizovati roštilje ili se jednostavno opustiti usred grada. Lako možete posetiti obližnju Gotsku četvrt koja je na samo nekoliko minuta pešice od gradske luke i plaže.</string>
 </resources>

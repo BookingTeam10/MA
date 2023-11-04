@@ -1,4 +1,4 @@
-package com.example.shopapp.fragments.new_product;
+package com.example.shopapp.fragments.new_accomodation;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -31,8 +31,6 @@ public class NewAccomodationFragment extends Fragment {
         binding = FragmentNewProductBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-//        final TextView textView = binding.productsTitle;
-//        productsViewModel.getTitle().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
