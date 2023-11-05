@@ -112,18 +112,13 @@ public class GuestMainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
 
-        ImageButton buttonOpenDetails = findViewById(R.id.buttonDetails);
-        if (buttonOpenDetails != null) {
-            buttonOpenDetails.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(GuestMainActivity.this, AccommodationDetailsScreen.class);
-                    startActivity(intent);
-                }
-            });
-        } else {
-            Log.e("ShopApp", "buttonDetails is not found in the current layout.");
-        }
+//        ImageButton starButton = findViewById(R.id.button_star);
+//        starButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                v.setSelected(!v.isSelected());
+//            }
+//        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -13,21 +13,20 @@
     <string name="nokia">Nokia</string>
     <string name="sort">Sort</string>
 
-    <string name="samsung_galaxy_s23_ultra_gray">Samsung Galaxy S23 Ultra Gray</string>
     <string name="settings">Settings</string>
     <string name="navigation_drawer_open" translatable="false">Navigation Drawer Open</string>
     <string name="navigation_drawer_close" translatable="false">Navigation Drawer Close</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="logout">Logout</string>
     <string name="products">Products</string>
+    <string name="samsung_galaxy_s23_ultra_gray">Samsung</string>
     <string name="new_product">New product</string>
     <string name="profile">Profile</string>
-    <string name="home">Home</string>
-    <string name="reservations">Reservations</string>
-    <string name="notifications">Notifications</string>
-    <string name="account">Account</string>
-    <string name="register_with">Register with</string>
-    <string name="navigation">Navigation</string>
+    <string name="home" translatable="false">Home</string>
+    <string name="reservations" translatable="false">Reservations</string>
+    <string name="notifications" translatable="false">Notifications</string>
+    <string name="account" translatable="false">Account</string>
+    <string name="register_with" translatable="false">Register with</string>
+    <string name="navigation" translatable="false">Navigation</string>
     <string name="type" translatable="false">Type</string>
     <string name="language">Language</string>
     <string name="book_now" translatable="false">Book now</string>

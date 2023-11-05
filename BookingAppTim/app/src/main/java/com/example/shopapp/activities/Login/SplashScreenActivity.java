@@ -15,7 +15,6 @@ import com.example.shopapp.R;
 import com.google.android.material.snackbar.Snackbar;
 
 public class SplashScreenActivity extends AppCompatActivity {
-
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
         @Override
