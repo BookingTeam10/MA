@@ -51,12 +51,13 @@
                 android:layout_weight="1" />
 
             <ImageButton
-                android:id="@+id/buttonDetails"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/round_border_background"
-                android:contentDescription="@string/cart"
-                app:srcCompat="@drawable/ic_shop_cart" />
+                android:id="@+id/button_star"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/star_selector"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true" />
         </LinearLayout>
 
 

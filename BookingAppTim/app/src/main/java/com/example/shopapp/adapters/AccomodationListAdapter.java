@@ -2,12 +2,16 @@ package com.example.shopapp.adapters;
 
 
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,6 +20,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.shopapp.activities.GuestScreen.AccommodationDetailsScreen;
+import com.example.shopapp.activities.GuestScreen.GuestMainActivity;
 import com.example.shopapp.model.Accomodation;
 
 import com.example.shopapp.R;
@@ -29,12 +35,10 @@ public class AccomodationListAdapter extends ArrayAdapter<Accomodation> {
         super(context, R.layout.accomodation_card, accomodations);
         aAccomodation = accomodations;
     }
-
     @Override
     public int getCount() {
         return aAccomodation.size();
     }
-
     @Nullable
     @Override
     public Accomodation getItem(int position) {
@@ -57,17 +61,19 @@ public class AccomodationListAdapter extends ArrayAdapter<Accomodation> {
         ImageView imageView = convertView.findViewById(R.id.product_image);
         TextView productTitle = convertView.findViewById(R.id.product_title);
         TextView productDescription = convertView.findViewById(R.id.product_description);
+        ImageButton imageButton = convertView.findViewById(R.id.button_star);
 
         if(product != null){
             imageView.setImageResource(product.getImage());
             productTitle.setText(product.getTitle());
             productDescription.setText(product.getDescription());
             productCard.setOnClickListener(v -> {
-                // Handle click on the item at 'position'
-                Log.i("ShopApp", "Clicked: " + product.getTitle() + ", id: " +
-                        product.getId().toString());
-                Toast.makeText(getContext(), "Clicked: " + product.getTitle()  +
-                        ", id: " + product.getId().toString(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(),AccommodationDetailsScreen.class);
+                getContext().startActivity(intent);
+            });
+
+            imageButton.setOnClickListener(v -> {
+                    v.setSelected(!v.isSelected());
             });
         }
 
