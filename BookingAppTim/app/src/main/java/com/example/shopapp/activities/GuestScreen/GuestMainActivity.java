@@ -17,10 +17,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.shopapp.R;
+import com.example.shopapp.activities.Login.LoginActivity;
 import com.example.shopapp.databinding.ActivityHomeBinding;
 import com.google.android.material.navigation.NavigationView;
 
@@ -65,8 +67,8 @@ public class GuestMainActivity extends AppCompatActivity {
 
         drawer.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-
         topLevelDestinations.add(R.id.nav_language);
+        topLevelDestinations.add(R.id.nav_profile);
         topLevelDestinations.add(R.id.nav_settings);
         navController = Navigation.findNavController(this, R.id.fragment_nav_content_main);
         navController.addOnDestinationChangedListener((navController, navDestination, bundle) -> {
@@ -119,6 +121,8 @@ public class GuestMainActivity extends AppCompatActivity {
 //                v.setSelected(!v.isSelected());
 //            }
 //        });
+
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
