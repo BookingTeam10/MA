@@ -26,9 +26,6 @@
             android:name=".activities.Login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".fragments.sdsadsadsdasd"
-            android:exported="false"/>
-        <activity
             android:name=".activities.GuestScreen.GuestMainActivity"
             android:exported="false"
             android:label="Home"
