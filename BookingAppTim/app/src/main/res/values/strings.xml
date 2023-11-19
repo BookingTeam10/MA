@@ -4,8 +4,8 @@
     <string name="cart">Cart</string>
     <string name="filters">Filters</string>
     <string name="category">Category</string>
-    <string name="smartphone">Smartphone</string>
-    <string name="tablet">Tablet</string>
+    <string name="rooms" translatable="false">Room</string>
+    <string name="apartment" translatable="false">Apartment</string>
     <string name="manufacturer">Manufacturer</string>
     <string name="samsung">Samsung</string>
     <string name="xiaomi">Xiaomi</string>

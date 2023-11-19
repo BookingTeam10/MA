@@ -3,6 +3,7 @@
     <string-array name="sort_array">
         <item>Price ASC</item>
         <item>Price DSC</item>
-        <item>Rating</item>
+        <item>Rating ASC</item>
+        <item>Rating DSC</item>
     </string-array>
 </resources>
