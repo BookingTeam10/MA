@@ -17,5 +17,8 @@
     <string name="accomodations">Accomodations</string>
     <string name="new_product">New product</string>
     <string name="profile">Profile</string>
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
     <string name="language">Language</string>
 </resources>
