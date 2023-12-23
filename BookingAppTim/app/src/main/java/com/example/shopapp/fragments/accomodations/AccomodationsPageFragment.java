@@ -19,14 +19,14 @@ import android.widget.Spinner;
 import com.example.shopapp.R;
 import com.example.shopapp.databinding.FragmentProductsPageBinding;
 import com.example.shopapp.fragments.FragmentTransition;
-import com.example.shopapp.model.Accomodation;
+import com.example.shopapp.model.accommodation.Accommodation;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
 public class AccomodationsPageFragment extends Fragment {
 
-    public static ArrayList<Accomodation> accomodations = new ArrayList<Accomodation>();
+    public static ArrayList<Accommodation> accomodations = new ArrayList<Accommodation>();
     private AccomodationPageViewModel productsViewModel;
     private FragmentProductsPageBinding binding;
 
@@ -101,10 +101,10 @@ public class AccomodationsPageFragment extends Fragment {
         binding = null;
     }
 
-    private void prepareProductList(ArrayList<Accomodation> products){
-        products.add(new Accomodation(1L, "Aparment in Novi Sad, Gunduliceva 21a", "This aparment in Novi Sad.", R.drawable.apartment1));
-        products.add(new Accomodation(2L, "Aparment in Belgrade, Sanska 17", "This aparment in Belgrade.", R.drawable.apartment2));
-        products.add(new Accomodation(3L, "Aparment Novi Sad, Gunduliceva 21a", "This aparment in Novi Sad.", R.drawable.apartment1));
-        products.add(new Accomodation(4L, "Aparment in Belgrade, Sanska 17", "This aparment in Belgrade.", R.drawable.apartment2));
+    private void prepareProductList(ArrayList<Accommodation> products){
+        products.add(new Accommodation(1L, "Aparment in Novi Sad, Gunduliceva 21a", "This aparment in Novi Sad.", R.drawable.apartment1));
+        products.add(new Accommodation(2L, "Aparment in Belgrade, Sanska 17", "This aparment in Belgrade.", R.drawable.apartment2));
+        products.add(new Accommodation(3L, "Aparment Novi Sad, Gunduliceva 21a", "This aparment in Novi Sad.", R.drawable.apartment1));
+        products.add(new Accommodation(4L, "Aparment in Belgrade, Sanska 17", "This aparment in Belgrade.", R.drawable.apartment2));
     }
 }
