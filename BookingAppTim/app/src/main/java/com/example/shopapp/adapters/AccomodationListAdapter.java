@@ -2,11 +2,8 @@ package com.example.shopapp.adapters;
 
 
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,23 +12,21 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.shopapp.activities.GuestScreen.AccommodationDetailsScreen;
-import com.example.shopapp.activities.GuestScreen.GuestMainActivity;
-import com.example.shopapp.model.Accomodation;
+import com.example.shopapp.model.accommodation.Accommodation;
 
 import com.example.shopapp.R;
 
 import java.util.ArrayList;
 
-public class AccomodationListAdapter extends ArrayAdapter<Accomodation> {
-    private ArrayList<Accomodation> aAccomodation;
+public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
+    private ArrayList<Accommodation> aAccomodation;
 
-    public AccomodationListAdapter(Context context, ArrayList<Accomodation> accomodations){
+    public AccomodationListAdapter(Context context, ArrayList<Accommodation> accomodations){
         super(context, R.layout.accomodation_card, accomodations);
         aAccomodation = accomodations;
     }
@@ -41,7 +36,7 @@ public class AccomodationListAdapter extends ArrayAdapter<Accomodation> {
     }
     @Nullable
     @Override
-    public Accomodation getItem(int position) {
+    public Accommodation getItem(int position) {
         return aAccomodation.get(position);
     }
 
@@ -52,7 +47,7 @@ public class AccomodationListAdapter extends ArrayAdapter<Accomodation> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Accomodation product = getItem(position);
+        Accommodation product = getItem(position);
         if(convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.accomodation_card,
                     parent, false);

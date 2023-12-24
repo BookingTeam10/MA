@@ -14,6 +14,10 @@
             android:title="@string/reservations"
             android:icon="@drawable/ic_reservation"
             android:orderInCategory="200"/>
+        <item android:id="@+id/nav_requests"
+            android:title="@string/requests"
+            android:icon="@drawable/ic_reservation"
+            android:orderInCategory="200"/>
 
         <item android:id="@+id/nav_new"
             android:title="@string/notifications"

@@ -19,14 +19,14 @@ import android.widget.Spinner;
 import com.example.shopapp.R;
 import com.example.shopapp.databinding.FragmentProductsPageBinding;
 import com.example.shopapp.fragments.FragmentTransition;
-import com.example.shopapp.model.Accomodation;
+import com.example.shopapp.model.accommodation.Accommodation;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 
 public class AccomodationsPageFragment extends Fragment {
 
-    public static ArrayList<Accomodation> accomodations = new ArrayList<Accomodation>();
+    public static ArrayList<Accommodation> accomodations = new ArrayList<Accommodation>();
     private AccomodationPageViewModel productsViewModel;
     private FragmentProductsPageBinding binding;
 
@@ -51,6 +51,14 @@ public class AccomodationsPageFragment extends Fragment {
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity(), R.style.FullScreenBottomSheetDialog);
             View dialogView = getLayoutInflater().inflate(R.layout.bottom_sheet_filter, null);
             bottomSheetDialog.setContentView(dialogView);
+            Spinner spinnerAmenity =  dialogView.findViewById(R.id.spinnerAmenity);;
+            ArrayAdapter<String> arrayAdapterAmenity = new ArrayAdapter<>(getActivity(),
+                    android.R.layout.simple_spinner_item,
+                    getResources().getStringArray(R.array.spinner_items));
+            // Specify the layout to use when the list of choices appears
+            arrayAdapterAmenity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            // Apply the adapter to the spinner
+            spinnerAmenity.setAdapter(arrayAdapterAmenity);
             bottomSheetDialog.show();
         });
 
@@ -63,6 +71,9 @@ public class AccomodationsPageFragment extends Fragment {
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(arrayAdapter);
+
+
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -101,10 +112,10 @@ public class AccomodationsPageFragment extends Fragment {
         binding = null;
     }
 
-    private void prepareProductList(ArrayList<Accomodation> products){
-        products.add(new Accomodation(1L, "Aparment in Novi Sad, Gunduliceva 21a", "This aparment in Novi Sad.", R.drawable.apartment1));
-        products.add(new Accomodation(2L, "Aparment in Belgrade, Sanska 17", "This aparment in Belgrade.", R.drawable.apartment2));
-        products.add(new Accomodation(3L, "Aparment Novi Sad, Gunduliceva 21a", "This aparment in Novi Sad.", R.drawable.apartment1));
-        products.add(new Accomodation(4L, "Aparment in Belgrade, Sanska 17", "This aparment in Belgrade.", R.drawable.apartment2));
+    private void prepareProductList(ArrayList<Accommodation> products){
+        products.add(new Accommodation(1L, "Aparment in Novi Sad, Gunduliceva 21a", "This aparment in Novi Sad.", R.drawable.apartment1));
+        products.add(new Accommodation(2L, "Aparment in Belgrade, Sanska 17", "This aparment in Belgrade.", R.drawable.apartment2));
+        products.add(new Accommodation(3L, "Aparment Novi Sad, Gunduliceva 21a", "This aparment in Novi Sad.", R.drawable.apartment1));
+        products.add(new Accommodation(4L, "Aparment in Belgrade, Sanska 17", "This aparment in Belgrade.", R.drawable.apartment2));
     }
 }

@@ -1,25 +1,52 @@
-package com.example.shopapp.model;
+package com.example.shopapp.model.accommodation;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-public class Accomodation implements Parcelable {
+import com.example.shopapp.enums.AccommodationStatus;
+import com.example.shopapp.enums.TypeAccommodation;
+import com.example.shopapp.model.reservation.Reservation;
+import com.example.shopapp.model.user.Owner;
+
+import java.util.List;
+
+public class Accommodation implements Parcelable {
     private Long id;
     private String title;
     private String description;
     private int image;
-    public Accomodation(Long id, String title, String description, int image) {
+    private boolean accepted;
+    private boolean automaticActivation = false;
+    private int minPeople;
+    private int maxPeople;
+    private List<String> photos;
+    private TypeAccommodation typeAccommodation;
+    private AccommodationStatus accommodationStatus;
+    private boolean isNight;
+    private List<TakenDate> takenDates;
+    private List<Amenity> amenities;
+    private Location location;
+    private Owner owner;
+    private List<Reservation> reservations;
+    private boolean automaticConfirmation;
+    private double rating;
+    private int cancelDeadline;
+    private List<Price> prices;
+    private double weekendPrice;
+    private double holidayPrice;
+    private double summerPrice;
+    public Accommodation(Long id, String title, String description, int image) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.image = image;
     }
 
-    public Accomodation() {
+    public Accommodation() {
     }
-    protected Accomodation(Parcel in) {
+    protected Accommodation(Parcel in) {
         id = in.readLong();
         title = in.readString();
         description = in.readString();
@@ -74,15 +101,15 @@ public class Accomodation implements Parcelable {
         dest.writeInt(image);
     }
 
-    public static final Creator<Accomodation> CREATOR = new Creator<Accomodation>() {
+    public static final Creator<Accommodation> CREATOR = new Creator<Accommodation>() {
         @Override
-        public Accomodation createFromParcel(Parcel in) {
-            return new Accomodation(in);
+        public Accommodation createFromParcel(Parcel in) {
+            return new Accommodation(in);
         }
 
         @Override
-        public Accomodation[] newArray(int size) {
-            return new Accomodation[size];
+        public Accommodation[] newArray(int size) {
+            return new Accommodation[size];
         }
     };
 }
