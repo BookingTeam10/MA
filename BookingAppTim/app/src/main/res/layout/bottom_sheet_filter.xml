@@ -29,29 +29,33 @@
         android:background="@color/black"
         android:layout_margin="2dp"
         />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/accomodations"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_margin="2dp">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/accomodations"/>
+
         <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:id="@+id/accommodationRadioGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
             <RadioButton
-                android:layout_width="match_parent"
+                android:id="@+id/roomRadioButton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/rooms"/>
             <RadioButton
-                android:layout_width="match_parent"
+                android:id="@+id/apartmentRadioButton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/apartment"/>
         </RadioGroup>
-
-
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -59,20 +63,17 @@
         android:background="@color/black"
         android:layout_margin="2dp"
         />
-    <LinearLayout
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="2dp">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Date"/>
-        <CalendarView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-    </LinearLayout>
+        android:text="Number of people"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="@string/number_of_people"
+        android:id="@+id/numberOfPeople" />
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
@@ -83,43 +84,106 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Price"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="@string/minimum_price"
+            android:id="@+id/minPrice" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="@string/maximum_price"
+            android:id="@+id/maxPrice" />
+
+    </LinearLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <SeekBar
-            android:id="@+id/seekBar2"
-            android:layout_width="397dp"
-            android:layout_height="22dp"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:max="10000"
-            android:thumbOffset="-10dp"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <TextView
-            android:id="@+id/textViewMinPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/seekBar2"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"/>
-
-        <!-- Text View for Max Price -->
-        <TextView
-            android:id="@+id/textViewMaxPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10000"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/seekBar2"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="8dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Locations"/>
+    <Spinner
+        android:id="@+id/spinnerAmenity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="2dp">
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/checkBoxWifi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wi-Fi" />
+
+        <CheckBox
+            android:id="@+id/checkBoxAc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Air Conditioning" />
+
+        <CheckBox
+            android:id="@+id/checkBoxParking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Parking" />
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Date"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CalendarView
+            android:id="@+id/calendarView1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <CalendarView
+            android:id="@+id/calendarView2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/submit_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:padding="12dp"
+        android:text="@string/submit"
+        android:background="@color/nav_profile_grey"
+        android:clickable="true"
+        android:focusable="true"
+        android:textColor="@color/white" />
 
 </LinearLayout>

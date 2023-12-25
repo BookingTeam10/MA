@@ -40,14 +40,25 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
         android:padding="10dp">
-
+        <TextView
+            android:id="@+id/textViewAmenity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Amenity: WIFI"
+            android:textSize="18sp" />
+        <Button
+            android:id="@+id/buttonMapsAAA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/view_map" />
 
         <TextView
             android:id="@+id/textViewPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Cena za 1 noćenje, 2 odrasla"
+            android:text="Cena za 1 noćenje je 3000"
             android:textSize="18sp" />
 
         <Button

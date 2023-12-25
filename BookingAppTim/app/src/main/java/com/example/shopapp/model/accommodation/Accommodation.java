@@ -79,6 +79,14 @@ public class Accommodation implements Parcelable {
         this.image = image;
     }
 
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
