@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_view"
-    tools:showIn="navigation_view">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn="navigation_view_owner">
 
     <group android:checkableBehavior="single">
 
@@ -15,14 +15,13 @@
             android:title="@string/reservations"
             android:icon="@drawable/ic_reservation"
             android:orderInCategory="200"/>
-
         <item android:id="@+id/nav_requests"
             android:title="@string/requests"
             android:icon="@drawable/ic_reservation"
             android:orderInCategory="200"/>
 
         <item android:id="@+id/nav_new"
-            android:title="@string/notifications"
+            android:title="@string/allOwnerAccommodations"
             android:icon="@drawable/ic_notification"
             android:orderInCategory="200"/>
 

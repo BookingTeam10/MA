@@ -89,11 +89,7 @@ public class Accommodation implements Parcelable {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", image='" + image + '\'' +
-                '}';
+        return   title;
     }
 
     @Override

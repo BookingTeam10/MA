@@ -19,7 +19,7 @@ public class Reservation {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
-       this.accommodation = accommodation;
+        this.accommodation = accommodation;
     }
 
     public long getId() {

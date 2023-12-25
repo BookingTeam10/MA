@@ -45,16 +45,57 @@
             android:name=".activities.MapsActivity"
             android:exported="false" />
         <activity
+            android:name=".fragments.new_accomodation.EditAccommodationActivity"
+            android:exported="false"
+            android:label="@string/title_activity_edit_accommodation"
+            android:theme="@style/Theme.ShopApp" />
+        <activity
             android:name=".activities.GuestScreen.AccommodationDetailsScreen"
             android:exported="false" />
         <activity
             android:name=".activities.Login.RegisterActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.HostScreen.LoadScreen"
+            android:exported="false" />
+        <activity
             android:name=".activities.Login.LoginActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.HostScreen.LoadAccSreen"
+            android:exported="false" />
+        <activity
+            android:name=".activities.HostScreen.AddAccommodationActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.GuestScreen.GuestMainActivity"
+            android:exported="false"
+            android:label="Home"
+            android:theme="@style/Theme.ShopApp">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.HostScreen.HostMainActivity"
+            android:exported="false"
+            android:label="Home"
+            android:theme="@style/Theme.ShopApp">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.HostScreen.AccommodationScreen"
+            android:exported="false"
+            android:label="Home"
+            android:theme="@style/Theme.ShopApp">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.HostScreen.AddAccommodationScreen"
             android:exported="false"
             android:label="Home"
             android:theme="@style/Theme.ShopApp">
