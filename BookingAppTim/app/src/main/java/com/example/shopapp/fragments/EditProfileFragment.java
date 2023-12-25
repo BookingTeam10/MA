@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.shopapp.R;
-import com.example.shopapp.model.User;
+import com.example.shopapp.model.user.User;
 
 public class EditProfileFragment extends Fragment {
 

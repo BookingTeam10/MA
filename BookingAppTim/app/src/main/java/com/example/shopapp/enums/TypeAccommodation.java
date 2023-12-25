@@ -1,5 +1,5 @@
 package com.example.shopapp.enums;
-public enum TypeAccomodation {
+public enum TypeAccommodation {
     APARTMENT,
     ROOM
 }

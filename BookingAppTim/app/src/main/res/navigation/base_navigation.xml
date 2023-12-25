@@ -58,4 +58,10 @@
         android:label="Edit Profile"
         tools:layout="@layout/fragment_edit_profile" />
 
+    <activity
+        android:id="@+id/nav_accommodations"
+        android:name="com.example.shopapp.activities.HostScreen.AddAccommodationScreen"
+        android:label="Add Accommodation"
+        tools:layout="@layout/activity_add_accommodation" />
+
 </navigation>
