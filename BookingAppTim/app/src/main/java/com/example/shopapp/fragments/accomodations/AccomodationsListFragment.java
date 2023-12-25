@@ -11,16 +11,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.ListFragment;
 import com.example.shopapp.adapters.AccomodationListAdapter;
 import com.example.shopapp.databinding.FragmentProductsListBinding;
-import com.example.shopapp.model.Accomodation;
+import com.example.shopapp.model.accommodation.Accommodation;
 import java.util.ArrayList;
 
 public class AccomodationsListFragment extends ListFragment {
     private AccomodationListAdapter adapter;
     private static final String ARG_PARAM = "param";
-    private ArrayList<Accomodation> mProducts;
+    private ArrayList<Accommodation> mProducts;
     private FragmentProductsListBinding binding;
 
-    public static AccomodationsListFragment newInstance(ArrayList<Accomodation> products){
+    public static AccomodationsListFragment newInstance(ArrayList<Accommodation> products){
         AccomodationsListFragment fragment = new AccomodationsListFragment();
         Bundle args = new Bundle();
         args.putParcelableArrayList(ARG_PARAM, products);

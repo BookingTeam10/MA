@@ -10,8 +10,8 @@
             android:icon="@drawable/ic_home"
             android:orderInCategory="100" />
 
-        <item android:id="@+id/nav_reservations"
-            android:title="@string/reservations"
+        <item android:id="@+id/nav_owner_accommodation"
+            android:title="@string/allOwnerAccommodations"
             android:icon="@drawable/ic_reservation"
             android:orderInCategory="200"/>
 

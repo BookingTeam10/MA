@@ -1,39 +1,46 @@
-package com.example.shopapp.activities.Login;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.shopapp.fragments.new_accomodation;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.shopapp.R;
 import com.example.shopapp.activities.GuestScreen.GuestMainActivity;
+import com.example.shopapp.activities.HostScreen.LoadAccSreen;
+import com.example.shopapp.activities.HostScreen.LoadScreen;
 
-public class RegisterActivity extends AppCompatActivity {
+public class EditAccommodationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.definition_accommodation);
 
-        Button btnRegister= findViewById(R.id.btnRegister);
-        btnRegister.setOnClickListener(new View.OnClickListener(){
+//        EditText e=findViewById(R.id.WeekendText);
+//        e.setText(0);
+
+        Button btnEdit= findViewById(R.id.editAccommodation);
+
+        btnEdit.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                Intent intent = new Intent(EditAccommodationActivity.this, LoadAccSreen.class);
                 startActivity(intent);
-
             }
         });
-    }
 
+
+    }
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("BookingAppTim", "RegisterActivity onStart()");
+        Log.d("BookingAppTim", "LoginActivity onStart()");
     }
     /*
      * onResume se poziva kada je aktivnost u fokusu i korisnik
@@ -42,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        Log.d("BookingAppTim", "RegisterActivity onResume()");
+        Log.d("BookingAppTim", "LoginActivity onResume()");
     }
 
     /*
@@ -51,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("BookingAppTim", "RegisterActivity onPause()");
+        Log.d("BookingAppTim", "LoginActivity onPause()");
     }
     /*
      * onStop se poziva kada je aktivnost u potpunosti prekrivena nekom drugom aktivnošću
@@ -59,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d("BookingAppTim", "RegisterActivity onStop()");
+        Log.d("BookingAppTim", "LoginActivity onStop()");
     }
     /*
      * onDestory se poziva kada je aktivnost u potpunosti unistena,
@@ -69,12 +76,12 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("BookingAppTim", "RegisterActivity onDestroy()");
+        Log.d("BookingAppTim", "LoginActivity onDestroy()");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d("BookingAppTim", "RegisterActivity onRestart()");
+        Log.d("BookingAppTim", "LoginActivity onRestart()");
     }
 }
