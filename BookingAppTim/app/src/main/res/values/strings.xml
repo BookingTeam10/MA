@@ -21,13 +21,12 @@
     <string name="navigation_drawer_close" translatable="false">Navigation Drawer Close</string>
     <string name="logout">Logout</string>
     <string name="accomodations">Accomodations</string>
-    <string name="allOwnerAccommodations" translatable="false">My Accomodations</string>
-    <string name="addAccommodations" translatable="false">Add accomodations</string>
     <string name="samsung_galaxy_s23_ultra_gray">Samsung</string>
     <string name="new_product">New product</string>
     <string name="profile">Profile</string>
     <string name="home" translatable="false">Home</string>
     <string name="reservations" translatable="false">Reservations</string>
+    <string name="requests" translatable="false">Requests</string>
     <string name="notifications" translatable="false">Notifications</string>
     <string name="account" translatable="false">Account</string>
     <string name="register_with" translatable="false">Register with</string>
@@ -35,9 +34,11 @@
     <string name="type" translatable="false">Type</string>
     <string name="language">Language</string>
     <string name="book_now" translatable="false">Book now</string>
+    <string name="view_map" translatable="false">Map</string>
+    <string name="number_of_people" translatable="false">Number of people</string>
+    <string name="minimum_price" translatable="false">Minimum price</string>
+    <string name="maximum_price" translatable="false">Maximum price</string>
+    <string name="submit" translatable="false">Submit</string>
     <string name="description_apartment" translatable="false">Apartmani su opremljeni svim modernim pogodnostima tako da možete uživati u veoma privatnoj ili nezavisnoj atmosferi, bez obzira na to da li rezervišete boravak sa porodicom ili grupom prijatelja. Sama zgrada ima lift i veličanstvenu terasu za zajedničko korišćenje na kojoj možete organizovati roštilje ili se jednostavno opustiti usred grada. Lako možete posetiti obližnju Gotsku četvrt koja je na samo nekoliko minuta pešice od gradske luke i plaže.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_edit_accommodation">EditAccommodationActivity</string>
-    <string name="title_activity_load_acc_screen">LoadAccScreen</string>
+    <string name="combobox_hint" translatable="false">Izaberite opciju</string>
 </resources>

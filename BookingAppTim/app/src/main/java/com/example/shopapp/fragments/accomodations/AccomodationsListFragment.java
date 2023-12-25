@@ -47,7 +47,6 @@ public class AccomodationsListFragment extends ListFragment {
             setListAdapter(adapter);
         }
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

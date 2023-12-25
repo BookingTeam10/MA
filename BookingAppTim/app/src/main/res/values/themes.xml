@@ -21,7 +21,6 @@
         <item name="android:windowContentOverlay">@null</item>
 
     </style>
-
     <style name="FullScreenBottomSheetDialog" parent="Theme.Design.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowIsTranslucent">true</item>
@@ -29,9 +28,7 @@
         <item name="android:windowMinWidthMajor">100%</item>
         <item name="android:windowMinWidthMinor">100%</item>
     </style>
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar" />
-
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

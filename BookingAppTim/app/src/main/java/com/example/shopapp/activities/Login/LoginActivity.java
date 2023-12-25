@@ -7,16 +7,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.example.shopapp.R;
 import com.example.shopapp.activities.GuestScreen.GuestMainActivity;
-import com.example.shopapp.activities.HostScreen.HostMainActivity;
-import com.example.shopapp.databinding.ActivityLoginBinding;
-
 
 public class LoginActivity extends AppCompatActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,22 +22,9 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                EditText etUsername = findViewById(R.id.etUsername);
-                String username = etUsername.getText().toString();
-                EditText etPassword = findViewById(R.id.etPassword);
-                String password = etPassword.getText().toString();
+                Intent intent = new Intent(LoginActivity.this, GuestMainActivity.class);
+                startActivity(intent);
 
-                Log.d("BookingAppTim", username);
-
-
-                if((username.equals("aleksa@gmail.com") && password.equals("abc")) || (username.equals("a") && password.equals("abc"))){
-                    Intent intent = new Intent(LoginActivity.this, GuestMainActivity.class);
-                    startActivity(intent);;
-                }
-                if(username.equals("popovic.sv4.2021@uns.ac.rs") && password.equals("abc")){
-                    Intent intent = new Intent(LoginActivity.this, HostMainActivity.class);
-                    startActivity(intent);
-                }
             }
         });
 

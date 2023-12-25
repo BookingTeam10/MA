@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.example.shopapp.R;
@@ -51,6 +53,14 @@ public class AccomodationsPageFragment extends Fragment {
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity(), R.style.FullScreenBottomSheetDialog);
             View dialogView = getLayoutInflater().inflate(R.layout.bottom_sheet_filter, null);
             bottomSheetDialog.setContentView(dialogView);
+            //punjenje lokacija, slucajno sam nazvao Amenity, izmeniti posle
+            Spinner spinnerAmenity =  dialogView.findViewById(R.id.spinnerAmenity);;
+            ArrayAdapter<String> arrayAdapterAmenity = new ArrayAdapter<>(getActivity(),
+                    android.R.layout.simple_spinner_item,
+                    getResources().getStringArray(R.array.spinner_items));
+            arrayAdapterAmenity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerAmenity.setAdapter(arrayAdapterAmenity);
+
             bottomSheetDialog.show();
         });
 
@@ -63,6 +73,9 @@ public class AccomodationsPageFragment extends Fragment {
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(arrayAdapter);
+
+
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -90,6 +103,19 @@ public class AccomodationsPageFragment extends Fragment {
             }
         });
 
+        //radio Button
+        RadioGroup radioGroup = root.findViewById(R.id.accommodationRadioGroup); // Pretpostavljamo da je ovo vaš RadioGroup
+
+     //  int selectedId = radioGroup.getCheckedRadioButtonId();
+//
+//        if (selectedId != -1) {
+//            RadioButton radioButton =  root.findViewById(selectedId);
+//            String selectedValue = radioButton.getText().toString();
+//            Log.i("RADIO BUTTON",selectedValue);
+//        } else {
+//            // Nijedan RadioButton nije selektovan
+//        }
+
         FragmentTransition.to(AccomodationsListFragment.newInstance(accomodations), getActivity(), false, R.id.scroll_products_list);
 
         return root;
@@ -104,7 +130,5 @@ public class AccomodationsPageFragment extends Fragment {
     private void prepareProductList(ArrayList<Accommodation> products){
         products.add(new Accommodation(1L, "Aparment in Novi Sad, Gunduliceva 21a", "This aparment in Novi Sad.", R.drawable.apartment1));
         products.add(new Accommodation(2L, "Aparment in Belgrade, Sanska 17", "This aparment in Belgrade.", R.drawable.apartment2));
-        products.add(new Accommodation(3L, "Aparment Novi Sad, Gunduliceva 21a", "This aparment in Novi Sad.", R.drawable.apartment1));
-        products.add(new Accommodation(4L, "Aparment in Belgrade, Sanska 17", "This aparment in Belgrade.", R.drawable.apartment2));
     }
 }
