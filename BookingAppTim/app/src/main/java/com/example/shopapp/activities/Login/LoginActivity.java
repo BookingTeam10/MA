@@ -1,5 +1,6 @@
 package com.example.shopapp.activities.Login;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,11 +9,23 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.auth0.android.jwt.JWT;
 import com.example.shopapp.R;
+import com.example.shopapp.activities.AdminScreen.AdminMainActivity;
 import com.example.shopapp.activities.GuestScreen.GuestMainActivity;
 import com.example.shopapp.activities.HostScreen.HostMainActivity;
-import com.example.shopapp.databinding.ActivityLoginBinding;
+import com.example.shopapp.configuration.ServiceUtils;
+import com.example.shopapp.model.login.LoginDTO;
+import com.example.shopapp.model.login.Token;
+
+import java.util.HashMap;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -27,24 +40,13 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                EditText etUsername = findViewById(R.id.etUsername);
-                String username = etUsername.getText().toString();
-                EditText etPassword = findViewById(R.id.etPassword);
-                String password = etPassword.getText().toString();
-
-                Log.d("BookingAppTim", username);
-
-
-                if((username.equals("aleksa@gmail.com") && password.equals("abc")) || (username.equals("a") && password.equals("abc"))){
-                    Intent intent = new Intent(LoginActivity.this, GuestMainActivity.class);
-                    startActivity(intent);;
-                }
-                if(username.equals("popovic.sv4.2021@uns.ac.rs") && password.equals("abc")){
-                    Intent intent = new Intent(LoginActivity.this, HostMainActivity.class);
-                    startActivity(intent);
-                }
+                String etUsername = ((EditText) findViewById(R.id.etUsername)).getText().toString();
+                String etPassword = ((EditText) findViewById(R.id.etPassword)).getText().toString();
+                login(etUsername, etPassword);
             }
         });
+
+
 
         Button btnRegister= findViewById(R.id.tvRegister);
         btnRegister.setOnClickListener(new View.OnClickListener(){
@@ -104,5 +106,73 @@ public class LoginActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         Log.d("BookingAppTim", "LoginActivity onRestart()");
+    }
+    public void login(String email, String password){
+        LoginDTO loginDTO = new LoginDTO(email, password);
+        Call<Token> call = ServiceUtils.userService.loginUser(loginDTO);
+
+        call.enqueue(new Callback<Token>() {
+            @Override
+            public void onResponse(@NonNull Call<Token> call, @NonNull Response<Token> response) {
+
+                if(!response.isSuccessful()) {
+                    Log.d("Login Fail", "Response error");
+                    Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Token loginResponse = response.body();
+               String userRole = "";
+
+               JWT jwt = new JWT(loginResponse.getJwt());
+                List<HashMap> role =
+                        jwt.getClaim("role").asList(HashMap.class);
+                for (Object values: role.get(0).values()){
+                    userRole = values.toString();
+                    break;
+                }
+                //dobro odredi rol
+                Log.i("USERROLE",userRole);
+
+
+//                String email = jwt.getClaim("sub").asString();
+//                Long id = jwt.getClaim("id").asLong();
+//                Token token = TokenDTO.getInstance();
+//                tokenDTO.setToken(loginResponse.getToken());
+//                tokenDTO.setRefreshToken(loginResponse.getRefreshToken());
+//                Intent intent;
+//
+//
+                //ovo ostaviti i posle roknuti
+                if(userRole.equals("ROLE_Guest")){
+                    //setSharedPreferences("PASSENGER", email, id);
+                    //setTokenPreference(loginResponse.getToken(), loginResponse.getRefreshToken());
+                    Intent intent = new Intent(LoginActivity.this,GuestMainActivity.class);
+                    startActivity(intent);
+
+                }
+                else if(userRole.equalsIgnoreCase("ROLE_Owner")) {
+                    //setSharedPreferences("DRIVER", email, id);
+                    //setTokenPreference(loginResponse.getToken(), loginResponse.getRefreshToken());
+                    Intent intent = new Intent(LoginActivity.this,HostMainActivity.class);
+                    startActivity(intent);
+
+                }
+                else if(userRole.equalsIgnoreCase("ROLE_Administrator")) {
+                    //setSharedPreferences("DRIVER", email, id);
+                    //setTokenPreference(loginResponse.getToken(), loginResponse.getRefreshToken());
+                    Intent intent = new Intent(LoginActivity.this, AdminMainActivity.class);
+                    startActivity(intent);
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Token> call, Throwable t) {
+                Log.d("Login Failed", t.getMessage());
+            }
+        });
+
     }
 }

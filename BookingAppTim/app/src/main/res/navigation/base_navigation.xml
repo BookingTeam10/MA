@@ -15,16 +15,14 @@
 
     <fragment
         android:id="@+id/nav_new"
-        android:name="com.example.shopapp.fragments.new_accomodation.NewAccomodationFragment"
+        android:name="com.example.shopapp.fragments.reservations.myReservations.MyReservationListFragment"
         android:label="New product"
-        tools:layout="@layout/fragment_new_product"
-        app:popUpTo="@+id/nav_products"
-        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_my_reservation_list_list"
         />
 
     <fragment
         android:id="@+id/nav_profile"
-        android:name="com.example.shopapp.fragments.ProfileFragment"
+        android:name="com.example.shopapp.fragments.profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile"/>
 
@@ -54,7 +52,7 @@
 
     <fragment
         android:id="@+id/nav_edit_profile"
-        android:name="com.example.shopapp.fragments.EditProfileFragment"
+        android:name="com.example.shopapp.fragments.profile.EditProfileFragment"
         android:label="Edit Profile"
         tools:layout="@layout/fragment_edit_profile" />
 

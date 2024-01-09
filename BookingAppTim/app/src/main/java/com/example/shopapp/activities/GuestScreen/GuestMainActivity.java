@@ -6,6 +6,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -26,12 +27,15 @@ import android.widget.Toast;
 import com.example.shopapp.R;
 import com.example.shopapp.activities.Login.LoginActivity;
 import com.example.shopapp.databinding.ActivityHomeBinding;
+import com.example.shopapp.fragments.profile.ProfileFragment;
+import com.example.shopapp.fragments.reservations.RequestFragment;
+import com.example.shopapp.fragments.reservations.myReservations.MyReservationListFragment;
+import com.example.shopapp.fragments.reservations.myReservations.MyReservationPageFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.HashSet;
 import java.util.Set;
 
-//SVE STO JE ZAKOMENTARISANO NE BRISATI
 public class GuestMainActivity extends AppCompatActivity {
     private ActivityHomeBinding binding;
     private AppBarConfiguration mAppBarConfiguration;
@@ -53,7 +57,8 @@ public class GuestMainActivity extends AppCompatActivity {
 
         drawer = binding.drawerLayout;
         //navigationView = binding.navView;
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        //NavigationView navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = binding.navView;
         toolbar = binding.activityHomeBase.toolbar;
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
@@ -85,7 +90,66 @@ public class GuestMainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
 
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                MenuItem reservationsMenuItem = navigationView.getMenu().findItem(R.id.nav_reservations);
+                MenuItem requestMenuItem = navigationView.getMenu().findItem(R.id.nav_requests);
+                MenuItem logOutMenuItem = navigationView.getMenu().findItem(R.id.nav_logout);
+                MenuItem profileMenuItem = navigationView.getMenu().findItem(R.id.nav_profile);
+                View includedLayout = findViewById(R.id.fragment_nav_content_main);
+
+                Log.d("MENI 123","NAPRAVILO SE");
+
+                if (item.getItemId() == reservationsMenuItem.getItemId()) {
+                   // Intent intent=new Intent(GuestMainActivity.this, LoginActivity.class);
+//                    startActivity(intent);
+                    includedLayout.setVisibility(View.GONE);
+                    MyReservationListFragment fragment = new MyReservationListFragment();
+                    Log.d("NAPRAVILO SE1","NAPRAVILO SE");
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    Log.d("NAPRAVILO SE2","NAPRAVILO SE");
+                    transaction.replace(R.id.fragment_container, fragment);
+                    Log.d("NAPRAVILO SE","NAPRAVILO SE");
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                    return true;
+                }
+
+                if (item.getItemId() == requestMenuItem.getItemId()) {
+                    includedLayout.setVisibility(View.GONE);
+                    RequestFragment fragment = new RequestFragment();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragment_container, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                    return true;
+                }
+
+                if (item.getItemId() == logOutMenuItem.getItemId()) {
+                    Intent intent=new Intent(GuestMainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+
+                if (item.getItemId() == profileMenuItem.getItemId()) {
+                    ProfileFragment fragment = new ProfileFragment();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragment_container, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                    return true;
+                }
+
+                // Zatvori navigacijski izbornik
+                binding.drawerLayout.closeDrawer(binding.navView);
+
+                return true;
+            }
+        });
+
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);

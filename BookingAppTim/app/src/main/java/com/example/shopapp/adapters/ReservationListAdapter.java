@@ -1,17 +1,21 @@
 package com.example.shopapp.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shopapp.R;
+import com.example.shopapp.model.accommodation.Accommodation;
 import com.example.shopapp.model.reservation.Reservation;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -22,6 +26,12 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
     public ReservationListAdapter(List<Reservation> reservationList) {
         this.reservationList = reservationList;
     }
+
+    public ReservationListAdapter(Context context, FragmentManager supportFragmentManager, ArrayList<Reservation> reservations){
+//        super(context, R.layout.reservation_card, reservations);
+        reservationList = reservations;
+    }
+
     @Override
     public ReservationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_reservation, parent, false);

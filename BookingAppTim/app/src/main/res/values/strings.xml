@@ -21,7 +21,7 @@
     <string name="navigation_drawer_close" translatable="false">Navigation Drawer Close</string>
     <string name="logout">Logout</string>
     <string name="accomodations">Accomodations</string>
-    <string name="allOwnerAccommodations" translatable="false">accomodations</string>
+    <string name="allOwnerAccommodations" translatable="false">My Reservations</string>
     <string name="addAccommodations" translatable="false">Add accomodations</string>
     <string name="samsung_galaxy_s23_ultra_gray">Samsung</string>
     <string name="new_product">New product</string>

@@ -1,4 +1,4 @@
-package com.example.shopapp.activities.HostScreen;
+package com.example.shopapp.activities.AdminScreen;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -24,9 +24,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 //SVE STO JE ZAKOMENTARISANO NE BRISATI
-public class HostMainActivity extends AppCompatActivity {
+public class AdminMainActivity extends AppCompatActivity {
     private ActivityHomeBinding binding;
-    //SVE STO JE ZAKOMENTARISANO NE BRISATI
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
     private NavigationView navigationView;
@@ -45,16 +44,14 @@ public class HostMainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         drawer = binding.drawerLayout;
-        navigationView = binding.navView;
+        //navigationView = binding.navView;
+        NavigationView navigationView = findViewById(R.id.nav_view);
         toolbar = binding.activityHomeBase.toolbar;
-        MenuItem reservationsMenuItem = navigationView.getMenu().findItem(R.id.nav_reservations);
-        reservationsMenuItem.setVisible(false);
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
         if(actionBar != null){
 
             actionBar.setDisplayHomeAsUpEnabled(false);
-            //actionBar.setHomeAsUpIndicator(R.drawable.ic_hamburger);
             actionBar.setHomeButtonEnabled(true);
         }
 
@@ -64,6 +61,7 @@ public class HostMainActivity extends AppCompatActivity {
         drawer.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         topLevelDestinations.add(R.id.nav_language);
+        topLevelDestinations.add(R.id.nav_requests);
         topLevelDestinations.add(R.id.nav_profile);
         topLevelDestinations.add(R.id.nav_settings);
         navController = Navigation.findNavController(this, R.id.fragment_nav_content_main);
@@ -73,11 +71,12 @@ public class HostMainActivity extends AppCompatActivity {
         });
 
         mAppBarConfiguration = new AppBarConfiguration
-                .Builder(R.id.nav_products, R.id.nav_new, R.id.nav_profile, R.id.nav_logout, R.id.nav_settings, R.id.nav_language)
+                .Builder(R.id.nav_products, R.id.nav_new,R.id.nav_requests, R.id.nav_profile, R.id.nav_logout, R.id.nav_settings, R.id.nav_language)
                 .setOpenableLayout(drawer)
                 .build();
         NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

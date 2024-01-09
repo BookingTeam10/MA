@@ -14,9 +14,8 @@ import java.util.List;
 
 public class Accommodation implements Parcelable {
     private Long id;
-    private String title;
+    private String name;
     private String description;
-    private int image;
     private boolean accepted;
     private boolean automaticActivation = false;
     private int minPeople;
@@ -37,9 +36,10 @@ public class Accommodation implements Parcelable {
     private double weekendPrice;
     private double holidayPrice;
     private double summerPrice;
-    public Accommodation(Long id, String title, String description, int image) {
+    public int image;
+    public Accommodation(Long id, String name, String description, int image) {
         this.id = id;
-        this.title = title;
+        this.name = name;
         this.description = description;
         this.image = image;
     }
@@ -48,7 +48,7 @@ public class Accommodation implements Parcelable {
     }
     protected Accommodation(Parcel in) {
         id = in.readLong();
-        title = in.readString();
+        name = in.readString();
         description = in.readString();
         image = in.readInt();
     }
@@ -60,23 +60,20 @@ public class Accommodation implements Parcelable {
     public void setId(Long id) {
         this.id = id;
     }
-    public String getTitle() {
-        return title;
+
+    public String getName() {
+        return name;
     }
-    public void setTitle(String title) {
-        this.title = title;
+
+    public void setName(String name) {
+        this.name = name;
     }
+
     public String getDescription() {
         return description;
     }
     public void setDescription(String description) {
         this.description = description;
-    }
-    public int getImage() {
-        return image;
-    }
-    public void setImage(int image) {
-        this.image = image;
     }
 
     public Location getLocation() {
@@ -87,9 +84,25 @@ public class Accommodation implements Parcelable {
         this.location = location;
     }
 
+    public List<String> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<String> photos) {
+        this.photos = photos;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
-        return   title;
+        return   name;
     }
 
     @Override
@@ -100,7 +113,7 @@ public class Accommodation implements Parcelable {
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeLong(id);
-        dest.writeString(title);
+        dest.writeString(name);
         dest.writeString(description);
         dest.writeInt(image);
     }
