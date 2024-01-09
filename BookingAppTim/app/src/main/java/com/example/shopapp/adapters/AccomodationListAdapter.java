@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.shopapp.activities.GuestScreen.AccommodationDetailsScreen;
 import com.example.shopapp.model.accommodation.Accommodation;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
     private ArrayList<Accommodation> aAccomodation;
 
-    public AccomodationListAdapter(Context context, ArrayList<Accommodation> accomodations){
+    public AccomodationListAdapter(Context context, FragmentManager supportFragmentManager, ArrayList<Accommodation> accomodations){
         super(context, R.layout.accomodation_card, accomodations);
         aAccomodation = accomodations;
     }
@@ -60,7 +61,7 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
 
         if(product != null){
             imageView.setImageResource(product.getImage());
-            productTitle.setText(product.getTitle());
+            productTitle.setText(product.getName());
             productDescription.setText(product.getDescription());
             productCard.setOnClickListener(v -> {
                 Intent intent = new Intent(getContext(),AccommodationDetailsScreen.class);

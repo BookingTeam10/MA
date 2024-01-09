@@ -115,7 +115,7 @@
         android:layout_height="wrap_content"
         android:text="Locations"/>
     <Spinner
-        android:id="@+id/spinnerAmenity"
+        android:id="@+id/spinnerLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

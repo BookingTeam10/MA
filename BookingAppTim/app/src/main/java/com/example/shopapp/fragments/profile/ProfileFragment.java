@@ -1,4 +1,4 @@
-package com.example.shopapp.fragments;
+package com.example.shopapp.fragments.profile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,7 +18,7 @@ import com.example.shopapp.model.user.User;
 
 public class ProfileFragment extends Fragment {
 
-    private User currentUser = new User("luka@gmail.com", "aleksa", "Luka", "Popovic", "1232434", "Bul. Pobede 12");
+    //private User currentUser = new User("luka@gmail.com", "aleksa", "Luka", "Popovic", "1232434", "Bul. Pobede 12");
 
     @Nullable
     @Override
@@ -31,11 +31,11 @@ public class ProfileFragment extends Fragment {
         TextView phoneTextView = view.findViewById(R.id.phoneTextView);
         TextView addressTextView = view.findViewById(R.id.addressTextView);
 
-        emailTextView.setText("Email:          " + currentUser.getEmail());
-        nameTextView.setText("Name:          " + currentUser.getName());
-        surnameTextView.setText("Surname:     " + currentUser.getSurname());
-        phoneTextView.setText("Phone:          " + currentUser.getPhone());
-        addressTextView.setText("Address:       " + currentUser.getAddress());
+//        emailTextView.setText("Email:          " + currentUser.getEmail());
+//        nameTextView.setText("Name:          " + currentUser.getName());
+//        surnameTextView.setText("Surname:     " + currentUser.getSurname());
+//        phoneTextView.setText("Phone:          " + currentUser.getPhone());
+//        addressTextView.setText("Address:       " + currentUser.getAddress());
 
         Button editProfileButton = view.findViewById(R.id.editProfileButton);
 

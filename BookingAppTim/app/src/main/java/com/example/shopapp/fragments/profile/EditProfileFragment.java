@@ -1,4 +1,4 @@
-package com.example.shopapp.fragments;
+package com.example.shopapp.fragments.profile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,7 +16,7 @@ import com.example.shopapp.model.user.User;
 
 public class EditProfileFragment extends Fragment {
 
-    private User currentUser = new User("luka@gmail.com", "aleksa", "Luka", "Popovic", "1232434", "Bul. Pobede 12");
+   // private User currentUser = new User("luka@gmail.com", "aleksa", "Luka", "Popovic", "1232434", "Bul. Pobede 12");
     private EditText emailEditText, nameEditText, surnameEditText, phoneEditText, addressEditText;
     private Button saveProfileButton;
 
@@ -26,16 +26,16 @@ public class EditProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
 
         // Initialize EditTexts
-        emailEditText = view.findViewById(R.id.emailEditText);
-        emailEditText.setText(currentUser.getEmail());
-        nameEditText = view.findViewById(R.id.nameEditText);
-        nameEditText.setText(currentUser.getName());
-        surnameEditText = view.findViewById(R.id.surnameEditText);
-        surnameEditText.setText(currentUser.getSurname());
-        phoneEditText = view.findViewById(R.id.phoneEditText);
-        phoneEditText.setText(currentUser.getPhone());
-        addressEditText = view.findViewById(R.id.addressEditText);
-        addressEditText.setText(currentUser.getAddress());
+//        emailEditText = view.findViewById(R.id.emailEditText);
+//        emailEditText.setText(currentUser.getEmail());
+//        nameEditText = view.findViewById(R.id.nameEditText);
+//        nameEditText.setText(currentUser.getName());
+//        surnameEditText = view.findViewById(R.id.surnameEditText);
+//        surnameEditText.setText(currentUser.getSurname());
+//        phoneEditText = view.findViewById(R.id.phoneEditText);
+//        phoneEditText.setText(currentUser.getPhone());
+//        addressEditText = view.findViewById(R.id.addressEditText);
+//        addressEditText.setText(currentUser.getAddress());
 
         // Initialize Button
         saveProfileButton = view.findViewById(R.id.saveProfileButton);

@@ -14,9 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.shopapp.R;
 import com.example.shopapp.activities.HostScreen.AddAccommodationActivity;
-import com.example.shopapp.activities.HostScreen.AddAccommodationScreen;
 import com.example.shopapp.databinding.FragmentNewProductBinding;
 
 public class NewAccomodationFragment extends Fragment {

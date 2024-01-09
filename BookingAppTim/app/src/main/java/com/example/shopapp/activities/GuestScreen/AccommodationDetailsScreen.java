@@ -9,8 +9,10 @@ import android.widget.Button;
 
 import com.example.shopapp.R;
 import com.example.shopapp.activities.MapsActivity;
+import com.example.shopapp.model.accommodation.Accommodation;
 
 public class AccommodationDetailsScreen extends AppCompatActivity {
+    private Accommodation accommodation = new Accommodation();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
