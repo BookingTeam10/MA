@@ -22,6 +22,7 @@
     <string name="logout">Logout</string>
     <string name="accomodations">Accomodations</string>
     <string name="allOwnerAccommodations" translatable="false">My Reservations</string>
+    <string name="allOwnerAccommodations1" translatable="false">My Accommodations</string>
     <string name="addAccommodations" translatable="false">Add accomodations</string>
     <string name="samsung_galaxy_s23_ultra_gray">Samsung</string>
     <string name="new_product">New product</string>
@@ -43,6 +44,13 @@
     <string name="submit" translatable="false">Submit</string>
     <string name="description_apartment" translatable="false">Apartmani su opremljeni svim modernim pogodnostima tako da možete uživati u veoma privatnoj ili nezavisnoj atmosferi, bez obzira na to da li rezervišete boravak sa porodicom ili grupom prijatelja. Sama zgrada ima lift i veličanstvenu terasu za zajedničko korišćenje na kojoj možete organizovati roštilje ili se jednostavno opustiti usred grada. Lako možete posetiti obližnju Gotsku četvrt koja je na samo nekoliko minuta pešice od gradske luke i plaže.</string>
     <string name="combobox_hint" translatable="false">Izaberite opciju</string>
+    <string name="rate_owner">Rate owner</string>
+    <string name="delete_rate_owner">Delete rate owner</string>
+    <string name="view_rate_owner">View rate owner</string>
+    <string name="report_owner">Report owner</string>
+    <string name="add_describe">Add describe</string>
+    <string name="rate_owner_title">Add rate owner</string>
+    <string name="add_rate">Add rate owner</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="title_activity_edit_accommodation" translatable="false">EditAccommodationActivity</string>

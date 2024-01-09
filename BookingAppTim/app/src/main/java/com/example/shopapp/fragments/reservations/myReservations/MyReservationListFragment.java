@@ -20,6 +20,7 @@ import android.widget.ListView;
 
 import com.example.shopapp.R;
 import com.example.shopapp.adapters.AccomodationListAdapter;
+import com.example.shopapp.adapters.MyReservationListAdapter;
 import com.example.shopapp.adapters.ReservationListAdapter;
 import com.example.shopapp.configuration.ServiceUtils;
 import com.example.shopapp.databinding.FragmentProductsListBinding;
@@ -61,7 +62,10 @@ public class MyReservationListFragment extends Fragment {
         //Log.d("GOST ID",);
 
 
-        Call<ArrayList<Reservation>> call = ServiceUtils.reservationService.getGuestsRequests();
+        //Call<ArrayList<Reservation>> call = ServiceUtils.reservationService.getGuestsRequests();
+
+        Call<ArrayList<Reservation>> call = ServiceUtils.reservationService.getReservationsByGuest(3L);
+
 
         Log.d("REZ REPO SMRDLJIVI234","Meesage recieved");
 
@@ -69,15 +73,10 @@ public class MyReservationListFragment extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<Reservation>> call, Response<ArrayList<Reservation>> response) {
                 if (response.code() == 200){
-                    Log.d("REZ REPO","Meesage recieved");
                     System.out.println(response.body());
-                    Log.d("REZ11","Meesage recieved");
                     reservations = response.body();
-                    Log.d("REZ1","Meesage recieved");
-                    ReservationListAdapter adapter = new ReservationListAdapter(reservations);
-                    Log.d("REZ2","Meesage recieved");
+                    MyReservationListAdapter adapter = new MyReservationListAdapter(getActivity(),reservations, getChildFragmentManager());
                     recyclerView.setAdapter(adapter);
-                    Log.d("REZ3","Meesage recieved");
                 }
             }
             @Override
