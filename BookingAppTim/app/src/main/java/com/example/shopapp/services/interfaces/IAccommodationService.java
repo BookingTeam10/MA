@@ -36,8 +36,8 @@ public interface IAccommodationService {
     @GET("accommodationsSearch")
     Call<ArrayList<Accommodation>>  getSearchedAccommodations(
             @Query("location") String location,
-            @Query("start") String start, // Datum formatiran kao String
-            @Query("end") String end,     // Datum formatiran kao String
+            @Query("start") String start,
+            @Query("end") String end,
             @Query("numPeople") Integer numPeople,
             @Query("minPrice") String minPrice,
             @Query("maxPrice") String maxPrice,

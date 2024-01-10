@@ -3,9 +3,7 @@ package com.example.shopapp.model.user;
 import java.io.Serializable;
 
 public class Owner extends User implements Serializable {
-
     private double totalPrice;
-
     private double rating;
 
     public void setCreatedNotification(boolean createdNotification) {
@@ -25,11 +23,8 @@ public class Owner extends User implements Serializable {
     }
 
     private boolean createdNotification;
-
     private boolean rateMeNotification;
-
     private boolean cancelledNotification;
-
     private boolean rateAccommodationNotification;
 
     public Owner(Long id,String email, String password, String name, String surname, String phone, String address,boolean rep, boolean blocked) {
@@ -87,8 +82,16 @@ public class Owner extends User implements Serializable {
     }
 
     public void copyValues(Owner ownerForUpdate) {
+        this.setEmail(ownerForUpdate.getEmail());
+        this.setPassword(ownerForUpdate.getPassword());
+        this.setName(ownerForUpdate.getName());
+        this.setSurname(ownerForUpdate.getSurname());
+        this.setPhone(ownerForUpdate.getPhone());
+        this.setAddress(ownerForUpdate.getAddress());
+        this.setBlocked(ownerForUpdate.isBlocked());
     }
     public Long id() {
         return super.getId();
     }
+
 }

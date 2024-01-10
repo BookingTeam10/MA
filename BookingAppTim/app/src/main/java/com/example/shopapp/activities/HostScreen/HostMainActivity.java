@@ -1,11 +1,11 @@
 package com.example.shopapp.activities.HostScreen;
 
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -13,16 +13,13 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.shopapp.R;
-import com.example.shopapp.activities.Login.LoginActivity;
 import com.example.shopapp.databinding.ActivityHomeBinding;
-import com.example.shopapp.fragments.profile.ProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.HashSet;
@@ -40,6 +37,7 @@ public class HostMainActivity extends AppCompatActivity {
     private ActionBar actionBar;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private Set<Integer> topLevelDestinations = new HashSet<>();
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +46,11 @@ public class HostMainActivity extends AppCompatActivity {
 
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        sharedPreferences = getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        String role = sharedPreferences.getString("pref_role", "undefined");
+
+        Log.i("UserRoleOWNER", "Role: " + role);
 
         drawer = binding.drawerLayout;
         navigationView = binding.navView;
@@ -83,45 +86,6 @@ public class HostMainActivity extends AppCompatActivity {
                 .build();
         NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                MenuItem reservationsMenuItem = navigationView.getMenu().findItem(R.id.nav_reservations);
-                MenuItem requestMenuItem = navigationView.getMenu().findItem(R.id.nav_requests);
-                MenuItem logOutMenuItem = navigationView.getMenu().findItem(R.id.nav_logout);
-                MenuItem profileMenuItem = navigationView.getMenu().findItem(R.id.nav_profile);
-                MenuItem accommodationMenuItem=navigationView.getMenu().findItem(R.id.nav_accommodat);
-                View includedLayout = findViewById(R.id.fragment_nav_content_main);
-
-
-                if (item.getItemId() == accommodationMenuItem.getItemId()) {
-                    Intent intent=new Intent(HostMainActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    return true;
-                }
-
-                if (item.getItemId() == logOutMenuItem.getItemId()) {
-                    Intent intent=new Intent(HostMainActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    return true;
-                }
-
-                if (item.getItemId() == profileMenuItem.getItemId()) {
-                    ProfileFragment fragment = new ProfileFragment();
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragment_container, fragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                    return true;
-                }
-
-                // Zatvori navigacijski izbornik
-                binding.drawerLayout.closeDrawer(binding.navView);
-
-                return true;
-            }
-        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
