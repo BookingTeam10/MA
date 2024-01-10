@@ -1,4 +1,4 @@
-package com.example.shopapp.fragments.guest.myReservations;
+package com.example.shopapp.fragments.guest.reservations.myReservations;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

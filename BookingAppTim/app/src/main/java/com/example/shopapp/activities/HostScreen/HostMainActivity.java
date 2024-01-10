@@ -1,6 +1,8 @@
 package com.example.shopapp.activities.HostScreen;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -39,6 +41,7 @@ public class HostMainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ActionBar actionBar;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    private SharedPreferences sharedPreferences;
     private Set<Integer> topLevelDestinations = new HashSet<>();
 
     @Override
@@ -48,6 +51,11 @@ public class HostMainActivity extends AppCompatActivity {
 
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        sharedPreferences = getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        String role = sharedPreferences.getString("pref_role", "undefined");
+
+        Log.i("UserRoleOWNER", "Role: " + role);
 
         drawer = binding.drawerLayout;
         navigationView = binding.navView;

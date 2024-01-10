@@ -1,12 +1,11 @@
 package com.example.shopapp.model.user;
 
+
 import com.example.shopapp.enums.ReviewStatus;
 
 import java.io.Serializable;
 
 public class ReportUser implements Serializable {
-
-
     private Long id;
 
 
@@ -17,7 +16,7 @@ public class ReportUser implements Serializable {
     private Owner owner;
 
     private Guest guest;
-    
+
     private String userReportUser;
 
     public ReportUser() {

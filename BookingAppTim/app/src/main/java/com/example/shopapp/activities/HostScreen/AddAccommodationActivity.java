@@ -9,7 +9,6 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.shopapp.R;
-import com.example.shopapp.fragments.new_accomodation.EditAccommodationActivity;
 
 public class AddAccommodationActivity extends AppCompatActivity {
 

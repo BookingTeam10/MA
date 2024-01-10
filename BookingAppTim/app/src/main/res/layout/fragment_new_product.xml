@@ -4,7 +4,7 @@
     android:id="@+id/details_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.new_accomodation.NewAccomodationFragment">
+    tools:context=".fragments.owner.new_accomodation.NewAccomodationFragment">
 
     <Button
         android:id="@+id/btnNew"

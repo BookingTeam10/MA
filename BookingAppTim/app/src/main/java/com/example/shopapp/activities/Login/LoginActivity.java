@@ -3,7 +3,9 @@ package com.example.shopapp.activities.Login;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,7 +32,7 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-
+    private SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,37 +124,36 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 Token loginResponse = response.body();
-               String userRole = "";
+                String userRole = "";
+                Log.i("USERROLE",userRole);
+                JWT jwt = new JWT(loginResponse.getJwt());
 
-               JWT jwt = new JWT(loginResponse.getJwt());
                 List<HashMap> role =
                         jwt.getClaim("role").asList(HashMap.class);
                 for (Object values: role.get(0).values()){
                     userRole = values.toString();
                     break;
                 }
-                //dobro odredi rol
-                Log.i("USERROLE",userRole);
+
+                String email = jwt.getClaim("sub").asString();
+                Long id = jwt.getClaim("id").asLong();
+                Log.d("EMAIL UCITAN", String.valueOf(email));
+                Log.d("ID UCITAN", String.valueOf(id));
+                //Token token = Token.getInstance();
+                //token.setJwt(loginResponse.getJwt());
 
 
-//                String email = jwt.getClaim("sub").asString();
-//                Long id = jwt.getClaim("id").asLong();
-//                Token token = TokenDTO.getInstance();
-//                tokenDTO.setToken(loginResponse.getToken());
-//                tokenDTO.setRefreshToken(loginResponse.getRefreshToken());
-//                Intent intent;
-//
-//
                 //ovo ostaviti i posle roknuti
                 if(userRole.equals("ROLE_Guest")){
-                    //setSharedPreferences("PASSENGER", email, id);
+                    setSharedPreferences("Guest", email, id);
                     //setTokenPreference(loginResponse.getToken(), loginResponse.getRefreshToken());
                     Intent intent = new Intent(LoginActivity.this,GuestMainActivity.class);
                     startActivity(intent);
 
                 }
-                else if(userRole.equalsIgnoreCase("ROLE_Owner")) {
-                    //setSharedPreferences("DRIVER", email, id);
+
+                else if(userRole.equals("ROLE_Owner")) {
+                    setSharedPreferences("Owner", email, id);
                     //setTokenPreference(loginResponse.getToken(), loginResponse.getRefreshToken());
                     Intent intent = new Intent(LoginActivity.this,HostMainActivity.class);
                     startActivity(intent);
@@ -163,7 +164,6 @@ public class LoginActivity extends AppCompatActivity {
                     //setTokenPreference(loginResponse.getToken(), loginResponse.getRefreshToken());
                     Intent intent = new Intent(LoginActivity.this, AdminMainActivity.class);
                     startActivity(intent);
-
                 }
 
             }
@@ -173,6 +173,15 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d("Login Failed", t.getMessage());
             }
         });
+    }
+
+    private void setSharedPreferences(String role, String email, Long id){
+        this.sharedPreferences = getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor spEditor = this.sharedPreferences.edit();
+        spEditor.putString("pref_role", role);
+        spEditor.putString("pref_email", email);
+        //spEditor.putLong("pref_id", id);
+        spEditor.apply();
 
     }
 }

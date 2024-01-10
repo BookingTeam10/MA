@@ -1,4 +1,4 @@
-package com.example.shopapp.fragments.guest.myReservations;
+package com.example.shopapp.fragments.guest.reservations.myReservations;
 
 import android.app.AlertDialog;
 import android.os.Bundle;

@@ -57,7 +57,7 @@
             android:name=".activities.MapsActivity"
             android:exported="false" />
         <activity
-            android:name=".fragments.new_accomodation.EditAccommodationActivity"
+            android:name=".fragments.owner.new_accomodation.EditAccommodationActivity"
             android:exported="false"
             android:label="@string/title_activity_edit_accommodation"
             android:theme="@style/Theme.ShopApp" />

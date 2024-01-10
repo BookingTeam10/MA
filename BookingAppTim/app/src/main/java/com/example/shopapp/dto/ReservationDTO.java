@@ -1,68 +1,54 @@
-package com.example.shopapp.model.reservation;
+package com.example.shopapp.dto;
 
-
-import com.example.shopapp.dto.ReservationDTO;
 import com.example.shopapp.enums.ReservationStatus;
 import com.example.shopapp.model.accommodation.Accommodation;
+import com.example.shopapp.model.reservation.Reservation;
 import com.example.shopapp.model.review.Review;
 import com.example.shopapp.model.user.Guest;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
-public class Reservation implements Serializable {
-
+public class ReservationDTO {
     private long id;
     private double totalPrice;
     private ReservationStatus status;
     private Date startDate;
     private Date endDate;
-    private int numberOfNights = 1;
+    private int numberOfNights;
     private Accommodation accommodation;
     private Guest guest;
     private List<Review> reviews;
 
-    public Reservation() {
+    public ReservationDTO() {
     }
 
-    public Reservation( Long id,int totalPrice,ReservationStatus reservationStatus, Date startDate, Date endDate,int numberOfNights,Accommodation accommodation,Guest guest) {
+    public ReservationDTO(long id, double totalPrice, ReservationStatus status, Date startDate, Date endDate, int numberOfNights,
+                          Accommodation accommodation, Guest guest, List<Review> reviews) {
         this.id = id;
-        this.totalPrice = totalPrice;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.status = reservationStatus;
-        this.accommodation = accommodation;
-        this.guest = guest;
-        this.numberOfNights = numberOfNights;
-        this.reviews = new ArrayList<>();
-    }
-
-    public Reservation( Long id, Date startDate, Date endDate,Accommodation accommodation) {
-        this.id = id;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.accommodation = accommodation;
-    }
-    public Reservation(double totalPrice, ReservationStatus status, Date startDate, Date endDate, int numberOfNights) {
         this.totalPrice = totalPrice;
         this.status = status;
         this.startDate = startDate;
         this.endDate = endDate;
         this.numberOfNights = numberOfNights;
+        this.accommodation = accommodation;
+        this.guest = guest;
+        this.reviews = reviews;
     }
 
-    public Reservation(ReservationDTO reservationDTO) {
-        this.id = reservationDTO.getId();
-        this.totalPrice = reservationDTO.getTotalPrice();
-        this.status = reservationDTO.getStatus();
-        this.startDate = reservationDTO.getStartDate();
-        this.endDate = reservationDTO.getEndDate();
-        this.numberOfNights = reservationDTO.getNumberOfNights();
-        this.accommodation = reservationDTO.getAccommodation();
-        this.guest = reservationDTO.getGuest();
-        this.reviews = reservationDTO.getReviews();
+    public ReservationDTO(Reservation reservation) {
+        this.id = reservation.getId();
+        this.totalPrice = reservation.getTotalPrice();
+        this.status = reservation.getStatus();
+        this.startDate = reservation.getStartDate();
+        this.endDate = reservation.getEndDate();
+        this.numberOfNights = reservation.getNumberOfNights();
+
+        this.accommodation = reservation.getAccommodation();
+        this.guest = reservation.getGuest();
+
+        this.reviews = reservation.getReviews();
     }
 
     public long getId() {
@@ -113,6 +99,14 @@ public class Reservation implements Serializable {
         this.numberOfNights = numberOfNights;
     }
 
+    public Accommodation getAccommodation() {
+        return accommodation;
+    }
+
+    public void setAccommodation(Accommodation accommodation) {
+        this.accommodation = accommodation;
+    }
+
     public Guest getGuest() {
         return guest;
     }
@@ -129,17 +123,9 @@ public class Reservation implements Serializable {
         this.reviews = reviews;
     }
 
-    public Accommodation getAccommodation() {
-        return accommodation;
-    }
-
-    public void setAccommodation(Accommodation accommodation) {
-        this.accommodation = accommodation;
-    }
-
     @Override
     public String toString() {
-        return "Reservation{" +
+        return "ReservationDTO{" +
                 "id=" + id +
                 ", totalPrice=" + totalPrice +
                 ", status=" + status +
@@ -152,8 +138,16 @@ public class Reservation implements Serializable {
                 '}';
     }
 
-    public void copyValues(Reservation reservation) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ReservationDTO that = (ReservationDTO) o;
+        return id == that.id;
     }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

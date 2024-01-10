@@ -1,4 +1,4 @@
-package com.example.shopapp.fragments.new_accomodation;
+package com.example.shopapp.fragments.owner.new_accomodation;
 
 import android.os.Bundle;
 

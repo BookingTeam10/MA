@@ -1,4 +1,4 @@
-package com.example.shopapp.fragments.guest.myReservations;
+package com.example.shopapp.fragments.guest.reservations.myReservations;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

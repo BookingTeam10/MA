@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shopapp.R;
-import com.example.shopapp.fragments.guest.myReservations.ReservationDetailFragment;
+import com.example.shopapp.fragments.guest.reservations.myReservations.ReservationDetailFragment;
 import com.example.shopapp.model.reservation.Reservation;
 
 import java.text.SimpleDateFormat;
