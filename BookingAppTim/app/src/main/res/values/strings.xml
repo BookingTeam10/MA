@@ -51,6 +51,12 @@
     <string name="add_describe">Add describe</string>
     <string name="rate_owner_title">Add rate owner</string>
     <string name="add_rate">Add rate owner</string>
+    <string name="report_user_title">Report user</string>
+    <string name="add_report">Add report user</string>
+    <string name="rate_accommodation">Rate Accommodation</string>
+    <string name="delete_rate_accommodation">Delete rate accommodation</string>
+    <string name="view_rate_accommodation">View rate accommodation</string>
+    <string name="add_rate_accommodation">Add rate Accommodation</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="title_activity_edit_accommodation" translatable="false">EditAccommodationActivity</string>

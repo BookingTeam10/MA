@@ -20,12 +20,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.shopapp.R;
-import com.example.shopapp.activities.GuestScreen.GuestMainActivity;
 import com.example.shopapp.activities.Login.LoginActivity;
 import com.example.shopapp.databinding.ActivityHomeBinding;
 import com.example.shopapp.fragments.profile.ProfileFragment;
-import com.example.shopapp.fragments.reservations.RequestFragment;
-import com.example.shopapp.fragments.reservations.myReservations.MyReservationListFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.HashSet;
@@ -97,7 +94,6 @@ public class HostMainActivity extends AppCompatActivity {
                 MenuItem accommodationMenuItem=navigationView.getMenu().findItem(R.id.nav_accommodat);
                 View includedLayout = findViewById(R.id.fragment_nav_content_main);
 
-                Log.d("MENI 123","NAPRAVILO SE");
 
                 if (item.getItemId() == accommodationMenuItem.getItemId()) {
                     Intent intent=new Intent(HostMainActivity.this, LoginActivity.class);

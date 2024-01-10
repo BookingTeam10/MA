@@ -1,15 +1,11 @@
 package com.example.shopapp.adapters;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.FragmentManager;
@@ -17,7 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shopapp.R;
-import com.example.shopapp.fragments.reservations.myReservations.ReservationDetailFragment;
+import com.example.shopapp.fragments.guest.myReservations.ReservationDetailFragment;
 import com.example.shopapp.model.reservation.Reservation;
 
 import java.text.SimpleDateFormat;
@@ -68,7 +64,7 @@ public class MyReservationListAdapter extends RecyclerView.Adapter<ReservationLi
             String month = parts[1];
             String year = parts[5];
             String formattedDate = day + " " + month + " " + year;
-            holder.textViewStart.setText(formattedDate);
+            holder.textViewEnd.setText(formattedDate);
             holder.textViewEnd.setText(formattedDate);}
         if (reservation.getAccommodation()==null){
             holder.textViewAccommodation.setText((""));

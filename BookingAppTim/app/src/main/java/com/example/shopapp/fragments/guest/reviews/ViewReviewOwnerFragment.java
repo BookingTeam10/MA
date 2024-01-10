@@ -1,27 +1,21 @@
-package com.example.shopapp.fragments.reviews;
+package com.example.shopapp.fragments.guest.reviews;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 import com.example.shopapp.R;
-import com.example.shopapp.model.accommodation.Accommodation;
-import com.example.shopapp.model.reservation.Reservation;
-import com.example.shopapp.model.review.Review;
 import com.example.shopapp.model.review.ReviewOwner;
 
 /**

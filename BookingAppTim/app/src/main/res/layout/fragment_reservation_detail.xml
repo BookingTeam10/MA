@@ -59,6 +59,24 @@
                 android:text="@string/view_rate_owner" />
 
             <Button
+                android:id="@+id/rateAccommodation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/rate_accommodation" />
+
+            <Button
+                android:id="@+id/deleteRateAccommodation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/delete_rate_accommodation" />
+
+            <Button
+                android:id="@+id/viewRateAccommodation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/view_rate_accommodation" />
+
+            <Button
                 android:id="@+id/reportOwner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

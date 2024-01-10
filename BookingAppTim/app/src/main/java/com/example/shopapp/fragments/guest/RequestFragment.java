@@ -1,4 +1,4 @@
-package com.example.shopapp.fragments.reservations;
+package com.example.shopapp.fragments.guest;
 
 import android.os.Bundle;
 

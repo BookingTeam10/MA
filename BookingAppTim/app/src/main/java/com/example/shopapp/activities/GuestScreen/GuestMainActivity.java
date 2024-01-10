@@ -18,19 +18,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.shopapp.R;
 import com.example.shopapp.activities.Login.LoginActivity;
-import com.example.shopapp.databinding.ActivityHomeBinding;
 import com.example.shopapp.fragments.profile.ProfileFragment;
-import com.example.shopapp.fragments.reservations.RequestFragment;
-import com.example.shopapp.fragments.reservations.myReservations.MyReservationListFragment;
-import com.example.shopapp.fragments.reservations.myReservations.MyReservationPageFragment;
+import com.example.shopapp.fragments.guest.RequestFragment;
+import com.example.shopapp.fragments.guest.myReservations.MyReservationListFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.HashSet;

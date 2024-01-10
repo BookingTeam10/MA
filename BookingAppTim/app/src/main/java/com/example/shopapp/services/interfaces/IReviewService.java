@@ -1,5 +1,6 @@
 package com.example.shopapp.services.interfaces;
 
+import com.example.shopapp.dto.ReviewDTO;
 import com.example.shopapp.model.review.Review;
 import com.example.shopapp.model.review.ReviewOwner;
 
@@ -29,4 +30,16 @@ public interface IReviewService {
 
     @DELETE("reviews/rateDelete/{idOwner}/{idGuest}")
     Call<ResponseBody> deleteById(@Path("idOwner") Long idOwner,@Path("idGuest") Long idGuest);
+
+    @GET("reviews/byReservationId/{id}")
+    Call<Review> getReviewByReservationId(@Path("id") Long id);
+
+    @POST("reviews")
+    Call<ReviewDTO> createReview(@Body Review review);
+
+    @DELETE("reviews/{id}")
+    Call<ResponseBody> deleteByIdReview(@Path("id") Long id);
+
+    @GET("reviews/byReservationIdSingle/{id}")
+    Call<Review> getReviewByReservationIdSingle(@Path("id") Long id);
 }

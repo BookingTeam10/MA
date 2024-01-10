@@ -1,4 +1,4 @@
-package com.example.shopapp.fragments.reviews;
+package com.example.shopapp.fragments.guest.reviews;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,12 +15,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.example.shopapp.R;
 import com.example.shopapp.configuration.ServiceUtils;
 import com.example.shopapp.enums.ReviewStatus;
-import com.example.shopapp.model.accommodation.Accommodation;
 import com.example.shopapp.model.reservation.Reservation;
 import com.example.shopapp.model.review.ReviewOwner;
 import com.example.shopapp.model.user.Guest;
