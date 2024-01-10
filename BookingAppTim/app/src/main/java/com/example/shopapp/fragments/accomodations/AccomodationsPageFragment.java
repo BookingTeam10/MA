@@ -1,13 +1,10 @@
 package com.example.shopapp.fragments.accomodations;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
@@ -33,7 +30,6 @@ import com.example.shopapp.model.accommodation.Accommodation;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,7 +41,6 @@ public class AccomodationsPageFragment extends Fragment {
     private AccomodationPageViewModel productsViewModel;
     private FragmentProductsPageBinding binding;
     private AccomodationListAdapter adapter;
-
     public static AccomodationsPageFragment newInstance() {
         return new AccomodationsPageFragment();
     }
@@ -54,27 +49,17 @@ public class AccomodationsPageFragment extends Fragment {
 
         binding = FragmentProductsPageBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        AccomodationsListFragment accomodationsListFragment = new AccomodationsListFragment();
-        FragmentManager fragmentManager = getParentFragmentManager(); // ili getSupportFragmentManager() ako ste u FragmentActivity
-        adapter = new AccomodationListAdapter(getActivity(), fragmentManager, accommodations);
-        accomodationsListFragment.setListAdapter(adapter);
-        productsViewModel.getAccommodations().observe(getViewLifecycleOwner(), new Observer<ArrayList<Accommodation>>() {
-            @Override
-            public void onChanged(ArrayList<Accommodation> accommodations) {
-                adapter.setAccommodations(accommodations);
-            }
-        });
+
         SearchView searchView = binding.searchText;
         productsViewModel.getText().observe(getViewLifecycleOwner(), searchView::setQueryHint);
 
         Button btnFilters = binding.btnFilters;
         btnFilters.setOnClickListener(v -> {
-            Log.i("STARI ACCOMMODATIONS", String.valueOf(accommodations.size()));
             Log.i("ShopApp", "Bottom Sheet Dialog");
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity(), R.style.FullScreenBottomSheetDialog);
             View dialogView = getLayoutInflater().inflate(R.layout.bottom_sheet_filter, null);
             bottomSheetDialog.setContentView(dialogView);
-
+            //punjenje lokacija, slucajno sam nazvao Amenity, izmeniti posle
             Spinner spinnerAmenity =  dialogView.findViewById(R.id.spinnerLocation);;
             ArrayAdapter<String> arrayAdapterAmenity = new ArrayAdapter<>(getActivity(),
                     android.R.layout.simple_spinner_item,
@@ -98,10 +83,12 @@ public class AccomodationsPageFragment extends Fragment {
             submitButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // Čitanje vrednosti iz RadioGroup
                     int selectedRadioButtonId = accommodationRadioGroup.getCheckedRadioButtonId();
                     RadioButton selectedRadioButton = dialogView.findViewById(selectedRadioButtonId);
                     String accommodationType = selectedRadioButton != null ? selectedRadioButton.getText().toString() : "";
 
+                    // Čitanje ostalih vrednosti
                     String numberOfPeople = numberOfPeopleEditText.getText().toString();
                     String minPrice = minPriceEditText.getText().toString();
                     String maxPrice = maxPriceEditText.getText().toString();
@@ -110,6 +97,7 @@ public class AccomodationsPageFragment extends Fragment {
                     boolean ac = checkBoxAc.isChecked();
                     boolean parking = checkBoxParking.isChecked();
 
+                    // Ispisivanje vrednosti
                     Log.i("ShopApp", "Accommodation Type: " + accommodationType);
                     Log.i("ShopApp", "Number of People: " + numberOfPeople);
                     Log.i("ShopApp", "Min Price: " + minPrice);
@@ -118,14 +106,54 @@ public class AccomodationsPageFragment extends Fragment {
                     Log.i("ShopApp", "WiFi: " + wifi);
                     Log.i("ShopApp", "AC: " + ac);
                     Log.i("ShopApp", "Parking: " + parking);
-
-                    filterAccommodations();
-                    bottomSheetDialog.dismiss();
+                    ArrayList<Accommodation> filteredAccommodations =new ArrayList<>();
+                    productsViewModel.setAccommodations(filteredAccommodations);
+                    Log.i("SMESTAJ12345", String.valueOf(productsViewModel.getAccommodations().getValue().size()));
                 }
             });
         });
 
-        Log.i("NOVI ACCOMMODATIONS", String.valueOf(accommodations.size()));
+        //msm da je ovo sve visak al nek stoji
+        Spinner spinner = binding.btnSort;
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_item,
+                getResources().getStringArray(R.array.sort_array));
+        // Specify the layout to use when the list of choices appears
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(arrayAdapter);
+
+
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+        Spinner spinnerType = binding.btnType;
+        ArrayAdapter<String> arrayType = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_item,
+                getResources().getStringArray(R.array.type_accomodations));
+        arrayType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerType.setAdapter(arrayType);
+        spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+
         FragmentTransition.to(AccomodationsListFragment.newInstance(accommodations), getActivity(), false, R.id.scroll_products_list);
 
         return root;
@@ -146,14 +174,15 @@ public class AccomodationsPageFragment extends Fragment {
                     Log.d("REZ","Meesage recieved");
                     Log.d("UDJE","UDJE");
                     System.out.println(response.body());
-                    accommodations = response.body();
-                    accommodations.add(new Accommodation("AAA"));
-                    Log.i("SETIOVANJE", String.valueOf(accommodations.size()));
-                    productsViewModel.setAccommodations(accommodations); // filteredAccommodations je rezultat vašeg filtera
-
-                    if(adapter != null) {
-                        adapter.notifyDataSetChanged();
+                    //accommodations = response.body();
+                    StringBuilder builder = new StringBuilder();
+                    for(Accommodation accommodation : accommodations) {
+                        builder.append(accommodation.toString()); // Pretpostavimo da klasa Accommodation ima metod toString()
+                        builder.append(", "); // Dodajemo separator
                     }
+                    Log.i("SMESTAJ", builder.toString());
+                    Log.i("productsViewModel",productsViewModel.toString());
+                    productsViewModel.setAccommodations(accommodations);
                 }
             }
 
@@ -164,6 +193,5 @@ public class AccomodationsPageFragment extends Fragment {
         });
 
     }
-
 
 }

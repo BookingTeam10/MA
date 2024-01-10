@@ -5,8 +5,8 @@ import java.util.concurrent.TimeUnit;
 
 import com.example.shopapp.services.interfaces.IAccommodationService;
 import com.example.shopapp.services.interfaces.IReservationService;
-import com.example.shopapp.services.interfaces.users.IGuestService;
-import com.example.shopapp.services.interfaces.users.IOwnerService;
+import com.example.shopapp.services.interfaces.IReviewService;
+import com.example.shopapp.services.interfaces.users.IReportUserService;
 import com.example.shopapp.services.interfaces.users.IUnregisteredUserService;
 import com.example.shopapp.services.interfaces.users.IUserService;
 
@@ -19,8 +19,12 @@ public class ServiceUtils {
 
     //public static final String SERVICE_API_PATH = "http://"+ BuildConfig.IP_ADDR +":8090/api/";
     //public static final String SERVICE_API_PATH = "http://192.168.0.11:8090/api/";
-    public static final String SERVICE_API_PATH = "http://192.168.0.4:8090/api/";
+    public static final String SERVICE_API_PATH = "http://192.168.0.5:8090/api/";
 
+    /*
+     * Ovo ce nam sluziti za debug, da vidimo da li zahtevi i odgovori idu
+     * odnosno dolaze i kako izgeldaju.
+     * */
     public static OkHttpClient test(){
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -44,7 +48,8 @@ public class ServiceUtils {
     public static IAccommodationService accommodationService = retrofit.create(IAccommodationService.class);
     public static IUserService userService = retrofit.create(IUserService.class);
     public static IUnregisteredUserService unregisteredUserService = retrofit.create(IUnregisteredUserService.class);
+
     public static IReservationService reservationService = retrofit.create(IReservationService.class);
-    public static IGuestService guestService = retrofit.create(IGuestService.class);
-    public static IOwnerService ownerService = retrofit.create(IOwnerService.class);
+    public static IReviewService reviewService = retrofit.create(IReviewService.class);
+    public static IReportUserService reportService = retrofit.create(IReportUserService.class);
 }

@@ -10,7 +10,6 @@ import com.example.shopapp.enums.TypeAccommodation;
 import com.example.shopapp.model.reservation.Reservation;
 import com.example.shopapp.model.user.Owner;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class Accommodation implements Parcelable {
@@ -47,149 +46,11 @@ public class Accommodation implements Parcelable {
 
     public Accommodation() {
     }
-
-    public boolean isAccepted() {
-        return accepted;
-    }
-
-    public void setAccepted(boolean accepted) {
-        this.accepted = accepted;
-    }
-
-    public boolean isAutomaticActivation() {
-        return automaticActivation;
-    }
-
-    public void setAutomaticActivation(boolean automaticActivation) {
-        this.automaticActivation = automaticActivation;
-    }
-
-    public int getMinPeople() {
-        return minPeople;
-    }
-
-    public void setMinPeople(int minPeople) {
-        this.minPeople = minPeople;
-    }
-
-    public int getMaxPeople() {
-        return maxPeople;
-    }
-
-    public void setMaxPeople(int maxPeople) {
-        this.maxPeople = maxPeople;
-    }
-
-    public TypeAccommodation getTypeAccommodation() {
-        return typeAccommodation;
-    }
-
-    public void setTypeAccommodation(TypeAccommodation typeAccommodation) {
-        this.typeAccommodation = typeAccommodation;
-    }
-
-    public AccommodationStatus getAccommodationStatus() {
-        return accommodationStatus;
-    }
-
-    public void setAccommodationStatus(AccommodationStatus accommodationStatus) {
-        this.accommodationStatus = accommodationStatus;
-    }
-
-    public boolean isNight() {
-        return isNight;
-    }
-
-    public void setNight(boolean night) {
-        isNight = night;
-    }
-
-    public List<TakenDate> getTakenDates() {
-        return takenDates;
-    }
-
-    public void setTakenDates(List<TakenDate> takenDates) {
-        this.takenDates = takenDates;
-    }
-
-    public List<Amenity> getAmenities() {
-        return amenities;
-    }
-
-    public void setAmenities(List<Amenity> amenities) {
-        this.amenities = amenities;
-    }
-
-    public Owner getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Owner owner) {
-        this.owner = owner;
-    }
-
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
-
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
-    }
-
-    public boolean isAutomaticConfirmation() {
-        return automaticConfirmation;
-    }
-
-    public void setAutomaticConfirmation(boolean automaticConfirmation) {
-        this.automaticConfirmation = automaticConfirmation;
-    }
-
-    public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-
-    public int getCancelDeadline() {
-        return cancelDeadline;
-    }
-
-    public void setCancelDeadline(int cancelDeadline) {
-        this.cancelDeadline = cancelDeadline;
-    }
-
-    public List<Price> getPrices() {
-        return prices;
-    }
-
-    public void setPrices(List<Price> prices) {
-        this.prices = prices;
-    }
-
-    public double getWeekendPrice() {
-        return weekendPrice;
-    }
-
-    public void setWeekendPrice(double weekendPrice) {
-        this.weekendPrice = weekendPrice;
-    }
-
-    public double getHolidayPrice() {
-        return holidayPrice;
-    }
-
-    public void setHolidayPrice(double holidayPrice) {
-        this.holidayPrice = holidayPrice;
-    }
-
-    public double getSummerPrice() {
-        return summerPrice;
-    }
-
-    public void setSummerPrice(double summerPrice) {
-        this.summerPrice = summerPrice;
+    protected Accommodation(Parcel in) {
+        id = in.readLong();
+        name = in.readString();
+        description = in.readString();
+        image = in.readInt();
     }
 
     public Long getId() {
@@ -239,16 +100,22 @@ public class Accommodation implements Parcelable {
         this.image = image;
     }
 
-
     @Override
     public String toString() {
-        return "Accommodation{" +
-                ", name='" + name ;
+        return   name;
     }
 
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 
     @Override
@@ -257,15 +124,6 @@ public class Accommodation implements Parcelable {
         dest.writeString(name);
         dest.writeString(description);
         dest.writeInt(image);
-       // dest.writeTypedList(this.amenities);
-    }
-
-    protected Accommodation(Parcel in) {
-        id = in.readLong();
-        name = in.readString();
-        description = in.readString();
-        image = in.readInt();
-        //in.readTypedList(this.amenities, Amenity.CREATOR);
     }
 
     public static final Creator<Accommodation> CREATOR = new Creator<Accommodation>() {
@@ -278,11 +136,5 @@ public class Accommodation implements Parcelable {
         public Accommodation[] newArray(int size) {
             return new Accommodation[size];
         }
-
-
     };
-
-    public Accommodation(String name){
-        this.name = name;
-    }
 }

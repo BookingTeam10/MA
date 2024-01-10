@@ -39,6 +39,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class GuestMainActivity extends AppCompatActivity {
+
     private ActivityHomeBinding binding;
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
@@ -48,7 +49,6 @@ public class GuestMainActivity extends AppCompatActivity {
     private ActionBar actionBar;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private Set<Integer> topLevelDestinations = new HashSet<>();
-    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +57,13 @@ public class GuestMainActivity extends AppCompatActivity {
 
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        sharedPreferences = getSharedPreferences("preferences", Context.MODE_PRIVATE);
-        String role = sharedPreferences.getString("pref_role", "undefined");
-
-        Log.i("UserRoleGUEST", "Role: " + role);
 
         drawer = binding.drawerLayout;
+        //navigationView = binding.navView;
+        //NavigationView navigationView = findViewById(R.id.nav_view);
         NavigationView navigationView = binding.navView;
+        MenuItem accommodationMenuItem = navigationView.getMenu().findItem(R.id.nav_accommodat);
+        accommodationMenuItem.setVisible(false);
         toolbar = binding.activityHomeBase.toolbar;
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
@@ -89,7 +89,7 @@ public class GuestMainActivity extends AppCompatActivity {
         });
 
         mAppBarConfiguration = new AppBarConfiguration
-                .Builder(R.id.nav_products, R.id.nav_new,R.id.nav_requests, R.id.nav_profile, R.id.nav_logout, R.id.nav_settings, R.id.nav_language)
+                .Builder(R.id.nav_products, R.id.nav_new,R.id.nav_requests, R.id.nav_profile, R.id.nav_logout, R.id.nav_settings, R.id.nav_language,R.id.nav_accommodat)
                 .setOpenableLayout(drawer)
                 .build();
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -102,18 +102,20 @@ public class GuestMainActivity extends AppCompatActivity {
                 MenuItem requestMenuItem = navigationView.getMenu().findItem(R.id.nav_requests);
                 MenuItem logOutMenuItem = navigationView.getMenu().findItem(R.id.nav_logout);
                 MenuItem profileMenuItem = navigationView.getMenu().findItem(R.id.nav_profile);
+                MenuItem accommodationMenuItem=navigationView.getMenu().findItem(R.id.nav_accommodat);
                 View includedLayout = findViewById(R.id.fragment_nav_content_main);
+
+                accommodationMenuItem.setVisible(false);
 
                 Log.d("MENI 123","NAPRAVILO SE");
 
                 if (item.getItemId() == reservationsMenuItem.getItemId()) {
+                   // Intent intent=new Intent(GuestMainActivity.this, LoginActivity.class);
+//                    startActivity(intent);
                     includedLayout.setVisibility(View.GONE);
                     MyReservationListFragment fragment = new MyReservationListFragment();
-                    Log.d("NAPRAVILO SE1","NAPRAVILO SE");
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    Log.d("NAPRAVILO SE2","NAPRAVILO SE");
                     transaction.replace(R.id.fragment_container, fragment);
-                    Log.d("NAPRAVILO SE","NAPRAVILO SE");
                     transaction.addToBackStack(null);
                     transaction.commit();
                     return true;

@@ -1,7 +1,6 @@
 package com.example.shopapp.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shopapp.R;
-import com.example.shopapp.configuration.ServiceUtils;
-import com.example.shopapp.dto.ReservationDTO;
+import com.example.shopapp.model.accommodation.Accommodation;
 import com.example.shopapp.model.reservation.Reservation;
 
 import java.text.SimpleDateFormat;
@@ -21,26 +19,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class ReservationListAdapter extends RecyclerView.Adapter<ReservationListAdapter.ReservationViewHolder> {
 
     private List<Reservation> reservationList;
-
     public ReservationListAdapter(List<Reservation> reservationList) {
         this.reservationList = reservationList;
     }
 
     public ReservationListAdapter(Context context, FragmentManager supportFragmentManager, ArrayList<Reservation> reservations){
-//        super(context, R.layout.reservation_card, reservations);
+ //       super(context, R.layout.reservation_card, reservations);
         reservationList = reservations;
     }
 
     @Override
     public ReservationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_reservation, parent, false);
+        //view.setVisibility(View.GONE);
         return new ReservationViewHolder(view);
     }
     @Override
@@ -67,31 +61,8 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
         holder.buttonAction.setOnClickListener(view -> {
             int adapterPosition = holder.getAdapterPosition();
             if (adapterPosition != RecyclerView.NO_POSITION) {
-                deleteRequest(reservation,adapterPosition);
-                //reservationList.remove(adapterPosition);
-                //notifyItemRemoved(adapterPosition);
-            }
-        });
-    }
-
-    private void deleteRequest(Reservation reservation, int adapterPosition) {
-        Call<ReservationDTO> call = ServiceUtils.guestService.deleteGuestReservation(reservation.getId());
-
-        call.enqueue(new Callback<ReservationDTO>() {
-            @Override
-            public void onResponse(Call<ReservationDTO> call, Response<ReservationDTO> response) {
-                if(!response.isSuccessful()){
-                    //Toast.makeText( "Something went wrong!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                //Toast.makeText(getActivity(), "Successfully deleted favorite route", Toast.LENGTH_SHORT).show();
                 reservationList.remove(adapterPosition);
                 notifyItemRemoved(adapterPosition);
-            }
-
-            @Override
-            public void onFailure(Call<ReservationDTO> call, Throwable t) {
-                Log.d("REZ", t.getMessage() != null?t.getMessage():"error");
             }
         });
     }

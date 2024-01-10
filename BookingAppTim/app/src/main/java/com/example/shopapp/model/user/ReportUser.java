@@ -1,51 +1,43 @@
-package com.example.shopapp.model.reviews;
+package com.example.shopapp.model.user;
 
 import com.example.shopapp.enums.ReviewStatus;
-import com.example.shopapp.model.user.Guest;
-import com.example.shopapp.model.user.Owner;
 
 import java.io.Serializable;
-import java.util.Date;
 
-public class ReviewOwner implements Serializable {
+public class ReportUser implements Serializable {
+
+
     private Long id;
 
-    private double rate;
+
     private String comment;
 
     private ReviewStatus status;
 
-    private Date commentDate;
-
     private Owner owner;
 
     private Guest guest;
+    
+    private String userReportUser;
 
-    private boolean is_reported;
-
-    public ReviewOwner() {
+    public ReportUser() {
     }
 
-    public ReviewOwner(double rate, String comment, ReviewStatus status) {
-        this.rate = rate;
+    public ReportUser(Long id, String comment, ReviewStatus status, Owner owner, Guest guest, String userReportUser) {
+        this.id = id;
         this.comment = comment;
         this.status = status;
+        this.owner = owner;
+        this.guest = guest;
+        this.userReportUser = userReportUser;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public double getRate() {
-        return rate;
-    }
-
-    public void setRate(double rate) {
-        this.rate = rate;
     }
 
     public String getComment() {
@@ -64,14 +56,6 @@ public class ReviewOwner implements Serializable {
         this.status = status;
     }
 
-    public Date getCommentDate() {
-        return commentDate;
-    }
-
-    public void setCommentDate(Date commentDate) {
-        this.commentDate = commentDate;
-    }
-
     public Owner getOwner() {
         return owner;
     }
@@ -88,29 +72,23 @@ public class ReviewOwner implements Serializable {
         this.guest = guest;
     }
 
-    public boolean isIs_reported() {
-        return is_reported;
+    public String getUserReportUser() {
+        return userReportUser;
     }
 
-    public void setIs_reported(boolean is_reported) {
-        this.is_reported = is_reported;
+    public void setUserReportUser(String userReportUser) {
+        this.userReportUser = userReportUser;
     }
 
     @Override
     public String toString() {
-        return "ReviewOwner{" +
+        return "ReportUser{" +
                 "id=" + id +
-                ", rate=" + rate +
                 ", comment='" + comment + '\'' +
                 ", status=" + status +
-                ", commentDate=" + commentDate +
                 ", owner=" + owner +
                 ", guest=" + guest +
-                ", is_reported=" + is_reported +
+                ", userReportUser='" + userReportUser + '\'' +
                 '}';
     }
-
-    public void copyValues(Review review) {
-    }
-
 }

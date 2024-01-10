@@ -19,6 +19,9 @@ public interface IReservationService {
     @GET("reservations")
     Call<ArrayList<Reservation>> getGuestsRequests();
 
+    @GET("reservations/byGuest/{idGuest}")
+    Call<ArrayList<Reservation>> getReservationsByGuest(@Path("idGuest") Long idGuest);
+
 
     @DELETE("request/{reqId}")
     Call<Reservation> deleteGuestReservation(@Path("reqId") Long reqId);
