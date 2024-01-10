@@ -5,6 +5,8 @@ import java.util.concurrent.TimeUnit;
 
 import com.example.shopapp.services.interfaces.IAccommodationService;
 import com.example.shopapp.services.interfaces.IReservationService;
+import com.example.shopapp.services.interfaces.IReviewService;
+import com.example.shopapp.services.interfaces.users.IReportUserService;
 import com.example.shopapp.services.interfaces.users.IUnregisteredUserService;
 import com.example.shopapp.services.interfaces.users.IUserService;
 
@@ -48,4 +50,6 @@ public class ServiceUtils {
     public static IUnregisteredUserService unregisteredUserService = retrofit.create(IUnregisteredUserService.class);
 
     public static IReservationService reservationService = retrofit.create(IReservationService.class);
+    public static IReviewService reviewService = retrofit.create(IReviewService.class);
+    public static IReportUserService reportService = retrofit.create(IReportUserService.class);
 }

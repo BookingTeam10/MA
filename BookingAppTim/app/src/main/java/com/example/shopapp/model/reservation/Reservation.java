@@ -1,9 +1,10 @@
 package com.example.shopapp.model.reservation;
 import com.example.shopapp.model.accommodation.Accommodation;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
-public class Reservation {
+public class Reservation implements Serializable {
     private long id;
     private Date startDate;
     private Date endDate;
@@ -52,6 +53,16 @@ public class Reservation {
 
     public void setAccommodation(Accommodation accommodation) {
         this.accommodation = accommodation;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", accommodation=" + accommodation +
+                '}';
     }
 }
 
