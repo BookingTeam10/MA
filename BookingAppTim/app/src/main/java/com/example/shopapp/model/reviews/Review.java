@@ -1,16 +1,16 @@
-package com.example.shopapp.model.review;
+package com.example.shopapp.model.reviews;
 
 import com.example.shopapp.enums.ReviewStatus;
 import com.example.shopapp.model.reservation.Reservation;
 
 import java.io.Serializable;
 
-public class Review implements Serializable {
-    private Long id;
+public class Review  implements Serializable {
+
+    private long id;
     private double rate;
     private String comment;
     private ReviewStatus status;
-
     private Reservation reservation;
 
     public Review() {
@@ -22,15 +22,7 @@ public class Review implements Serializable {
         this.status = status;
     }
 
-    public Review(Long id,double rate, String comment, ReviewStatus status,Reservation reservation) {
-        this.id=id;
-        this.rate = rate;
-        this.comment = comment;
-        this.status = status;
-        this.reservation=reservation;
-    }
-
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -78,7 +70,10 @@ public class Review implements Serializable {
                 ", rate=" + rate +
                 ", comment='" + comment + '\'' +
                 ", status=" + status +
-                ", reservation=" + reservation +
                 '}';
     }
+
+    public void copyValues(Review review) {
+    }
 }
+
