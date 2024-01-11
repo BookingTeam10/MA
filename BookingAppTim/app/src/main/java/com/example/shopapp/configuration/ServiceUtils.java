@@ -21,8 +21,8 @@ public class ServiceUtils {
 
     //public static final String SERVICE_API_PATH = "http://"+ BuildConfig.IP_ADDR +":8090/api/";
     //public static final String SERVICE_API_PATH = "http://192.168.0.11:8090/api/";
-    //public static final String SERVICE_API_PATH = "http://192.168.0.4:8090/api/";
-    public static final String SERVICE_API_PATH = "http://192.168.0.5:8090/api/";
+    public static final String SERVICE_API_PATH = "http://192.168.0.4:8090/api/";
+    //public static final String SERVICE_API_PATH = "http://192.168.0.5:8090/api/";
 
     /*
      * Ovo ce nam sluziti za debug, da vidimo da li zahtevi i odgovori idu

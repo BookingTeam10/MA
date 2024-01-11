@@ -1,6 +1,9 @@
 package com.example.shopapp.adapters;
 
+import static java.security.AccessController.getContext;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +40,11 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
 //        super(context, R.layout.reservation_card, reservations);
         reservationList = reservations;
     }
+    public static String getRole(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        String role = sharedPreferences.getString("pref_role", "undefined");
+        return role;
+    }
 
     @Override
     public ReservationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -46,7 +54,6 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
     @Override
     public void onBindViewHolder(ReservationViewHolder holder, int position) {
         Reservation reservation = reservationList.get(position);
-
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         holder.textViewId.setText((String.valueOf(reservation.getId())));
         holder.textViewAccommodation.setText((String.valueOf(reservation.getAccommodation())));
@@ -102,16 +109,21 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
     }
 
     public static class ReservationViewHolder extends RecyclerView.ViewHolder {
+
         public TextView textViewId, textViewStart, textViewEnd,textViewAccommodation;
         public Button buttonAction;
 
         public ReservationViewHolder(View view) {
             super(view);
+            String role = getRole(view.getContext());
             textViewId = view.findViewById(R.id.textViewId);
             textViewStart = view.findViewById(R.id.textViewStart);
             textViewEnd = view.findViewById(R.id.textViewEnd);
             textViewAccommodation= view.findViewById(R.id.textViewAccommodation);
             buttonAction = view.findViewById(R.id.buttonAction);
+            if(!role.equals("Guest")){
+                buttonAction.setVisibility(View.INVISIBLE);
+            }
         }
     }
 }

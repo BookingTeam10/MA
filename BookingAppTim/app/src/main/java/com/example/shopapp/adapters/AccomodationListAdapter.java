@@ -6,6 +6,7 @@ import static com.example.shopapp.fragments.accomodations.AccomodationsPageFragm
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,13 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
         super(context, R.layout.accomodation_card, accomodations);
         aAccomodation = accomodations;
     }
+
+    public String getRole(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        String role = sharedPreferences.getString("pref_role", "undefined");
+        return role;
+    }
+
     @Override
     public int getCount() {
         return aAccomodation.size();
@@ -65,6 +73,7 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        String role = getRole(getContext());
         Accommodation accommodation = getItem(position);
         if(convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.accomodation_card,
@@ -85,6 +94,10 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
                 intent.putExtra("accommodation", accommodation);
                 getContext().startActivity(intent);
             });
+
+            if (!role.equals("Guest")){
+                imageButton.setVisibility(View.INVISIBLE);
+            }
 
             imageButton.setOnClickListener(v -> {
                 v.setSelected(!v.isSelected());
@@ -139,5 +152,7 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
                 }
             });
         }
+
+
     }
 }

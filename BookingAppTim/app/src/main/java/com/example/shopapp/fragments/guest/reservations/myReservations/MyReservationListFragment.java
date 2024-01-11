@@ -45,7 +45,6 @@ public class MyReservationListFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerViewRes);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        Log.d("REZ REPO SMRDLJIVI","Meesage recieved");
 
         //Log.d("GOST ID",);
 
@@ -53,9 +52,6 @@ public class MyReservationListFragment extends Fragment {
         //Call<ArrayList<Reservation>> call = ServiceUtils.reservationService.getGuestsRequests();
 
         Call<ArrayList<Reservation>> call = ServiceUtils.reservationService.getReservationsByGuest(3L);
-
-
-        Log.d("REZ REPO SMRDLJIVI234","Meesage recieved");
 
         call.enqueue(new Callback<ArrayList<Reservation>>() {
             @Override

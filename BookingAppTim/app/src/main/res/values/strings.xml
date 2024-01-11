@@ -57,6 +57,7 @@
     <string name="delete_rate_accommodation">Delete rate accommodation</string>
     <string name="view_rate_accommodation">View rate accommodation</string>
     <string name="add_rate_accommodation">Add rate Accommodation</string>
+    <string name="favourite" translatable="false">Favourite accommodations</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="title_activity_edit_accommodation" translatable="false">EditAccommodationActivity</string>

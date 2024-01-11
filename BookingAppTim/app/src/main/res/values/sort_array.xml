@@ -14,4 +14,9 @@
         <item>Prague</item>
         <!-- Dodajte druge opcije po potrebi -->
     </array>
+    <array name="request_status">
+        <item>Accepted</item>
+        <item>Rejected</item>
+        <item>Waiting</item>
+    </array>
 </resources>
