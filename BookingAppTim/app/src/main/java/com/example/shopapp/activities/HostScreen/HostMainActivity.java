@@ -24,6 +24,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.shopapp.R;
 import com.example.shopapp.activities.Login.LoginActivity;
 import com.example.shopapp.databinding.ActivityHomeBinding;
+import com.example.shopapp.fragments.accomodations.AccomodationsListFragment;
+import com.example.shopapp.fragments.owner.user_accommodation.UserAccommodationListFragment;
 import com.example.shopapp.fragments.profile.ProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 
@@ -95,11 +97,11 @@ public class HostMainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                MenuItem reservationsMenuItem = navigationView.getMenu().findItem(R.id.nav_reservations);
+                MenuItem myAccommodationMenuItem = navigationView.getMenu().findItem(R.id.nav_my_accommodations);
                 MenuItem requestMenuItem = navigationView.getMenu().findItem(R.id.nav_requests);
                 MenuItem logOutMenuItem = navigationView.getMenu().findItem(R.id.nav_logout);
                 MenuItem profileMenuItem = navigationView.getMenu().findItem(R.id.nav_profile);
-                MenuItem accommodationMenuItem=navigationView.getMenu().findItem(R.id.nav_accommodat);
+                MenuItem accommodationMenuItem=navigationView.getMenu().findItem(R.id.nav_products);
                 View includedLayout = findViewById(R.id.fragment_nav_content_main);
 
 
@@ -116,6 +118,7 @@ public class HostMainActivity extends AppCompatActivity {
                 }
 
                 if (item.getItemId() == profileMenuItem.getItemId()) {
+                    includedLayout.setVisibility(View.GONE);
                     ProfileFragment fragment = new ProfileFragment();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragment_container, fragment);
@@ -124,7 +127,18 @@ public class HostMainActivity extends AppCompatActivity {
                     return true;
                 }
 
-                // Zatvori navigacijski izbornik
+
+                if (item.getItemId() == myAccommodationMenuItem.getItemId()) {
+                    includedLayout.setVisibility(View.GONE);
+                    UserAccommodationListFragment fragment = new UserAccommodationListFragment();
+                    //AccomodationsListFragment fragment = new AccomodationsListFragment();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragment_container, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                    return true;
+                }
+
                 binding.drawerLayout.closeDrawer(binding.navView);
 
                 return true;
