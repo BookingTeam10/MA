@@ -1,5 +1,6 @@
 package com.example.shopapp.services.interfaces.users;
 
+import com.example.shopapp.dto.AccommodationDTO;
 import com.example.shopapp.dto.GuestDTO;
 import com.example.shopapp.dto.ReservationDTO;
 import com.example.shopapp.model.accommodation.Accommodation;
@@ -34,4 +35,7 @@ public interface IGuestService {
 
     @DELETE("guests/request/{reqId}")
     Call<ReservationDTO> deleteGuestReservation(@Path("reqId") Long reqId);
+
+    @GET("guests/{id}/favouriteAccommodations")
+    Call<ArrayList<AccommodationDTO>> getFavouriteAccommodation(@Path("id") Long id);
 }

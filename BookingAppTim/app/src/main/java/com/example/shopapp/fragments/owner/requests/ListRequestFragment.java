@@ -19,6 +19,7 @@ import com.example.shopapp.R;
 import com.example.shopapp.adapters.ReservationListAdapter;
 import com.example.shopapp.configuration.ServiceUtils;
 import com.example.shopapp.dto.ReservationDTO;
+import com.example.shopapp.model.accommodation.Accommodation;
 import com.example.shopapp.model.reservation.Reservation;
 
 import java.util.ArrayList;
@@ -38,7 +39,6 @@ public class ListRequestFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_request, container, false);
-
         Button buttonSearch = view.findViewById(R.id.buttonSearch);
         Spinner spinnerRequestStatus =  view.findViewById(R.id.spinnerRequestStatus);
         ArrayAdapter<String> arrayAdapterStatus = new ArrayAdapter<>(getActivity(),
@@ -58,7 +58,8 @@ public class ListRequestFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.i("UDjE OVDE","UDJE OVDE");
-               searchRequests(nameAccommodation);
+                String selectedStatus = spinnerRequestStatus.getSelectedItem().toString();
+               searchRequests(nameAccommodation,selectedStatus);
             }
         });
 
@@ -77,7 +78,8 @@ public class ListRequestFragment extends Fragment {
                     for(ReservationDTO reservationDTO : reservationDTOS){
                         reservationList.add(new Reservation(reservationDTO));
                     }
-                    ReservationListAdapter adapter = new ReservationListAdapter(reservationList);
+                    //ReservationListAdapter adapter = new ReservationListAdapter(reservationList);
+                    adapter = new ReservationListAdapter(reservationList);
                     recyclerView.setAdapter(adapter);
 
                 }
@@ -89,7 +91,28 @@ public class ListRequestFragment extends Fragment {
             }
         });
     }
-    private void searchRequests(String nameAccommodation) {
+    private void searchRequests(String nameAccommodation, String selectedStatus) {
+        Log.i("CITANJE IZ COMBOBOXA",selectedStatus);
         Log.i("CITANJE IZ TEXTBOXA",nameAccommodation);
+        Call<ArrayList<ReservationDTO>> call = ServiceUtils.ownerService.searchedRequests(selectedStatus,"","",nameAccommodation,1L);
+        call.enqueue(new Callback<ArrayList<ReservationDTO>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ReservationDTO>> call, Response<ArrayList<ReservationDTO>> response) {
+                if (response.code() == 200){
+                    Log.i("UDJE U RESPONSE BODY",response.body().toString());
+                    reservationDTOS = response.body();
+                    for(ReservationDTO reservationDTO : reservationDTOS){
+                        reservationList.add(new Reservation(reservationDTO));
+                    }
+                    Log.i("UDJE U RESPONSE BODY2",reservationDTOS.toString());
+                    adapter = new ReservationListAdapter(reservationList);
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+            @Override
+            public void onFailure(Call<ArrayList<ReservationDTO>> call, Throwable t) {
+                Log.d("REZ", t.getMessage() != null?t.getMessage():"error");
+            }
+        });
     }
 }

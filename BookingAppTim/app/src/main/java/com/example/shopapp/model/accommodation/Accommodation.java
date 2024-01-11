@@ -1,16 +1,19 @@
 package com.example.shopapp.model.accommodation;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import com.example.shopapp.dto.AccommodationDTO;
 import com.example.shopapp.enums.AccommodationStatus;
 import com.example.shopapp.enums.TypeAccommodation;
 import com.example.shopapp.model.reservation.Reservation;
 import com.example.shopapp.model.user.Owner;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Accommodation implements Parcelable {
@@ -46,6 +49,32 @@ public class Accommodation implements Parcelable {
     }
 
     public Accommodation() {
+    }
+
+    public Accommodation(AccommodationDTO accommodation) {
+        this.accepted=accommodation.isAccepted();
+        this.takenDates=accommodation.getTakenDates();
+        this.automaticActivation=accommodation.isAutomaticActivation();
+        this.id=accommodation.getId();
+        this.name=accommodation.getName();
+        this.description=accommodation.getDescription();
+        this.minPeople=accommodation.getMinPeople();
+        this.maxPeople=accommodation.getMaxPeople();
+        this.photos=accommodation.getPhotos();
+        this.typeAccommodation=accommodation.getTypeAccomodation();
+        this.rating=accommodation.getRating();
+        this.cancelDeadline=accommodation.getCancelDeadline();
+        this.location=accommodation.getLocation();
+        this.accommodationStatus=accommodation.getAccommodationStatus();
+        this.owner=accommodation.getOwner();
+        this.automaticConfirmation=accommodation.isAutomaticConfirmation();
+        this.prices=accommodation.getPrices();
+        this.weekendPrice=accommodation.getWeekendPrice();
+        this.holidayPrice=accommodation.getHolidayPrice();
+        this.amenities=accommodation.getAmenities();
+        this.reservations=accommodation.getReservations();
+        this.summerPrice=accommodation.getSummerPrice();
+        this.isNight=accommodation.isNight();
     }
 
     public boolean isAccepted() {
@@ -257,7 +286,13 @@ public class Accommodation implements Parcelable {
         dest.writeString(name);
         dest.writeString(description);
         dest.writeInt(image);
-        // dest.writeTypedList(this.amenities);
+        dest.writeTypedList(amenities);
+//        if (Build.VERSION.SDK_INT >= 29) {
+//            dest.writeBoolean(automaticConfirmation);
+//        } else {
+//            dest.writeInt(automaticConfirmation ? 1 : 0);
+//        }
+        dest.writeTypedList(prices);
     }
 
     protected Accommodation(Parcel in) {
@@ -265,7 +300,16 @@ public class Accommodation implements Parcelable {
         name = in.readString();
         description = in.readString();
         image = in.readInt();
-        //in.readTypedList(this.amenities, Amenity.CREATOR);
+//        if (Build.VERSION.SDK_INT >= 29) {
+//            automaticConfirmation = in.readBoolean();
+//        } else {
+//            automaticConfirmation = in.readInt() != 0;
+//        }
+        amenities = new ArrayList<>();
+        in.readTypedList(amenities, Amenity.CREATOR);
+        prices = new ArrayList<>();
+        in.readTypedList(prices, Price.CREATOR);
+
     }
 
     public static final Creator<Accommodation> CREATOR = new Creator<Accommodation>() {

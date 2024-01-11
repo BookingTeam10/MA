@@ -31,12 +31,18 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:padding="4dp" />
+    <TextView
+        android:id="@+id/textViewStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="4dp" />
 
     <Button
         android:id="@+id/buttonAction"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Action" />
+        android:text="DELETE" />
 
 </LinearLayout>
