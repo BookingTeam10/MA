@@ -4,14 +4,17 @@ package com.example.shopapp.adapters;
 
 import static com.example.shopapp.fragments.accomodations.AccomodationsPageFragment.accommodations;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,15 +24,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.shopapp.activities.GuestScreen.AccommodationDetailsScreen;
+import com.example.shopapp.activities.HostScreen.DefinitionAccommodationActivity;
 import com.example.shopapp.configuration.ServiceUtils;
 import com.example.shopapp.dto.GuestDTO;
+import com.example.shopapp.fragments.guest.reviews.AddReviewOwnerFragment;
+import com.example.shopapp.fragments.owner.edit_accommodation.EditAccommodationFragment;
 import com.example.shopapp.model.accommodation.Accommodation;
 
 import com.example.shopapp.R;
 import com.example.shopapp.model.user.Guest;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,9 +49,12 @@ import retrofit2.Response;
 public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
     private ArrayList<Accommodation> aAccomodation;
 
+    private FragmentManager fragmentManager;
+
     public AccomodationListAdapter(Context context, FragmentManager supportFragmentManager, ArrayList<Accommodation> accomodations){
         super(context, R.layout.accomodation_card, accomodations);
         aAccomodation = accomodations;
+        fragmentManager=supportFragmentManager;
     }
 
     public String getRole(Context context) {
@@ -85,6 +96,8 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
         TextView productDescription = convertView.findViewById(R.id.product_description);
         ImageButton imageButton = convertView.findViewById(R.id.button_star);
 
+        Button editButton=convertView.findViewById(R.id.button_edit);
+
         if(accommodation != null){
             imageView.setImageResource(accommodation.getImage());
             productTitle.setText(accommodation.getName());
@@ -103,6 +116,36 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
                 v.setSelected(!v.isSelected());
                 addFavouriteAccommodation(accommodation,v.isSelected());
 
+            });
+
+            if (!role.equals("Owner")){
+                editButton.setVisibility(View.INVISIBLE);
+            }
+
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //View includedLayout = v.findViewById(R.id.product_card_item);
+//                    Log.d("Edit", "Edit.");
+//                    EditAccommodationFragment fragment = new EditAccommodationFragment();
+//                   Bundle bundle = new Bundle();
+//                    bundle.putParcelable("accommodation", accommodation);
+//                    fragment.setArguments(bundle);
+//
+//                    //includedLayout.setVisibility(View.GONE);
+//                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+//                    transaction.replace(R.id.product_card_item, fragment);
+//                    transaction.addToBackStack(null);
+//                    transaction.commit();
+//                    Log.d("NAPRAVILO SE0,","AAAA00");
+
+                    Log.d("AKTIVNOST","EDIT AKTIVNOST");
+                    //DefinitionAccommodationActivity definitionAccommodationActivity=new DefinitionAccommodationActivity();
+                    Intent intent = new Intent(getContext(), DefinitionAccommodationActivity.class);
+                    intent.putExtra("accommodation", accommodation);
+                    getContext().startActivity(intent);
+
+                }
             });
         }
 
@@ -152,7 +195,6 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
                 }
             });
         }
-
-
     }
+
 }

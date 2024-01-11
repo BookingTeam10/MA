@@ -9,6 +9,10 @@ public class Amenity implements Parcelable {
     private String name;
     public Amenity() {}
 
+    public Amenity(String name) {
+        this.name=name;
+    }
+
     @Override
     public String toString() {
         return "Amenity{" +

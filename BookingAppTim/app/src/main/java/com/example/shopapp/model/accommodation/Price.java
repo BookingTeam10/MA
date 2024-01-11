@@ -8,4 +8,21 @@ public class Price {
 
     public Price() {
     }
+
+    public Price(Long id, double price, Date startDate, Date endDate) {
+        this.id = id;
+        this.price = price;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Price{" +
+                "id=" + id +
+                ", price=" + price +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
+    }
 }

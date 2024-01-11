@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -46,4 +47,7 @@ public interface IAccommodationService {
 
     @GET("owners/accommodations/{idOwner}")
     Call<ArrayList<Accommodation>> getAccommodationByOwner(@Path("idOwner") Long idOwner);
+
+    @POST("accommodations/add")
+    Call<Accommodation> createAccommodation(@Body Accommodation accommodation);
 }
