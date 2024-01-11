@@ -9,8 +9,6 @@ import com.example.shopapp.enums.AccommodationStatus;
 import com.example.shopapp.enums.TypeAccommodation;
 import com.example.shopapp.model.reservation.Reservation;
 import com.example.shopapp.model.user.Owner;
-
-import java.io.Serializable;
 import java.util.List;
 
 public class Accommodation implements Parcelable {
@@ -43,6 +41,33 @@ public class Accommodation implements Parcelable {
         this.name = name;
         this.description = description;
         this.image = image;
+    }
+
+    public Accommodation(Long id, boolean accepted, boolean automaticActivation, String description, int minPeople, int maxPeople,String name, List<String> photos, TypeAccommodation typeAccommodation, double rating, int cancelDeadline, List<Price> prices, List<TakenDate> takenDates, List<Amenity> amenities, Location location, Owner owner, List<Reservation> reservations,double weekendPrice, double holidayPrice, double summerPrice,boolean isNight, AccommodationStatus status) {
+
+        this.id = id;
+        this.accepted = accepted;
+        this.automaticActivation = automaticActivation;
+        this.description = description;
+        this.minPeople = minPeople;
+        this.maxPeople = maxPeople;
+        this.photos = photos;
+        this.typeAccommodation = typeAccommodation;
+        this.rating = rating;
+        this.cancelDeadline = cancelDeadline;
+        this.prices = prices;
+        this.takenDates = takenDates;
+        this.amenities = amenities;
+        this.location = location;
+        this.owner = owner;
+        this.reservations = reservations;
+        this.accommodationStatus = status;
+        this.automaticConfirmation = automaticActivation;
+        this.weekendPrice=weekendPrice;
+        this.holidayPrice=holidayPrice;
+        this.summerPrice=summerPrice;
+        this.isNight=isNight;
+        this.name = name;
     }
 
     public Accommodation() {
@@ -239,11 +264,9 @@ public class Accommodation implements Parcelable {
         this.image = image;
     }
 
-
     @Override
     public String toString() {
-        return "Accommodation{" +
-                ", name='" + name ;
+        return name;
     }
 
     @Override

@@ -7,4 +7,16 @@ public class TakenDate {
 
     }
 
+    public TakenDate(Date firstDate, Date lastDate) {
+        this.firstDate = firstDate;
+        this.lastDate = lastDate;
+    }
+
+    @Override
+    public String toString() {
+        return "TakenDate{" +
+                "firstDate=" + firstDate +
+                ", lastDate=" + lastDate +
+                '}';
+    }
 }

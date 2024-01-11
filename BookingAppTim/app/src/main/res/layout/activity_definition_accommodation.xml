@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/edit_accommodation_scroll_view"
+    android:layout_height="wrap_content"
+
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Price"
+            android:padding="12dp" />
+
+        <EditText
+            android:id="@+id/WeekendText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Weekend price"
+            android:inputType="number"
+            android:padding="12dp" />
+
+        <EditText
+            android:id="@+id/HolidayText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Holiday price"
+            android:inputType="number"
+            android:padding="12dp" />
+
+        <EditText
+            android:id="@+id/SummerText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Summer/Winter price"
+            android:inputType="number"
+            android:padding="12dp" />
+
+        <EditText
+            android:id="@+id/limitText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="limit for reservation"
+            android:inputType="number"
+            android:padding="12dp" />
+
+        <!-- Tip smeštaja -->
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <RadioButton
+                android:id="@+id/guestRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Guest" />
+
+            <RadioButton
+                android:id="@+id/nightRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Night" />
+        </RadioGroup>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <RadioButton
+                android:id="@+id/AutomaticConfirmation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Automatic confirm" />
+
+            <RadioButton
+                android:id="@+id/NoAutomatic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No automatic confrim" />
+        </RadioGroup>
+
+
+
+        <EditText
+            android:id="@+id/priceuEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Price"
+            android:inputType="number"
+            android:padding="12dp" />
+
+        <CalendarView
+            android:id="@+id/calendarView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <CalendarView
+            android:id="@+id/calendarView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <!-- Vaši postojeći elementi... -->
+
+        <Button
+            android:id="@+id/addPriceDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Price and Date"
+            android:padding="12dp" />
+
+        <!-- TableLayout za prikaz podataka -->
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp">
+
+            <TableRow>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="26-12-2023"
+                    android:padding="4dp" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="28-12-2023"
+                    android:padding="4dp" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="1000"
+                    android:padding="4dp" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delete"
+                    android:padding="4dp" />
+            </TableRow>
+        </TableLayout>
+
+
+        <Button
+            android:id="@+id/editAccommodation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Definition Accommodation"
+            android:padding="12dp" />
+
+        <!-- Ostatak vašeg layout-a... -->
+
+    </LinearLayout>
+</ScrollView>

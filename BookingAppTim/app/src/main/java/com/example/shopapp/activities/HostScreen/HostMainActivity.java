@@ -90,6 +90,8 @@ public class HostMainActivity extends AppCompatActivity {
             Log.i("ShopApp", "Destination Changed");
         });
 
+
+
         mAppBarConfiguration = new AppBarConfiguration
                 .Builder(R.id.nav_products, R.id.nav_new, R.id.nav_profile, R.id.nav_logout, R.id.nav_settings, R.id.nav_language)
                 .setOpenableLayout(drawer)

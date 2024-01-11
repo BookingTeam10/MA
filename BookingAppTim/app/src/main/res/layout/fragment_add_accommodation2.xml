@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.owner.add_accommodation.AddAccommodationFragment">
+    <ScrollView
+        android:id="@+id/fragment_add_accommodation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+
+            <!-- Naziv -->
+            <EditText
+                android:id="@+id/nazivEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                android:inputType="text"
+                android:padding="12dp" />
+
+            <!-- Opis -->
+            <EditText
+                android:id="@+id/opisEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Description"
+                android:inputType="textMultiLine"
+                android:padding="12dp" />
+
+            <!-- Država -->
+            <EditText
+                android:id="@+id/drzavaEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Country"
+                android:inputType="text"
+                android:padding="12dp" />
+
+            <!-- Grad -->
+            <EditText
+                android:id="@+id/gradEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="City"
+                android:inputType="text"
+                android:padding="12dp" />
+
+            <!-- Ulica -->
+            <EditText
+                android:id="@+id/ulicaEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Street"
+                android:inputType="text"
+                android:padding="12dp" />
+
+            <!-- Broj -->
+            <EditText
+                android:id="@+id/brojEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Number"
+                android:inputType="number"
+                android:padding="12dp" />
+
+            <!-- Pogodnosti -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Benefits"
+                android:padding="12dp" />
+
+            <CheckBox
+                android:id="@+id/wifiCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="WiFi"
+                android:padding="12dp" />
+
+            <CheckBox
+                android:id="@+id/acCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="AC"
+                android:padding="12dp" />
+
+            <!-- Dodajte dodatne CheckBox-ove za ostale pogodnosti -->
+
+            <!-- Minimalan broj gostiju -->
+            <CheckBox
+                android:id="@+id/parkingCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:text="Free parking" />
+
+            <EditText
+                android:id="@+id/minBrojGostijuEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Min guests"
+                android:inputType="number"
+                android:padding="12dp" />
+
+            <!-- Maksimalan broj gostiju -->
+            <EditText
+                android:id="@+id/maxBrojGostijuEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Max guests"
+                android:inputType="number"
+                android:padding="12dp" />
+
+            <!-- Tip smeštaja -->
+
+            <!--        <ImageView-->
+            <!--            android:id="@+id/imageViewAccommodation"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="200dp" />-->
+
+            <!--        <Button-->
+            <!--            android:id="@+id/buttonChooseImage"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:text="Choose image" />-->
+
+            <RadioGroup
+                android:id="@+id/myRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <RadioButton
+                    android:id="@+id/roomRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Room" />
+
+                <RadioButton
+                    android:id="@+id/apartmentRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Apartman" />
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/priceuEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Price"
+                android:inputType="number"
+                android:padding="12dp" />
+
+            <CalendarView
+                android:id="@+id/calendarView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CalendarView
+                android:id="@+id/calendarView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/addPriceDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Price and Date"
+                android:padding="12dp" />
+
+            <Button
+                android:id="@+id/buttonChooseImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Choose Image"
+                android:padding="12dp" />
+            <!-- Dugme za čuvanje -->
+            <Button
+                android:id="@+id/addAccommodationFr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Accommodation"
+                android:padding="12dp" />
+
+
+            <!--        <androidx.recyclerview.widget.RecyclerView-->
+            <!--            android:id="@+id/imagesRecyclerView"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_marginTop="8dp"-->
+            <!--            android:orientation="horizontal" />-->
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/HomePage"
     tools:context=".fragments.accomodations.AccomodationsPageFragment">
 
     <LinearLayout
@@ -53,22 +54,15 @@
             android:text="@string/filters"
             tools:ignore="TextContrastCheck" />
 
-            <Spinner
-                android:id="@+id/btnSort"
+            <Button
+                android:id="@+id/btnAddAccommodation"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:contentDescription="@string/sort"
-                android:layout_marginStart="10dp"/>
-
-            <Spinner
-                android:id="@+id/btnType"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="10dp"
-                android:contentDescription="@string/type"/>
-
+                android:layout_marginLeft="5dp"
+                android:background="#4CAF50"
+                android:text="Add accommodations"
+                tools:ignore="TextContrastCheck" />
         </LinearLayout>
 
 

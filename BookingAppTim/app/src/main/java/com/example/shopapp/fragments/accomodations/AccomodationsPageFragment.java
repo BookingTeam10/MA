@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -25,10 +26,13 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.example.shopapp.R;
+import com.example.shopapp.activities.HostScreen.HostMainActivity;
 import com.example.shopapp.adapters.AccomodationListAdapter;
 import com.example.shopapp.configuration.ServiceUtils;
 import com.example.shopapp.databinding.FragmentProductsPageBinding;
 import com.example.shopapp.fragments.FragmentTransition;
+import com.example.shopapp.fragments.guest.reviews.AddReviewOwnerFragment;
+import com.example.shopapp.fragments.owner.add_accommodation.AddAccommodationFragment;
 import com.example.shopapp.model.accommodation.Accommodation;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
@@ -124,6 +128,18 @@ public class AccomodationsPageFragment extends Fragment {
                 }
             });
         });
+
+
+        Button btnAddAcc = binding.btnAddAccommodation;
+        btnAddAcc.setOnClickListener(v -> {
+            AddAccommodationFragment fragment = new AddAccommodationFragment();
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+            //transaction.replace(R.id.reservation_detail, fragment);
+            transaction.replace(R.id.HomePage, fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        });
+
 
         Log.i("NOVI ACCOMMODATIONS", String.valueOf(accommodations.size()));
         FragmentTransition.to(AccomodationsListFragment.newInstance(accommodations), getActivity(), false, R.id.scroll_products_list);
