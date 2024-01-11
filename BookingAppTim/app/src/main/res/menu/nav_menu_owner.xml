@@ -20,6 +20,11 @@
             android:icon="@drawable/ic_reservation"
             android:orderInCategory="200"/>
 
+        <item android:id="@+id/nav_requests_owner"
+            android:title="@string/requests"
+            android:icon="@drawable/ic_reservation"
+            android:orderInCategory="200"/>
+
         <item android:id="@+id/nav_new"
             android:title="@string/allOwnerAccommodations"
             android:icon="@drawable/ic_notification"
@@ -32,6 +37,11 @@
 
         <item android:id="@+id/nav_profile"
             android:title="@string/account"
+            android:icon="@drawable/ic_account"
+            android:orderInCategory="300" />
+
+        <item android:id="@+id/nav_favourite"
+            android:title="@string/favourite"
             android:icon="@drawable/ic_account"
             android:orderInCategory="300" />
 

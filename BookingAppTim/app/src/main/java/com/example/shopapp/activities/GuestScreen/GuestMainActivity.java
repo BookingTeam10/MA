@@ -24,6 +24,8 @@ import android.view.View;
 import com.example.shopapp.R;
 import com.example.shopapp.activities.Login.LoginActivity;
 import com.example.shopapp.databinding.ActivityHomeBinding;
+import com.example.shopapp.fragments.accomodations.AccomodationsListFragment;
+import com.example.shopapp.fragments.accomodations.AccomodationsPageFragment;
 import com.example.shopapp.fragments.profile.ProfileFragment;
 import com.example.shopapp.fragments.guest.reservations.RequestFragment;
 import com.example.shopapp.fragments.guest.reservations.myReservations.MyReservationListFragment;
@@ -59,6 +61,8 @@ public class GuestMainActivity extends AppCompatActivity {
         drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         toolbar = binding.activityHomeBase.toolbar;
+        MenuItem menuItem = navigationView.getMenu().findItem(R.id.nav_requests_owner);
+        menuItem.setVisible(false);
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
         if(actionBar != null){
@@ -96,6 +100,7 @@ public class GuestMainActivity extends AppCompatActivity {
                 MenuItem requestMenuItem = navigationView.getMenu().findItem(R.id.nav_requests);
                 MenuItem logOutMenuItem = navigationView.getMenu().findItem(R.id.nav_logout);
                 MenuItem profileMenuItem = navigationView.getMenu().findItem(R.id.nav_profile);
+                MenuItem favouriteMenuItem = navigationView.getMenu().findItem(R.id.nav_favourite);
                 View includedLayout = findViewById(R.id.fragment_nav_content_main);
 
                 Log.d("MENI 123","NAPRAVILO SE");
@@ -131,6 +136,16 @@ public class GuestMainActivity extends AppCompatActivity {
 
                 if (item.getItemId() == profileMenuItem.getItemId()) {
                     ProfileFragment fragment = new ProfileFragment();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragment_container, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                    return true;
+                }
+                if (item.getItemId() == favouriteMenuItem.getItemId()) {
+                    includedLayout.setVisibility(View.GONE);
+                    //ostaviti ovako ali u AccommodationListFragmentu izmeniti da se pozove getFavouriteAccommodations
+                    AccomodationsListFragment fragment = new AccomodationsListFragment();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragment_container, fragment);
                     transaction.addToBackStack(null);

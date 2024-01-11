@@ -15,6 +15,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -24,6 +25,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.shopapp.R;
 import com.example.shopapp.activities.Login.LoginActivity;
 import com.example.shopapp.databinding.ActivityHomeBinding;
+import com.example.shopapp.fragments.owner.requests.ListRequestFragment;
 import com.example.shopapp.fragments.profile.ProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 
@@ -62,6 +64,8 @@ public class HostMainActivity extends AppCompatActivity {
         toolbar = binding.activityHomeBase.toolbar;
         MenuItem reservationsMenuItem = navigationView.getMenu().findItem(R.id.nav_reservations);
         reservationsMenuItem.setVisible(false);
+        MenuItem menuItem = navigationView.getMenu().findItem(R.id.nav_requests);
+        menuItem.setVisible(false);
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
         if(actionBar != null){
@@ -96,7 +100,7 @@ public class HostMainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 MenuItem reservationsMenuItem = navigationView.getMenu().findItem(R.id.nav_reservations);
-                MenuItem requestMenuItem = navigationView.getMenu().findItem(R.id.nav_requests);
+                MenuItem requestMenuItem = navigationView.getMenu().findItem(R.id.nav_requests_owner);
                 MenuItem logOutMenuItem = navigationView.getMenu().findItem(R.id.nav_logout);
                 MenuItem profileMenuItem = navigationView.getMenu().findItem(R.id.nav_profile);
                 MenuItem accommodationMenuItem=navigationView.getMenu().findItem(R.id.nav_accommodat);
@@ -123,7 +127,15 @@ public class HostMainActivity extends AppCompatActivity {
                     transaction.commit();
                     return true;
                 }
-
+                if (item.getItemId() == requestMenuItem.getItemId()) {
+                    includedLayout.setVisibility(View.GONE);
+                    ListRequestFragment fragment = new ListRequestFragment();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragment_container, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                    return true;
+                }
                 // Zatvori navigacijski izbornik
                 binding.drawerLayout.closeDrawer(binding.navView);
 
