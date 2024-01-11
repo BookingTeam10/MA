@@ -59,6 +59,8 @@ public class GuestMainActivity extends AppCompatActivity {
         drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         toolbar = binding.activityHomeBase.toolbar;
+        MenuItem myAccommodationMenuItem = navigationView.getMenu().findItem(R.id.nav_my_accommodations);
+        myAccommodationMenuItem.setVisible(false);
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
         if(actionBar != null){
@@ -103,11 +105,8 @@ public class GuestMainActivity extends AppCompatActivity {
                 if (item.getItemId() == reservationsMenuItem.getItemId()) {
                     includedLayout.setVisibility(View.GONE);
                     MyReservationListFragment fragment = new MyReservationListFragment();
-                    Log.d("NAPRAVILO SE1","NAPRAVILO SE");
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    Log.d("NAPRAVILO SE2","NAPRAVILO SE");
                     transaction.replace(R.id.fragment_container, fragment);
-                    Log.d("NAPRAVILO SE","NAPRAVILO SE");
                     transaction.addToBackStack(null);
                     transaction.commit();
                     return true;

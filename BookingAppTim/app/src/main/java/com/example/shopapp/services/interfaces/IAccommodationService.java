@@ -44,4 +44,6 @@ public interface IAccommodationService {
             @Query("amenities") List<String> amenities);
 
 
+    @GET("owners/accommodations/{idOwner}")
+    Call<ArrayList<Accommodation>> getAccommodationByOwner(@Path("idOwner") Long idOwner);
 }
