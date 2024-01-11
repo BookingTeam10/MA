@@ -9,8 +9,16 @@ public class Amenity implements Parcelable {
     private String name;
     public Amenity() {}
 
-    public Amenity(String name) {
-        this.name=name;
+    public Amenity(String name){
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -47,4 +55,3 @@ public class Amenity implements Parcelable {
         }
     };
 }
-

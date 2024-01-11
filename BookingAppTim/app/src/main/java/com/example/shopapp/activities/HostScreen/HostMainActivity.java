@@ -67,6 +67,8 @@ public class HostMainActivity extends AppCompatActivity {
         reservationsMenuItem.setVisible(false);
         MenuItem menuItem = navigationView.getMenu().findItem(R.id.nav_requests);
         menuItem.setVisible(false);
+        MenuItem favouriteItem = navigationView.getMenu().findItem(R.id.nav_favourite);
+        favouriteItem.setVisible(false);
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
         if(actionBar != null){

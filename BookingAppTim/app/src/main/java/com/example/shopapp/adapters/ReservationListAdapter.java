@@ -57,6 +57,7 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         holder.textViewId.setText((String.valueOf(reservation.getId())));
         holder.textViewAccommodation.setText((String.valueOf(reservation.getAccommodation())));
+        holder.textViewStatus.setText((String.valueOf(reservation.getStatus())));
         if (reservation.getStartDate()==null){
             holder.textViewStart.setText((""));}
         else{
@@ -110,7 +111,7 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
 
     public static class ReservationViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView textViewId, textViewStart, textViewEnd,textViewAccommodation;
+        public TextView textViewId, textViewStart, textViewEnd,textViewAccommodation,textViewStatus;
         public Button buttonAction;
 
         public ReservationViewHolder(View view) {
@@ -120,6 +121,7 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
             textViewStart = view.findViewById(R.id.textViewStart);
             textViewEnd = view.findViewById(R.id.textViewEnd);
             textViewAccommodation= view.findViewById(R.id.textViewAccommodation);
+            textViewStatus= view.findViewById(R.id.textViewStatus);
             buttonAction = view.findViewById(R.id.buttonAction);
             if(!role.equals("Guest")){
                 buttonAction.setVisibility(View.INVISIBLE);

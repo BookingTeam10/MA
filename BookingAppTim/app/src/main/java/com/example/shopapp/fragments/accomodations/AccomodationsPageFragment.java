@@ -1,6 +1,8 @@
 package com.example.shopapp.fragments.accomodations;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -49,6 +51,7 @@ public class AccomodationsPageFragment extends Fragment {
     private AccomodationPageViewModel productsViewModel;
     private FragmentProductsPageBinding binding;
     private AccomodationListAdapter adapter;
+    private SharedPreferences sharedPreferences;
 
     public static AccomodationsPageFragment newInstance() {
         return new AccomodationsPageFragment();
@@ -58,6 +61,9 @@ public class AccomodationsPageFragment extends Fragment {
 
         binding = FragmentProductsPageBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        sharedPreferences = getActivity().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        String role = sharedPreferences.getString("pref_role", "undefined");
+        Log.i("ROLE FRAGMENT",role);
         AccomodationsListFragment accomodationsListFragment = new AccomodationsListFragment();
         FragmentManager fragmentManager = getParentFragmentManager(); // ili getSupportFragmentManager() ako ste u FragmentActivity
         adapter = new AccomodationListAdapter(getActivity(), fragmentManager, accommodations);
@@ -141,9 +147,10 @@ public class AccomodationsPageFragment extends Fragment {
         });
 
 
-        Log.i("NOVI ACCOMMODATIONS", String.valueOf(accommodations.size()));
         FragmentTransition.to(AccomodationsListFragment.newInstance(accommodations), getActivity(), false, R.id.scroll_products_list);
-
+        if(!role.equals("Owner")){
+            btnAddAcc.setVisibility(View.INVISIBLE);
+        }
         return root;
     }
 

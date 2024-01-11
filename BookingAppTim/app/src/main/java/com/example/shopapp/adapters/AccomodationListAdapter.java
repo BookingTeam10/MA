@@ -94,6 +94,8 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
         ImageView imageView = convertView.findViewById(R.id.product_image);
         TextView productTitle = convertView.findViewById(R.id.product_title);
         TextView productDescription = convertView.findViewById(R.id.product_description);
+        Button reportAccommodation = convertView.findViewById(R.id.button_document_accommodation);
+        Button editAccommodation = convertView.findViewById(R.id.button_edit);
         ImageButton imageButton = convertView.findViewById(R.id.button_star);
 
         Button editButton=convertView.findViewById(R.id.button_edit);
@@ -108,9 +110,17 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
                 getContext().startActivity(intent);
             });
 
+            if (!role.equals("Owner")){
+                reportAccommodation.setVisibility(View.INVISIBLE);
+            }
+            if (!role.equals("Owner")){
+                editAccommodation.setVisibility(View.INVISIBLE);
+            }
+
             if (!role.equals("Guest")){
                 imageButton.setVisibility(View.INVISIBLE);
             }
+
 
             imageButton.setOnClickListener(v -> {
                 v.setSelected(!v.isSelected());

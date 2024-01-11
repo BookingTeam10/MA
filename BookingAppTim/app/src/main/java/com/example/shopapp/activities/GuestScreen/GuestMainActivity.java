@@ -26,6 +26,7 @@ import com.example.shopapp.activities.Login.LoginActivity;
 import com.example.shopapp.databinding.ActivityHomeBinding;
 import com.example.shopapp.fragments.accomodations.AccomodationsListFragment;
 import com.example.shopapp.fragments.accomodations.AccomodationsPageFragment;
+import com.example.shopapp.fragments.guest.favourite_accomodations.FavouriteAccommodationsPageFragment;
 import com.example.shopapp.fragments.profile.ProfileFragment;
 import com.example.shopapp.fragments.guest.reservations.RequestFragment;
 import com.example.shopapp.fragments.guest.reservations.myReservations.MyReservationListFragment;
@@ -145,7 +146,8 @@ public class GuestMainActivity extends AppCompatActivity {
                 if (item.getItemId() == favouriteMenuItem.getItemId()) {
                     includedLayout.setVisibility(View.GONE);
                     //ostaviti ovako ali u AccommodationListFragmentu izmeniti da se pozove getFavouriteAccommodations
-                    AccomodationsListFragment fragment = new AccomodationsListFragment();
+                    //AccomodationsListFragment fragment = new AccomodationsListFragment();
+                    FavouriteAccommodationsPageFragment fragment = new FavouriteAccommodationsPageFragment ();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragment_container, fragment);
                     transaction.addToBackStack(null);

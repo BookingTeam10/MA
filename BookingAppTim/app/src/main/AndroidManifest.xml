@@ -31,7 +31,8 @@
         android:required="false" />
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="false" />
+        android:required="true"
+        tools:ignore="UnsupportedTvHardware" />
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />

@@ -1,5 +1,6 @@
 package com.example.shopapp.services.interfaces;
 
+import com.example.shopapp.dto.ReservationDTO;
 import com.example.shopapp.model.reservation.Reservation;
 
 import java.util.ArrayList;
@@ -25,4 +26,6 @@ public interface IReservationService {
 
     @DELETE("request/{reqId}")
     Call<Reservation> deleteGuestReservation(@Path("reqId") Long reqId);
+    @GET("reservations/{idAccommodation}/reservations")
+    Call<ArrayList<ReservationDTO>> getByAccommodations(@Path("idAccommodation") Long idAccommodation);
 }

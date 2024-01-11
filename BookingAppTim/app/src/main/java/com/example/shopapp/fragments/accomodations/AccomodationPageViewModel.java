@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.shopapp.configuration.ServiceUtils;
+import com.example.shopapp.dto.AccommodationDTO;
 import com.example.shopapp.model.accommodation.Accommodation;
 
 import java.lang.reflect.Array;
@@ -53,4 +54,31 @@ public class AccomodationPageViewModel extends ViewModel {
             }
         });
     }
+
+//    public void getFavouriteAccommodations(Long id){
+//        Call<ArrayList<AccommodationDTO>> call = ServiceUtils.guestService.getFavouriteAccommodation(3L);
+//        Log.i("UDJE U GET FAVOURITE","1");
+//        call.enqueue(new Callback<ArrayList<AccommodationDTO>>() {
+//            @Override
+//            public void onResponse(Call<ArrayList<AccommodationDTO>> call, Response<ArrayList<AccommodationDTO>> response) {
+//                Log.i("UDJE U GET FAVOURITE2","1");
+//                if (response.code() == 200){
+//                    System.out.println(response.body());
+//                    Log.i("UDJE U GET FAVOURITE3","1");
+//                    ArrayList<AccommodationDTO> accommodationDTOS = response.body();
+//                    ArrayList<Accommodation> accommodationsList = new ArrayList<>();
+//
+//                    for(AccommodationDTO accommodation:accommodationDTOS){
+//                        accommodationsList.add(new Accommodation(accommodation));
+//                    }
+//                    Log.i("UDJE U GET FAVOURITE4", String.valueOf(accommodationsList.size()));
+//                    accommodations.setValue(accommodationsList);
+//                }
+//            }
+//            @Override
+//            public void onFailure(Call<ArrayList<AccommodationDTO>> call, Throwable t) {
+//                Log.d("REZ", t.getMessage() != null?t.getMessage():"error");
+//            }
+//        });
+//    }
 }

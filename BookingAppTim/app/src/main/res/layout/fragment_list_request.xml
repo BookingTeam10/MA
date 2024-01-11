@@ -1,44 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.owner.requests.ListRequestFragment">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <!-- Koristimo LinearLayout kao root element kako bi sve bilo jedno ispod drugog -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:gravity="center_horizontal">
+        android:padding="16dp">
 
-        <Spinner
-            android:id="@+id/spinnerRequestStatus"
-            android:layout_width="200dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp" />
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="16dp">
 
-        <EditText
-            android:id="@+id/nameAccommodation"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:hint="Enter Text Here"
-            android:layout_marginBottom="16dp" />
+            <Spinner
+                android:id="@+id/spinnerRequestStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp" />
 
-        <Button
-            android:id="@+id/buttonSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Search"
-            android:layout_marginBottom="16dp"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="10dp" />
+            <EditText
+                android:id="@+id/nameAccommodation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="2"
+                android:hint="Enter Text Here"
+                android:inputType="text" />
 
+            <Button
+                android:id="@+id/buttonSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="10dp" />
+
+        </LinearLayout>
+
+        <!-- RecyclerView će sada zauzeti preostali prostor -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
     </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
 </FrameLayout>
