@@ -35,7 +35,7 @@ public interface IAccommodationService {
             "User-Agent: Mobile-Android",
             "Content-Type:application/json"
     })
-    @GET("accommodationsSearch")
+    @GET("accommodations/accommodationsSearch")
     Call<ArrayList<Accommodation>>  getSearchedAccommodations(
             @Query("location") String location,
             @Query("start") String start, // Datum formatiran kao String

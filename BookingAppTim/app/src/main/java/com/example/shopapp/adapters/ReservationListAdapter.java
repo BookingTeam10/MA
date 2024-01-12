@@ -31,10 +31,19 @@ import retrofit2.Response;
 public class ReservationListAdapter extends RecyclerView.Adapter<ReservationListAdapter.ReservationViewHolder> {
 
     private List<Reservation> reservationList;
+    private boolean showButton;
 
     public ReservationListAdapter(List<Reservation> reservationList) {
         this.reservationList = reservationList;
     }
+
+
+
+    public ReservationListAdapter(List<Reservation> reservationList, boolean showButton) {
+        this.reservationList = reservationList;
+        this.showButton = showButton;
+    }
+
 
     public ReservationListAdapter(Context context, FragmentManager supportFragmentManager, ArrayList<Reservation> reservations){
 //        super(context, R.layout.reservation_card, reservations);
@@ -76,10 +85,13 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
             int adapterPosition = holder.getAdapterPosition();
             if (adapterPosition != RecyclerView.NO_POSITION) {
                 deleteRequest(reservation,adapterPosition);
-                //reservationList.remove(adapterPosition);
-                //notifyItemRemoved(adapterPosition);
             }
         });
+
+        if(!showButton){
+            holder.buttonAction.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     private void deleteRequest(Reservation reservation, int adapterPosition) {

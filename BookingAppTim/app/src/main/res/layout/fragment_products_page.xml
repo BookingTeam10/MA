@@ -63,6 +63,15 @@
                 android:background="#4CAF50"
                 android:text="Add accommodations"
                 tools:ignore="TextContrastCheck" />
+
+            <Button
+                android:id="@+id/viewReport"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#4CAF50"
+                android:text="Report"
+                tools:ignore="TextContrastCheck" />
         </LinearLayout>
 
 

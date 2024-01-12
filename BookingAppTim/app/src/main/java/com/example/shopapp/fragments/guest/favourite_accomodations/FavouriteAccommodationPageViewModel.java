@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.shopapp.configuration.ServiceUtils;
 import com.example.shopapp.dto.AccommodationDTO;
+import com.example.shopapp.dto.GuestDTO;
 import com.example.shopapp.model.accommodation.Accommodation;
 
 import java.util.ArrayList;
@@ -32,25 +33,19 @@ public class FavouriteAccommodationPageViewModel extends ViewModel {
 
     public void setAccommodations(ArrayList<Accommodation> accommodations) {
         this.accommodations.setValue(accommodations);
-        Log.d("PROMENI SE", String.valueOf(accommodations.size()));
     }
     public void getFavouriteAccommodations(Long id){
         Call<ArrayList<AccommodationDTO>> call = ServiceUtils.guestService.getFavouriteAccommodation(3L);
-        Log.i("UDJE U GET FAVOURITE","1");
         call.enqueue(new Callback<ArrayList<AccommodationDTO>>() {
             @Override
             public void onResponse(Call<ArrayList<AccommodationDTO>> call, Response<ArrayList<AccommodationDTO>> response) {
-                Log.i("UDJE U GET FAVOURITE2","1");
                 if (response.code() == 200){
-                    System.out.println(response.body());
-                    Log.i("UDJE U GET FAVOURITE3","1");
                     ArrayList<AccommodationDTO> accommodationDTOS = response.body();
                     ArrayList<Accommodation> accommodationsList = new ArrayList<>();
 
-                    for(AccommodationDTO accommodation:accommodationDTOS){
-                        accommodationsList.add(new Accommodation(accommodation));
+                    for(AccommodationDTO accommodationDTO:accommodationDTOS){
+                        accommodationsList.add(new Accommodation(accommodationDTO));
                     }
-                    Log.i("UDJE U GET FAVOURITE4", String.valueOf(accommodationsList.size()));
                     accommodations.setValue(accommodationsList);
                 }
             }
@@ -60,4 +55,5 @@ public class FavouriteAccommodationPageViewModel extends ViewModel {
             }
         });
     }
+
 }

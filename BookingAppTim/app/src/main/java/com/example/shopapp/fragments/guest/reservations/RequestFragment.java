@@ -10,6 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.example.shopapp.R;
 import com.example.shopapp.adapters.ReservationListAdapter;
@@ -31,6 +35,7 @@ import retrofit2.Response;
 
 public class RequestFragment extends Fragment {
     private RecyclerView recyclerView;
+    private RecyclerView recyclerViewGuest;
     private ReservationListAdapter adapter;
     private List<Reservation> reservationList;
     private List<ReservationDTO> reservationDTOS;
@@ -40,7 +45,24 @@ public class RequestFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_request, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerView);
+
+
+        Button buttonSearch = view.findViewById(R.id.buttonSearchGuest);
+        Spinner spinnerRequestStatus =  view.findViewById(R.id.spinnerRequestStatusGuest);
+        ArrayAdapter<String> arrayAdapterStatus = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_item,
+                getResources().getStringArray(R.array.request_status));
+        arrayAdapterStatus.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerRequestStatus.setAdapter(arrayAdapterStatus);
+        EditText nameAccommodationEditText = view.findViewById(R.id.nameAccommodationGuest);
+        String nameAccommodation = nameAccommodationEditText.getText().toString();
+
+        recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        recyclerViewGuest = view.findViewById(R.id.recyclerViewAllRequestsGuest);
+        recyclerViewGuest.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         getGuestRequests();
 
 
@@ -59,9 +81,12 @@ public class RequestFragment extends Fragment {
                     for(ReservationDTO reservationDTO : reservationDTOS){
                         reservationList.add(new Reservation(reservationDTO));
                     }
-                    ReservationListAdapter adapter = new ReservationListAdapter(reservationList);
-                    recyclerView.setAdapter(adapter);
+                    ReservationListAdapter adapter1 = new ReservationListAdapter(reservationList,true);
+                    recyclerView.setAdapter(adapter1);
 
+                    ReservationListAdapter adapter2 = new ReservationListAdapter(reservationList,false);
+                    //OBIRSATI OBAVEZNO KAD DOBAVIM NOV GET
+                    recyclerViewGuest.setAdapter(adapter2);
                 }
             }
 

@@ -274,32 +274,7 @@ public class Accommodation implements Parcelable {
 
     @Override
     public String toString() {
-        return "Accommodation{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", accepted=" + accepted +
-                ", automaticActivation=" + automaticActivation +
-                ", minPeople=" + minPeople +
-                ", maxPeople=" + maxPeople +
-                ", photos=" + photos +
-                ", typeAccommodation=" + typeAccommodation +
-                ", accommodationStatus=" + accommodationStatus +
-                ", isNight=" + isNight +
-                ", takenDates=" + takenDates +
-                ", amenities=" + amenities +
-                ", location=" + location +
-                ", owner=" + owner +
-                ", reservations=" + reservations +
-                ", automaticConfirmation=" + automaticConfirmation +
-                ", rating=" + rating +
-                ", cancelDeadline=" + cancelDeadline +
-                ", prices=" + prices +
-                ", weekendPrice=" + weekendPrice +
-                ", holidayPrice=" + holidayPrice +
-                ", summerPrice=" + summerPrice +
-                ", image=" + image +
-                '}';
+        return   name;
     }
 
     @Override
