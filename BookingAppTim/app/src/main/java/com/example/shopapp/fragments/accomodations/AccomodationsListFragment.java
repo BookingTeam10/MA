@@ -28,7 +28,6 @@ public class AccomodationsListFragment extends ListFragment {
     private FragmentProductsListBinding binding;
     private AccomodationPageViewModel productsViewModel;
     private ArrayList<Accommodation> accommodations = new ArrayList<>();
-
     public static AccomodationsListFragment newInstance(ArrayList<Accommodation> accommodations){
         AccomodationsListFragment fragment = new AccomodationsListFragment();
         return fragment;
@@ -40,14 +39,19 @@ public class AccomodationsListFragment extends ListFragment {
         Log.i("ShopApp", "onCreateView Products List Fragment");
         binding = FragmentProductsListBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        productsViewModel = new ViewModelProvider(this).get(AccomodationPageViewModel.class);
+        productsViewModel = new ViewModelProvider(requireActivity()).get(AccomodationPageViewModel.class);
         adapter = new AccomodationListAdapter(getActivity(), getChildFragmentManager(), new ArrayList<>());
         setListAdapter(adapter);
+
+
         productsViewModel.getAccommodations().observe(getViewLifecycleOwner(), new Observer<List<Accommodation>>() {
             @Override
-            public void onChanged(List<Accommodation> accommodations) {
+            public void onChanged(List<Accommodation> newAccommodations) {
+                int size = newAccommodations.size();
+                Log.d("KOLIKO SE GETUJE", String.valueOf(size));
+                adapter.setAccommodations((ArrayList<Accommodation>) newAccommodations);
                 adapter.clear();
-                adapter.addAll(accommodations);
+                adapter.addAll(newAccommodations);
                 adapter.notifyDataSetChanged();
             }
         });

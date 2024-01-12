@@ -41,6 +41,15 @@ public class FavouriteAccommodationsListFragment extends ListFragment {
         adapter = new AccomodationListAdapter(getActivity(), getChildFragmentManager(), new ArrayList<>());
         setListAdapter(adapter);
 
+        productsViewModel.getAccommodations().observe(getViewLifecycleOwner(), new Observer<List<Accommodation>>() {
+            @Override
+            public void onChanged(List<Accommodation> accommodations) {
+                adapter.clear();
+                adapter.addAll(accommodations);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
         productsViewModel.getFavouriteAccommodations(3L);
         return root;
     }

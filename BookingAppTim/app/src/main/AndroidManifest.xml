@@ -49,6 +49,12 @@
         android:theme="@style/Theme.ShopApp"
         tools:targetApi="31">
         <activity
+            android:name=".activities.HostScreen.reports.GeneralReportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.HostScreen.reports.AccommodationReportActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.HostScreen.DefinitionAccommodationActivity"
             android:exported="false" />
         <activity

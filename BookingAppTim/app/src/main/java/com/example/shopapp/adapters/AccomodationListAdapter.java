@@ -2,13 +2,9 @@ package com.example.shopapp.adapters;
 
 
 
-import static com.example.shopapp.fragments.accomodations.AccomodationsPageFragment.accommodations;
-
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,37 +15,33 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.shopapp.activities.GuestScreen.AccommodationDetailsScreen;
+import com.example.shopapp.activities.HostScreen.reports.AccommodationReportActivity;
 import com.example.shopapp.activities.HostScreen.DefinitionAccommodationActivity;
 import com.example.shopapp.configuration.ServiceUtils;
 import com.example.shopapp.dto.GuestDTO;
-import com.example.shopapp.fragments.guest.reviews.AddReviewOwnerFragment;
-import com.example.shopapp.fragments.owner.edit_accommodation.EditAccommodationFragment;
+import com.example.shopapp.fragments.guest.favourite_accomodations.FavouriteAccommodationPageViewModel;
+import com.example.shopapp.fragments.guest.favourite_accomodations.FavouriteAccommodationsListFragment;
 import com.example.shopapp.model.accommodation.Accommodation;
 
 import com.example.shopapp.R;
-import com.example.shopapp.model.user.Guest;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
     private ArrayList<Accommodation> aAccomodation;
-
     private FragmentManager fragmentManager;
+    private FavouriteAccommodationPageViewModel productsViewModel;
 
     public AccomodationListAdapter(Context context, FragmentManager supportFragmentManager, ArrayList<Accommodation> accomodations){
         super(context, R.layout.accomodation_card, accomodations);
@@ -72,7 +64,6 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
     public Accommodation getItem(int position) {
         return aAccomodation.get(position);
     }
-
     @Override
     public long getItemId(int position) {
         return position;
@@ -135,23 +126,16 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //View includedLayout = v.findViewById(R.id.product_card_item);
-//                    Log.d("Edit", "Edit.");
-//                    EditAccommodationFragment fragment = new EditAccommodationFragment();
-//                   Bundle bundle = new Bundle();
-//                    bundle.putParcelable("accommodation", accommodation);
-//                    fragment.setArguments(bundle);
-//
-//                    //includedLayout.setVisibility(View.GONE);
-//                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-//                    transaction.replace(R.id.product_card_item, fragment);
-//                    transaction.addToBackStack(null);
-//                    transaction.commit();
-//                    Log.d("NAPRAVILO SE0,","AAAA00");
-
-                    Log.d("AKTIVNOST","EDIT AKTIVNOST");
-                    //DefinitionAccommodationActivity definitionAccommodationActivity=new DefinitionAccommodationActivity();
                     Intent intent = new Intent(getContext(), DefinitionAccommodationActivity.class);
+                    intent.putExtra("accommodation", accommodation);
+                    getContext().startActivity(intent);
+                }
+            });
+
+            reportAccommodation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), AccommodationReportActivity.class);
                     intent.putExtra("accommodation", accommodation);
                     getContext().startActivity(intent);
 
@@ -166,17 +150,16 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
     private void addFavouriteAccommodation(Accommodation accommodation, boolean isSelected) {
         //add favourite
         if (isSelected) {
-            Log.i("DODATI","DODATI");
             Call<GuestDTO> call = ServiceUtils.guestService.addFavouriteAccommodation(3L,accommodation);
 
             call.enqueue(new Callback<GuestDTO>() {
                 @Override
                 public void onResponse(Call<GuestDTO> call, Response<GuestDTO> response) {
                     if (response.code() == 204){
-                        Log.d("REZ","Meesage recieved");
                         System.out.println(response.body());
                         Log.i("AZURIRANO",response.body().toString());
                         //treba gosta azurirati
+                        GuestDTO guestDTO = response.body();
                     }
                 }
                 @Override

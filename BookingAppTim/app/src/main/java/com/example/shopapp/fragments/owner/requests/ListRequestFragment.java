@@ -68,8 +68,8 @@ public class ListRequestFragment extends Fragment {
 
     private void getGuestRequests(){
         reservationList = new ArrayList<>();
+        //ovo ispraviti, treba da bude za ownera
         Call<ArrayList<ReservationDTO>> call = ServiceUtils.guestService.allGuestRequests(3L);
-        Log.d("CALL", call.toString());
         call.enqueue(new Callback<ArrayList<ReservationDTO>>() {
             @Override
             public void onResponse(Call<ArrayList<ReservationDTO>> call, Response<ArrayList<ReservationDTO>> response) {
@@ -99,14 +99,21 @@ public class ListRequestFragment extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<ReservationDTO>> call, Response<ArrayList<ReservationDTO>> response) {
                 if (response.code() == 200){
-                    Log.i("UDJE U RESPONSE BODY",response.body().toString());
+                    Log.i("UDJE U RESPONSE BODY SEARCH",response.body().toString());
                     reservationDTOS = response.body();
+                    reservationList.clear();
                     for(ReservationDTO reservationDTO : reservationDTOS){
                         reservationList.add(new Reservation(reservationDTO));
                     }
-                    Log.i("UDJE U RESPONSE BODY2",reservationDTOS.toString());
-                    adapter = new ReservationListAdapter(reservationList);
-                    recyclerView.setAdapter(adapter);
+                    Log.i("UDJE U RESPONSE BODY2 SEARCH", String.valueOf(reservationDTOS.size()));
+                    Log.i("UDJE U RESPONSE BODY2 SEARCH",reservationDTOS.toString());
+                    if(adapter != null) {
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        // Ako adapter nije prethodno postavljen, kreirajte ga i postavite
+                        adapter = new ReservationListAdapter(reservationList);
+                        recyclerView.setAdapter(adapter);
+                    }
                 }
             }
             @Override
