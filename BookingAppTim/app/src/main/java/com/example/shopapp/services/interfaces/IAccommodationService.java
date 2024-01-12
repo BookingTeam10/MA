@@ -11,6 +11,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -50,4 +51,7 @@ public interface IAccommodationService {
 
     @POST("accommodations/add")
     Call<Accommodation> createAccommodation(@Body Accommodation accommodation);
+
+    @PUT("accommodations/{id}")
+    Call<Accommodation> updateAccommodation(@Body Accommodation accommodation,@Path("id") Long id);
 }

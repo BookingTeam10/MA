@@ -1,6 +1,5 @@
 package com.example.shopapp.model.accommodation;
 
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -12,7 +11,6 @@ import com.example.shopapp.enums.TypeAccommodation;
 import com.example.shopapp.model.reservation.Reservation;
 import com.example.shopapp.model.user.Owner;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -269,9 +267,39 @@ public class Accommodation implements Parcelable {
     }
 
 
+//    @Override
+//    public String toString() {
+//        return name ;
+//    }
+
     @Override
     public String toString() {
-        return name ;
+        return "Accommodation{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", accepted=" + accepted +
+                ", automaticActivation=" + automaticActivation +
+                ", minPeople=" + minPeople +
+                ", maxPeople=" + maxPeople +
+                ", photos=" + photos +
+                ", typeAccommodation=" + typeAccommodation +
+                ", accommodationStatus=" + accommodationStatus +
+                ", isNight=" + isNight +
+                ", takenDates=" + takenDates +
+                ", amenities=" + amenities +
+                ", location=" + location +
+                ", owner=" + owner +
+                ", reservations=" + reservations +
+                ", automaticConfirmation=" + automaticConfirmation +
+                ", rating=" + rating +
+                ", cancelDeadline=" + cancelDeadline +
+                ", prices=" + prices +
+                ", weekendPrice=" + weekendPrice +
+                ", holidayPrice=" + holidayPrice +
+                ", summerPrice=" + summerPrice +
+                ", image=" + image +
+                '}';
     }
 
     @Override
@@ -308,6 +336,7 @@ public class Accommodation implements Parcelable {
         in.readTypedList(amenities, Amenity.CREATOR);
         prices = new ArrayList<>();
         in.readTypedList(prices, Price.CREATOR);
+
 
     }
 
