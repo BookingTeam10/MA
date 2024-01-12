@@ -135,21 +135,10 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //View includedLayout = v.findViewById(R.id.product_card_item);
-//                    Log.d("Edit", "Edit.");
-//                    EditAccommodationFragment fragment = new EditAccommodationFragment();
-//                   Bundle bundle = new Bundle();
-//                    bundle.putParcelable("accommodation", accommodation);
-//                    fragment.setArguments(bundle);
-//
-//                    //includedLayout.setVisibility(View.GONE);
-//                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-//                    transaction.replace(R.id.product_card_item, fragment);
-//                    transaction.addToBackStack(null);
-//                    transaction.commit();
-//                    Log.d("NAPRAVILO SE0,","AAAA00");
 
                     Log.d("AKTIVNOST","EDIT AKTIVNOST");
+
+                    //Log.d("ACCOMMODATION IZMENJEN DTO",accommodation);
                     //DefinitionAccommodationActivity definitionAccommodationActivity=new DefinitionAccommodationActivity();
                     Intent intent = new Intent(getContext(), DefinitionAccommodationActivity.class);
                     intent.putExtra("accommodation", accommodation);
