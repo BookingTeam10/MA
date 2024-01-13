@@ -125,4 +125,10 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="magnetic_field">Magnetic field:</string>
+    <string name="non_gravity_accelerometer">Non-gravity accelerometer:</string>
+    <string name="accelerometer">Accelerometer:</string>
+    <string name="proximity_sensor">Proximity sensor:</string>
+    <string name="gyroscope">Gyroscope:</string>
+    <string name="sensors">Sensors</string>
 </resources>

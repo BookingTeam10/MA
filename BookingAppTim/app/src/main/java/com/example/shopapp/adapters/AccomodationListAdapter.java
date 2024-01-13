@@ -92,6 +92,7 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
         Button editButton=convertView.findViewById(R.id.button_edit);
 
         if(accommodation != null){
+            Log.i("ACCOMMODATION IMAGE",String.valueOf(accommodation.getImage()));
             imageView.setImageResource(accommodation.getImage());
             productTitle.setText(accommodation.getName());
             productDescription.setText(accommodation.getDescription());

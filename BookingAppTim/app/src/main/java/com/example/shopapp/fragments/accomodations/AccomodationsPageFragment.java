@@ -17,10 +17,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -28,21 +26,16 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.example.shopapp.R;
-import com.example.shopapp.activities.HostScreen.HostMainActivity;
-import com.example.shopapp.activities.HostScreen.reports.AccommodationReportActivity;
 import com.example.shopapp.activities.HostScreen.reports.GeneralReportActivity;
 import com.example.shopapp.adapters.AccomodationListAdapter;
 import com.example.shopapp.configuration.ServiceUtils;
 import com.example.shopapp.databinding.FragmentProductsPageBinding;
 import com.example.shopapp.fragments.FragmentTransition;
-import com.example.shopapp.fragments.guest.reviews.AddReviewOwnerFragment;
 import com.example.shopapp.fragments.owner.add_accommodation.AddAccommodationFragment;
 import com.example.shopapp.model.accommodation.Accommodation;
-import com.example.shopapp.model.accommodation.Amenity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -123,6 +116,20 @@ public class AccomodationsPageFragment extends Fragment {
                     boolean wifi = checkBoxWifi.isChecked();
                     boolean ac = checkBoxAc.isChecked();
                     boolean parking = checkBoxParking.isChecked();
+                    String selectedCity = spinnerAmenity.getSelectedItem().toString();
+                    Log.d("Selektiran grad", selectedCity);
+
+                    List<String> amenities = new ArrayList<>();
+                    if(wifi){
+                        amenities.add("WIFI");
+                    }
+                    if(ac){
+                        //izmeniti ovo posle ako treba
+                        amenities.add("AC");
+                    }
+                    if(parking){
+                        amenities.add("Parking");
+                    }
 
                     Log.i("ShopApp", "Accommodation Type: " + accommodationType);
                     Log.i("ShopApp", "Number of People: " + numberOfPeople);
@@ -133,9 +140,11 @@ public class AccomodationsPageFragment extends Fragment {
                     Log.i("ShopApp", "AC: " + ac);
                     Log.i("ShopApp", "Parking: " + parking);
 
-                    filterAccommodations();
+                    filterAccommodations(selectedCity,accommodationType,numberOfPeople,minPrice,maxPrice,amenities);
                     bottomSheetDialog.dismiss();
                 }
+
+
             });
         });
 
@@ -172,10 +181,9 @@ public class AccomodationsPageFragment extends Fragment {
         binding = null;
     }
 
-    private void filterAccommodations(){
-        List<String> amenities = new ArrayList<>();
-        amenities.add("WIFI");
-        Call<ArrayList<Accommodation>> call = ServiceUtils.accommodationService.getSearchedAccommodations("Novi","","",2,"1000","5000",amenities);
+    private void filterAccommodations(String selectedCity,String accommodationType, String numberOfPeople, String minPrice, String maxPrice, List<String> amenities){
+        //moram tip dodati u konacnom i kalendari
+        Call<ArrayList<Accommodation>> call = ServiceUtils.accommodationService.getSearchedAccommodations(selectedCity,"","", Integer.valueOf(numberOfPeople), minPrice,maxPrice,amenities);
         call.enqueue(new Callback<ArrayList<Accommodation>>() {
             @Override
             public void onResponse(Call<ArrayList<Accommodation>> call, Response<ArrayList<Accommodation>> response) {

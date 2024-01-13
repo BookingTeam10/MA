@@ -12,4 +12,11 @@ public class Token {
     public void setJwt(String jwt) {
         this.jwt = jwt;
     }
+
+    @Override
+    public String toString() {
+        return "Token{" +
+                "jwt='" + jwt + '\'' +
+                '}';
+    }
 }

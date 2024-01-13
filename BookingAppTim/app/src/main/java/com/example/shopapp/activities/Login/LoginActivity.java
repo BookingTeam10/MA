@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<Token>() {
             @Override
             public void onResponse(@NonNull Call<Token> call, @NonNull Response<Token> response) {
-
+                Log.d("TOKEN",response.body().toString());
                 if(!response.isSuccessful()) {
                     Log.d("Login Fail", "Response error");
                     Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
@@ -125,7 +125,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 Token loginResponse = response.body();
                 String userRole = "";
-                Log.i("USERROLE",userRole);
+
+                if(loginResponse.getJwt().equals("NEUSPESNO")){
+                    Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 JWT jwt = new JWT(loginResponse.getJwt());
 
                 List<HashMap> role =
