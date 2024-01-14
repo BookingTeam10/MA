@@ -61,7 +61,6 @@ public class AddAccommodationFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-
     private static final int CAMERA_REQUEST_CODE = 100;
     private static final int STORAGE_REQUEST_CODE = 101;
     private static final int IMAGE_PICK_CAMERA_CODE = 102;

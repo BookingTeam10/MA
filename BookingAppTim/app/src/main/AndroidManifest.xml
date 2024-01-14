@@ -113,13 +113,13 @@
             android:name=".activities.Login.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.HostScreen.LoadScreen"
+            android:name=".activities.HostScreen.visak.LoadScreen"
             android:exported="false" />
         <activity
             android:name=".activities.Login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.HostScreen.LoadAccSreen"
+            android:name=".activities.HostScreen.visak.LoadAccSreen"
             android:exported="false" />
         <activity
             android:name=".activities.HostScreen.AddAccommodationActivity"

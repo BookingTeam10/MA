@@ -12,9 +12,16 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -31,8 +38,8 @@ import com.example.shopapp.fragments.guest.favourite_accomodations.FavouriteAcco
 import com.example.shopapp.fragments.profile.ProfileFragment;
 import com.example.shopapp.fragments.guest.reservations.RequestFragment;
 import com.example.shopapp.fragments.guest.reservations.myReservations.MyReservationListFragment;
+import com.example.shopapp.services.GuestMessageService;
 import com.google.android.material.navigation.NavigationView;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,6 +54,35 @@ public class GuestMainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private Set<Integer> topLevelDestinations = new HashSet<>();
     private SharedPreferences sharedPreferences;
+
+    private SensorManager sensorManager;
+    private Sensor lightSensor;
+    public static String SYNC_DATA = "SYNC_DATA";
+    private static String GUEST_CHANNEL = "Guest channel";
+
+    private final SensorEventListener lightSensorListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            float lightValue = event.values[0];
+            int nightModeThreshold = 5;
+            Log.d("LIGHTVALUE", String.valueOf(lightValue));
+            if (lightValue < nightModeThreshold) {
+                Log.d("UDJE U SENZOR","UDJE U SENZOR");
+                // Aktivirajte noćni režim
+               //setTheme(R.style.ShopApp);
+               // recreate();
+
+            }
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+            // Implementirajte po potrebi
+            if(sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+                Log.i("REZ_ACCELEROMETER", String.valueOf(accuracy));
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,20 +100,25 @@ public class GuestMainActivity extends AppCompatActivity {
         NavigationView navigationView = binding.navView;
         toolbar = binding.activityHomeBase.toolbar;
 
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+
+        if (lightSensor != null) {
+            sensorManager.registerListener(lightSensorListener, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        }
         MenuItem myAccommodationMenuItem = navigationView.getMenu().findItem(R.id.nav_my_accommodations);
         myAccommodationMenuItem.setVisible(false);
         MenuItem menuItem = navigationView.getMenu().findItem(R.id.nav_requests_owner);
         menuItem.setVisible(false);
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
-        if(actionBar != null){
-
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(false);
             actionBar.setHomeButtonEnabled(true);
         }
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         drawer.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
@@ -92,87 +133,91 @@ public class GuestMainActivity extends AppCompatActivity {
         });
 
         mAppBarConfiguration = new AppBarConfiguration
-                .Builder(R.id.nav_products, R.id.nav_new,R.id.nav_requests, R.id.nav_profile, R.id.nav_logout, R.id.nav_settings, R.id.nav_language)
-                .setOpenableLayout(drawer)
-                .build();
+                    .Builder(R.id.nav_products, R.id.nav_new, R.id.nav_requests, R.id.nav_profile, R.id.nav_logout, R.id.nav_settings, R.id.nav_language)
+                    .setOpenableLayout(drawer)
+                    .build();
         NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                MenuItem reservationsMenuItem = navigationView.getMenu().findItem(R.id.nav_reservations);
-                MenuItem requestMenuItem = navigationView.getMenu().findItem(R.id.nav_requests);
-                MenuItem logOutMenuItem = navigationView.getMenu().findItem(R.id.nav_logout);
-                MenuItem profileMenuItem = navigationView.getMenu().findItem(R.id.nav_profile);
-                MenuItem favouriteMenuItem = navigationView.getMenu().findItem(R.id.nav_favourite);
-                MenuItem homeMenuItem = navigationView.getMenu().findItem(R.id.nav_products);
-                View includedLayout = findViewById(R.id.fragment_nav_content_main);
+                    MenuItem reservationsMenuItem = navigationView.getMenu().findItem(R.id.nav_reservations);
+                    MenuItem requestMenuItem = navigationView.getMenu().findItem(R.id.nav_requests);
+                    MenuItem logOutMenuItem = navigationView.getMenu().findItem(R.id.nav_logout);
+                    MenuItem profileMenuItem = navigationView.getMenu().findItem(R.id.nav_profile);
+                    MenuItem favouriteMenuItem = navigationView.getMenu().findItem(R.id.nav_favourite);
+                    MenuItem homeMenuItem = navigationView.getMenu().findItem(R.id.nav_products);
+                    View includedLayout = findViewById(R.id.fragment_nav_content_main);
 
-                Log.d("MENI 123","NAPRAVILO SE");
+                    Log.d("MENI 123", "NAPRAVILO SE");
 
-                if (item.getItemId() == reservationsMenuItem.getItemId()) {
-                    includedLayout.setVisibility(View.GONE);
-                    MyReservationListFragment fragment = new MyReservationListFragment();
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragment_container, fragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
+                    if (item.getItemId() == reservationsMenuItem.getItemId()) {
+                        includedLayout.setVisibility(View.GONE);
+                        MyReservationListFragment fragment = new MyReservationListFragment();
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragment_container, fragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                        return true;
+                    }
+
+                    if (item.getItemId() == requestMenuItem.getItemId()) {
+                        includedLayout.setVisibility(View.GONE);
+                        RequestFragment fragment = new RequestFragment();
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragment_container, fragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                        return true;
+                    }
+
+                    if (item.getItemId() == logOutMenuItem.getItemId()) {
+                        Intent intent = new Intent(GuestMainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        return true;
+                    }
+
+                    if (item.getItemId() == profileMenuItem.getItemId()) {
+                        ProfileFragment fragment = new ProfileFragment();
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragment_container, fragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                        return true;
+                    }
+                    if (item.getItemId() == favouriteMenuItem.getItemId()) {
+                        includedLayout.setVisibility(View.GONE);
+                        //ostaviti ovako ali u AccommodationListFragmentu izmeniti da se pozove getFavouriteAccommodations
+                        //AccomodationsListFragment fragment = new AccomodationsListFragment();
+                        FavouriteAccommodationsListFragment fragment = new FavouriteAccommodationsListFragment();
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragment_container, fragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                        return true;
+                    }
+                    if (item.getItemId() == homeMenuItem.getItemId()) {
+                        includedLayout.setVisibility(View.GONE);
+                        //AccomodationsPageFragment fragment1 = new AccomodationsPageFragment();
+                        AccomodationsListFragment fragment2 = new AccomodationsListFragment();
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragment_container, fragment2);
+                        //transaction.replace(R.id.fragment_container, fragment2);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                        return true;
+                    }
+
+                    // Zatvori navigacijski izbornik
+                    binding.drawerLayout.closeDrawer(binding.navView);
+
                     return true;
                 }
-
-                if (item.getItemId() == requestMenuItem.getItemId()) {
-                    includedLayout.setVisibility(View.GONE);
-                    RequestFragment fragment = new RequestFragment();
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragment_container, fragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                    return true;
-                }
-
-                if (item.getItemId() == logOutMenuItem.getItemId()) {
-                    Intent intent=new Intent(GuestMainActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    return true;
-                }
-
-                if (item.getItemId() == profileMenuItem.getItemId()) {
-                    ProfileFragment fragment = new ProfileFragment();
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragment_container, fragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                    return true;
-                }
-                if (item.getItemId() == favouriteMenuItem.getItemId()) {
-                    includedLayout.setVisibility(View.GONE);
-                    //ostaviti ovako ali u AccommodationListFragmentu izmeniti da se pozove getFavouriteAccommodations
-                    //AccomodationsListFragment fragment = new AccomodationsListFragment();
-                    FavouriteAccommodationsListFragment fragment = new FavouriteAccommodationsListFragment();
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragment_container, fragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                    return true;
-                }
-                if (item.getItemId() == homeMenuItem.getItemId()) {
-                    includedLayout.setVisibility(View.GONE);
-                    //AccomodationsPageFragment fragment = new AccomodationsPageFragment();
-                    AccomodationsListFragment fragment = new AccomodationsListFragment();
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragment_container, fragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                    return true;
-                }
-
-                // Zatvori navigacijski izbornik
-                binding.drawerLayout.closeDrawer(binding.navView);
-
-                return true;
-            }
-        });
+            });
+        createNotificationChannel();
+        setUpService();
+        //initializeSockets();
 
     }
 
@@ -190,4 +235,22 @@ public class GuestMainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.fragment_nav_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Notification channel";
+            String description = "Description";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(GUEST_CHANNEL, name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private void setUpService(){
+        Intent alarmIntent = new Intent(this, GuestMessageService.class);
+        startService(alarmIntent);
+    }
+
 }

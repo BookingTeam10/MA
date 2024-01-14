@@ -13,17 +13,14 @@
         android:textSize="24sp"
         android:textStyle="bold"/>
 
-    <!-- Centralno pozicionirana slika hotela -->
     <ImageView
         android:id="@+id/ivHotel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvHotelName"
         android:layout_centerInParent="true"
-        android:src="@drawable/apartment1"
-        android:contentDescription="abc"/>
+        android:src="@drawable/apartment1" />
 
-    <!-- Tekstualni opis ispod slike -->
     <TextView
         android:id="@+id/tvHotelDescription"
         android:layout_width="match_parent"
@@ -33,6 +30,15 @@
         android:text="@string/description_apartment"
         android:textSize="16sp"/>
 
+    <!-- RecyclerView za komentare -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvHotelDescription"
+        android:layout_above="@+id/linearLayoutPrice"
+        android:layout_marginTop="8dp"/>
+
     <LinearLayout
         android:id="@+id/linearLayoutPrice"
         android:layout_width="match_parent"
@@ -40,18 +46,20 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
         android:padding="10dp">
+
         <TextView
             android:id="@+id/textViewAmenity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Amenity: WIFI"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
+
         <Button
             android:id="@+id/buttonMapsAAA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/view_map" />
+            android:text="@string/view_map"/>
 
         <TextView
             android:id="@+id/textViewPrice"
@@ -59,13 +67,14 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Cena za 1 noćenje je 3000"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
         <Button
             android:id="@+id/buttonBook"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/book_now" />
+            android:text="@string/book_now"/>
 
     </LinearLayout>
+
 </RelativeLayout>

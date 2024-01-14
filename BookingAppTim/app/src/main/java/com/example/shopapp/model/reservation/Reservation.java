@@ -39,6 +39,18 @@ public class Reservation implements Serializable {
         this.reviews = new ArrayList<>();
     }
 
+    public Reservation( Long id,int totalPrice,ReservationStatus reservationStatus, Date startDate, Date endDate,int numberOfNights,Accommodation accommodation,Guest guest,List<Review> reviews) {
+        this.id = id;
+        this.totalPrice = totalPrice;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = reservationStatus;
+        this.accommodation = accommodation;
+        this.guest = guest;
+        this.numberOfNights = numberOfNights;
+        this.reviews = reviews;
+    }
+
     public Reservation( Long id, Date startDate, Date endDate,Accommodation accommodation) {
         this.id = id;
         this.startDate = startDate;

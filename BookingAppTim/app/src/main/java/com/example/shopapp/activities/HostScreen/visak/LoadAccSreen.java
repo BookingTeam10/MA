@@ -1,4 +1,4 @@
-package com.example.shopapp.activities.HostScreen;
+package com.example.shopapp.activities.HostScreen.visak;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.shopapp.R;
+import com.example.shopapp.activities.HostScreen.HostMainActivity;
 import com.example.shopapp.fragments.owner.new_accomodation.EditAccommodationActivity;
 
 public class LoadAccSreen extends AppCompatActivity {

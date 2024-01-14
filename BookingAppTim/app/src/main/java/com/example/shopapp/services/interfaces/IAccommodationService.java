@@ -5,6 +5,7 @@ import com.example.shopapp.model.accommodation.Accommodation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -52,6 +53,8 @@ public interface IAccommodationService {
     @POST("accommodations/add")
     Call<Accommodation> createAccommodation(@Body Accommodation accommodation);
 
-    @PUT("accommodations/{id}")
-    Call<Accommodation> updateAccommodation(@Body Accommodation accommodation,@Path("id") Long id);
+//    @PUT("accommodations/{id}")
+//    Call<Accommodation> updateAccommodation(@Body Accommodation accommodation,@Path("id") Long id);
+@PUT("accommodations/{id}")
+Call<Map<String, String>> updateAccommodation(@Body Accommodation accommodation, @Path("id") Long id);
 }

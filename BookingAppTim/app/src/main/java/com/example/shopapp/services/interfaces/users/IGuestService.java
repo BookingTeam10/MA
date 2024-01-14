@@ -7,7 +7,9 @@ import com.example.shopapp.model.accommodation.Accommodation;
 import com.example.shopapp.model.reservation.Reservation;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -23,6 +25,8 @@ public interface IGuestService {
     })
     @POST("guests/reservations")
     Call<ReservationDTO> createReservation(@Body Reservation reservation);
+//    @POST("guests/reservations")
+//    Call<ReservationDTO> createReservation(@Body RequestBody reservation);
 
     @POST("guests/{id}/favouriteAccommodations/add")
     Call<GuestDTO> addFavouriteAccommodation(@Path("id") Long id, @Body Accommodation accommodation);
@@ -38,4 +42,7 @@ public interface IGuestService {
 
     @GET("guests/{id}/favouriteAccommodations")
     Call<ArrayList<AccommodationDTO>> getFavouriteAccommodation(@Path("id") Long id);
+
+    @GET(value = "guests/{idGuest}/not-accepted-requests")
+    Call<ArrayList<ReservationDTO>> notAcceptedReservationByGuest(@Path("idGuest") Long idGuest);
 }
