@@ -6,11 +6,12 @@ import com.example.shopapp.model.reservation.Reservation;
 import com.example.shopapp.model.review.Review;
 import com.example.shopapp.model.user.Guest;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class ReservationDTO {
+public class ReservationDTO implements Serializable {
     private long id;
     private double totalPrice;
     private ReservationStatus status;

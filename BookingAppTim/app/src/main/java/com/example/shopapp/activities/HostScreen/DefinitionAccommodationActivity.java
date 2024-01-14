@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -279,17 +280,17 @@ public class DefinitionAccommodationActivity extends AppCompatActivity {
 
                 //slati ovo na put
 
-                Call<Accommodation> call = ServiceUtils.accommodationService.updateAccommodation(accommodation,accommodation.getId());
+                Call<Map<String, String>> call = ServiceUtils.accommodationService.updateAccommodation(accommodation,accommodation.getId());
 
-                call.enqueue(new Callback<Accommodation>() {
+                call.enqueue(new Callback<Map<String, String>>() {
                     @Override
-                    public void onResponse(Call<Accommodation> call, Response<Accommodation> response) {
+                    public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
                         Log.d("RESPONSE CODE AAA","A");
                         if (response.code() == 200){
-                            Log.d("REZ","Meesage recieved");
-                            System.out.println(response.body());
-                            Accommodation accommodation1 = response.body();
-                            System.out.println(accommodation1);
+                            Log.d("pogodi puT","POGODI PUT");
+//                            System.out.println(response.body());
+//                            Accommodation accommodation1 = response.body();
+//                            System.out.println(accommodation1);
                             //getActivity().getSupportFragmentManager().popBackStack();
                         }else{
                             Log.d("REZ","Meesage recieved: "+response.code());
@@ -297,7 +298,7 @@ public class DefinitionAccommodationActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<Accommodation> call, Throwable t) {
+                    public void onFailure(Call<Map<String, String>> call, Throwable t) {
                         Log.d("REZ", t.getMessage() != null?t.getMessage():"error");
                     }
                 });

@@ -2,9 +2,14 @@ package com.example.shopapp.adapters;
 
 
 
+import static com.google.maps.android.Context.getApplicationContext;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +38,7 @@ import com.example.shopapp.model.accommodation.Accommodation;
 import com.example.shopapp.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -92,8 +98,29 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
         Button editButton=convertView.findViewById(R.id.button_edit);
 
         if(accommodation != null){
-            Log.i("ACCOMMODATION IMAGE",String.valueOf(accommodation.getImage()));
-            imageView.setImageResource(accommodation.getImage());
+            List<String> photos = accommodation.getPhotos();
+
+            String firstPhoto = accommodation.getPhotos().get(0);
+
+//            String apartmentId = "R.id.apartment2"; // String koji predstavlja resursni identifikator
+//            int resourceId = 0; // Inicijalno postavljamo na 0
+//            Log.i("AAAA", String.valueOf(convertView));
+//            Log.i("BBBB", String.valueOf(getContext().getPackageName()));
+//            try {
+//                // Pokušavamo da dobijemo resursni identifikator
+//                resourceId = convertView.getResources().getIdentifier("apartment2.jpeg", "p", getContext().getPackageName());
+//            } catch (Exception e) {
+//                // U slučaju greške (npr. ako apartmentId nije validan), resourceId će ostati 0
+//            }
+//            Log.d("PRVA SLIKA", String.valueOf(resourceId));
+//            if (resourceId != 0) {
+//                // Postavljamo resursni identifikator na odgovarajući View ili resurs
+//                imageView.setImageResource(resourceId);
+//                // Možete nastaviti raditi sa imageView ili drugim resursima
+//            } else {
+//                // Handlujemo slučaj kada resursni identifikator nije pronađen
+//            }
+
             productTitle.setText(accommodation.getName());
             productDescription.setText(accommodation.getDescription());
             productCard.setOnClickListener(v -> {

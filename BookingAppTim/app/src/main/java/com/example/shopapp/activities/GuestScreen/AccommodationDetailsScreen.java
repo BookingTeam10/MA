@@ -11,12 +11,15 @@ import android.widget.Button;
 
 import com.example.shopapp.R;
 import com.example.shopapp.activities.MapsActivity;
+import com.example.shopapp.adapters.CommentsListAdapter;
 import com.example.shopapp.adapters.MyReservationListAdapter;
 import com.example.shopapp.model.accommodation.Accommodation;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,12 +38,15 @@ import com.example.shopapp.model.accommodation.Accommodation;
 import com.example.shopapp.model.accommodation.Amenity;
 import com.example.shopapp.model.reservation.Reservation;
 import com.example.shopapp.model.review.Review;
+import com.example.shopapp.model.user.Guest;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,6 +56,7 @@ public class AccommodationDetailsScreen extends AppCompatActivity {
     private AccommodationDetailsViewModel viewModel;
     ArrayList<ReservationDTO> reservationDTOS = new ArrayList<>();
     ArrayList<Review> reviews = new ArrayList<>();
+    RecyclerView recyclerView = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,12 +79,15 @@ public class AccommodationDetailsScreen extends AppCompatActivity {
         }
         textViewAmenity.setText("Amenity: " + amenitiesBuilder.toString());
 
+        recyclerView = findViewById(R.id.recyclerViewComment);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         double price = 0;
         if (accommodation.getPrices() != null && !accommodation.getPrices().isEmpty()) {
             price = accommodation.getPrices().get(0).getPrice(); // Pretpostavka da postoji getPrice metoda
         }
         textViewPrice.setText("Cena za 1 noćenje je " + price);
-        //loadReservations(accommodation);
+        loadReservations(accommodation);
 
 
         Button mapButton = findViewById(R.id.buttonMapsAAA);
@@ -107,7 +117,11 @@ public class AccommodationDetailsScreen extends AppCompatActivity {
                 Calendar endCal = Calendar.getInstance();
                 endCal.set(2025, Calendar.JANUARY, 15);
                 Date endDate = endCal.getTime();
-                Reservation reservation = new Reservation(100L, 100, ReservationStatus.WAITING, null, null, 1, accommodation, null);
+
+                List<Review> reviews = new ArrayList<>();
+                reviews.add(new Review());
+                Reservation reservation = new Reservation(100L, 100, ReservationStatus.WAITING, null, null, 1, accommodation, new Guest(3L),reviews);
+                Log.d("REZERVACIJA",reservation.toString());
 
                 Toast.makeText(AccommodationDetailsScreen.this, "Book now clicked!", Toast.LENGTH_SHORT).show();
                 Call<ReservationDTO> call = ServiceUtils.guestService.createReservation(reservation);
@@ -115,11 +129,15 @@ public class AccommodationDetailsScreen extends AppCompatActivity {
                 call.enqueue(new Callback<ReservationDTO>() {
                     @Override
                     public void onResponse(Call<ReservationDTO> call, Response<ReservationDTO> response) {
-                        if (!response.isSuccessful()) {
-                            Log.d("FAIL", "FAIL");
+                        Log.d("RESPONSE", String.valueOf(response.code()));
+                        Log.d("RESPONSE", String.valueOf(response.body()));
+                        if (response.isSuccessful()) {
+                            Toast.makeText(AccommodationDetailsScreen.this, "Request is created", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Log.d("FINISH", "Successfully finished ");
+                        else{
+                            Toast.makeText(AccommodationDetailsScreen.this, "Request is not created", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
@@ -129,23 +147,8 @@ public class AccommodationDetailsScreen extends AppCompatActivity {
                 });
             }
         });
-//        viewModel = new ViewModelProvider(this).get(AccommodationDetailsViewModel.class);
-//
-//        viewModel.getReservations().observe(this, reservationDTOS -> {
-//            // Ažurirajte globalnu promenljivu i UI
-//            reservations = new ArrayList<>(reservationDTOS);
-//            // Ovde ažurirajte UI sa listom rezervacija
-//            Log.d("RESERVATIONS UCITANO", reservations.toString());
-//            // Nakon što su rezervacije učitane, pokrenite učitavanje recenzija
-//            viewModel.loadReviews(reservations);
-//        });
-//
-//// Posmatrajte LiveData za recenzije
-//        viewModel.getReviewsLiveData().observe(this, reviewsLoad -> {
-//            // Ažurirajte globalnu promenljivu i UI
-//            reviews = new ArrayList<>(reviewsLoad);
-//            // Ovde ažurirajte UI sa listom recenzija
-//            Log.d("REVIEWS UCITANO", reviews.toString());
+
+
     }
 
     private void loadReservations(Accommodation accommodation){
@@ -156,7 +159,6 @@ public class AccommodationDetailsScreen extends AppCompatActivity {
                 if (response.code() == 200){
                     System.out.println(response.body());
                     reservationDTOS = response.body();
-                    Log.i("NAPUNI ", String.valueOf(reservationDTOS.size()));
                     loadReviews();
                 }
             }
@@ -168,18 +170,19 @@ public class AccommodationDetailsScreen extends AppCompatActivity {
     }
 
     private void loadReviews(){
-        Log.i("NE UDJE U 200", String.valueOf(reservationDTOS.size()));
         for(ReservationDTO reservationDTO:reservationDTOS){
 
             Call<Review> call = ServiceUtils.reviewService.getReviewByReservationId(reservationDTO.getId());
             call.enqueue(new Callback<Review>() {
                 @Override
                 public void onResponse(Call<Review> call, Response<Review> response) {
-                    Log.i("NE UDJE U 200",response.body().toString());
                     if (response.code() == 200){
-                        Log.i("UDJE U 200",response.body().toString());
                         System.out.println(response.body());
                         reviews.add(response.body());
+
+                        CommentsListAdapter adapter = new CommentsListAdapter(reviews);
+                        recyclerView.setAdapter(adapter);
+
 
                     }
                 }

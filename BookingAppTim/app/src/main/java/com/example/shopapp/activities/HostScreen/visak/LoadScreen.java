@@ -1,4 +1,4 @@
-package com.example.shopapp.activities.HostScreen;
+package com.example.shopapp.activities.HostScreen.visak;
 
 import android.os.Bundle;
 import android.util.Log;

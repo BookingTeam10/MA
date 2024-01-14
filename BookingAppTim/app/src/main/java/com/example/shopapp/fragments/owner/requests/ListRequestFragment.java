@@ -51,8 +51,8 @@ public class ListRequestFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //ovo prepraviti u nas slucaj
-       getGuestRequests();
+
+        getOwnersRequest();
         buttonSearch.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -66,10 +66,10 @@ public class ListRequestFragment extends Fragment {
         return view;
     }
 
-    private void getGuestRequests(){
+    private void getOwnersRequest(){
         reservationList = new ArrayList<>();
         //ovo ispraviti, treba da bude za ownera
-        Call<ArrayList<ReservationDTO>> call = ServiceUtils.guestService.allGuestRequests(3L);
+        Call<ArrayList<ReservationDTO>> call = ServiceUtils.ownerService.getOwnersRequests(1L);
         call.enqueue(new Callback<ArrayList<ReservationDTO>>() {
             @Override
             public void onResponse(Call<ArrayList<ReservationDTO>> call, Response<ArrayList<ReservationDTO>> response) {

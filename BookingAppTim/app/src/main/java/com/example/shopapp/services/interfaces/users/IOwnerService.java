@@ -30,4 +30,7 @@ public interface IOwnerService {
                                              @Query("start") String start,
                                              @Query("end") String end);
 
+    @GET("owners/{idOwner}/requestsReservations")
+    Call<ArrayList<ReservationDTO>> getOwnersRequests(@Path("idOwner") Long idOwner);
+
 }

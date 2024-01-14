@@ -69,7 +69,7 @@ public class GuestMainActivity extends AppCompatActivity {
             if (lightValue < nightModeThreshold) {
                 Log.d("UDJE U SENZOR","UDJE U SENZOR");
                 // Aktivirajte noćni režim
-               setTheme(R.style.ShopApp);
+               //setTheme(R.style.ShopApp);
                // recreate();
 
             }
@@ -199,10 +199,11 @@ public class GuestMainActivity extends AppCompatActivity {
                     }
                     if (item.getItemId() == homeMenuItem.getItemId()) {
                         includedLayout.setVisibility(View.GONE);
-                        //AccomodationsPageFragment fragment = new AccomodationsPageFragment();
-                        AccomodationsListFragment fragment = new AccomodationsListFragment();
+                        //AccomodationsPageFragment fragment1 = new AccomodationsPageFragment();
+                        AccomodationsListFragment fragment2 = new AccomodationsListFragment();
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.fragment_container, fragment);
+                        transaction.replace(R.id.fragment_container, fragment2);
+                        //transaction.replace(R.id.fragment_container, fragment2);
                         transaction.addToBackStack(null);
                         transaction.commit();
                         return true;

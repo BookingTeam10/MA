@@ -121,12 +121,10 @@ public class AccomodationsListFragment extends ListFragment implements SensorEve
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        //Spinner spinner = requireActivity().findViewById(R.id.btnSort);
 
         if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 
             long curTime = System.currentTimeMillis();
-            // only allow one update every 100ms.
             if ((curTime - lastUpdate) > 200) {
                 long diffTime = (curTime - lastUpdate);
                 lastUpdate = curTime;
@@ -137,7 +135,6 @@ public class AccomodationsListFragment extends ListFragment implements SensorEve
                 float z = values[2];
 
                 float speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
-                Log.d("ACCOMMODATION SENZOR", accommodations.toString());
                 if (speed > SHAKE_THRESHOLD) {
                     if (accommodations != null) {
                         ArrayList<Accommodation> newList = new ArrayList<>();
@@ -159,7 +156,7 @@ public class AccomodationsListFragment extends ListFragment implements SensorEve
                     }
                 }
 
-                Log.d("REZ", "shake detected w/ speed: " + speed);
+                //Log.d("REZ", "shake detected w/ speed: " + speed);
 
                 last_x = x;
                 last_y = y;
