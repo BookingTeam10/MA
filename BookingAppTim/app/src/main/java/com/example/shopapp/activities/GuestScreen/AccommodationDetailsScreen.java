@@ -40,10 +40,13 @@ import com.example.shopapp.model.reservation.Reservation;
 import com.example.shopapp.model.review.Review;
 import com.example.shopapp.model.user.Guest;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -112,7 +115,16 @@ public class AccommodationDetailsScreen extends AppCompatActivity {
                 Calendar startCal = Calendar.getInstance();
                 startCal.set(2025, Calendar.JANUARY, 1);
                 Date startDate = startCal.getTime();
+                SimpleDateFormat originalFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss 'CET' yyyy", Locale.ENGLISH);
+                originalFormat.setTimeZone(TimeZone.getTimeZone("CET"));
 
+                Date date = null;
+                try {
+                    date = originalFormat.parse("Wed Jan 01 18:24:20 CET 2025");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Log.i("DATUM FORMAT", String.valueOf(date));
                 // Postavljanje kalendara na krajnji datum
                 Calendar endCal = Calendar.getInstance();
                 endCal.set(2025, Calendar.JANUARY, 15);
@@ -120,7 +132,7 @@ public class AccommodationDetailsScreen extends AppCompatActivity {
 
                 List<Review> reviews = new ArrayList<>();
                 reviews.add(new Review());
-                Reservation reservation = new Reservation(100L, 100, ReservationStatus.WAITING, null, null, 1, accommodation, new Guest(3L),reviews);
+                Reservation reservation = new Reservation(100L, 100, ReservationStatus.WAITING, endDate, endDate, 1, accommodation, new Guest(3L),reviews);
                 Log.d("REZERVACIJA",reservation.toString());
 
                 Toast.makeText(AccommodationDetailsScreen.this, "Book now clicked!", Toast.LENGTH_SHORT).show();
