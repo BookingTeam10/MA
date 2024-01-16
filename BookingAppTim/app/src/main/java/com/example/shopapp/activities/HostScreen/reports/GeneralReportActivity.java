@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +30,7 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,6 +42,8 @@ import retrofit2.Response;
 
 public class GeneralReportActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
+    BarChart barChart;
+    BarChart barChart2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,8 +90,8 @@ public class GeneralReportActivity extends AppCompatActivity {
     //imacemo 2 grafa, 1 za pare a 1 za br rezervacije
     private void updateChart(ArrayList<Report> reports) {
 
-        BarChart barChart = findViewById(R.id.chartGeneralReport);
-        BarChart barChart2 = findViewById(R.id.chartGeneralReport2);
+        barChart = findViewById(R.id.chartGeneralReport);
+        barChart2 = findViewById(R.id.chartGeneralReport2);
         List<BarEntry> entries = new ArrayList<>();
         List<BarEntry> entries2 = new ArrayList<>();
 
@@ -139,24 +144,34 @@ public class GeneralReportActivity extends AppCompatActivity {
         Canvas canvas = page.getCanvas();
         Paint paint = new Paint();
         paint.setColor(Color.BLACK);
-        canvas.drawText("Testiranje generisanja PDF-a", 10, 25, paint);
+        //canvas.drawText("Testiranje generisanja PDF-a", 10, 25, paint);
+        Bitmap chartBitmap = getChartBitmap(barChart);
+        Bitmap chartBitmap2 = getChartBitmap(barChart2);
+
+        drawChartOnPdfPage(page, chartBitmap, 0, 0); // Koordinate x i y su primeri
+        drawChartOnPdfPage(page, chartBitmap2, 50, 400); // Koordinate x i y su primeri
 
         // Završite stranicu
         pdfDocument.finishPage(page);
 
+        //String fileName = "test.pdf";
 
-        String fileName = "test.pdf";
-        File file = new File(getFilesDir(), fileName); // Koristite interni direktorijum aplikacije
-
+        File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        String fileName = "general_report.pdf";
+        File file = new File(downloadsDir, fileName);
         try {
-            pdfDocument.writeTo(new FileOutputStream(file));
-            Toast.makeText(this, "PDF je generisan. Putanja: " + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+            FileOutputStream fos = new FileOutputStream(file);
+            pdfDocument.writeTo(fos);
+            pdfDocument.close();
+            fos.close();
+            Toast.makeText( this,  "Written Successful", Toast.LENGTH_SHORT).show();
+        } catch (FileNotFoundException e) {
+            Log.d( "mylog",  "Error while writing " + e.toString());
+            throw new RuntimeException(e);
         } catch (IOException e) {
-            Log.e("PDF Generation", "error " + e.toString());
-            Toast.makeText(this, "Greška: " + e.toString(),  Toast.LENGTH_LONG).show();
+            throw new RuntimeException(e);
         }
 
-        // Zatvorite dokument
         pdfDocument.close();
     }
 
@@ -170,6 +185,21 @@ public class GeneralReportActivity extends AppCompatActivity {
                 Toast.makeText(this, "Dozvola odbijena", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private Bitmap getChartBitmap(BarChart chart) {
+        // Uzmi BarChart i konvertuj ga u Bitmap
+        chart.setDrawingCacheEnabled(true);
+        chart.buildDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(chart.getDrawingCache());
+        chart.setDrawingCacheEnabled(false);
+        return bitmap;
+    }
+
+    // Ova funkcija crta Bitmap na PDF stranici
+    private void drawChartOnPdfPage(PdfDocument.Page page, Bitmap chartBitmap, float x, float y) {
+        Canvas canvas = page.getCanvas();
+        canvas.drawBitmap(chartBitmap, x, y, null);
     }
 
 }

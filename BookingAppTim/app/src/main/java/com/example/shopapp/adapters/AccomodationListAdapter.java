@@ -2,9 +2,14 @@ package com.example.shopapp.adapters;
 
 
 
+import static com.google.maps.android.Context.getApplicationContext;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +30,7 @@ import com.example.shopapp.activities.GuestScreen.AccommodationDetailsScreen;
 import com.example.shopapp.activities.HostScreen.reports.AccommodationReportActivity;
 import com.example.shopapp.activities.HostScreen.DefinitionAccommodationActivity;
 import com.example.shopapp.configuration.ServiceUtils;
+import com.example.shopapp.dto.AccommodationDTO;
 import com.example.shopapp.dto.GuestDTO;
 import com.example.shopapp.fragments.guest.favourite_accomodations.FavouriteAccommodationPageViewModel;
 import com.example.shopapp.fragments.guest.favourite_accomodations.FavouriteAccommodationsListFragment;
@@ -33,6 +39,7 @@ import com.example.shopapp.model.accommodation.Accommodation;
 import com.example.shopapp.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,6 +49,8 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
     private ArrayList<Accommodation> aAccomodation;
     private FragmentManager fragmentManager;
     private FavouriteAccommodationPageViewModel productsViewModel;
+    private ArrayList<AccommodationDTO> favouriteAccommodations;
+
 
     public AccomodationListAdapter(Context context, FragmentManager supportFragmentManager, ArrayList<Accommodation> accomodations){
         super(context, R.layout.accomodation_card, accomodations);
@@ -91,8 +100,13 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
 
         Button editButton=convertView.findViewById(R.id.button_edit);
 
+        getFavouriteAccommodations();
+
         if(accommodation != null){
-            imageView.setImageResource(accommodation.getImage());
+            List<String> photos = accommodation.getPhotos();
+
+            String firstPhoto = accommodation.getPhotos().get(0);
+
             productTitle.setText(accommodation.getName());
             productDescription.setText(accommodation.getDescription());
             productCard.setOnClickListener(v -> {
@@ -112,8 +126,8 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
                 imageButton.setVisibility(View.INVISIBLE);
             }
 
-
             imageButton.setOnClickListener(v -> {
+
                 v.setSelected(!v.isSelected());
                 addFavouriteAccommodation(accommodation,v.isSelected());
 
@@ -146,12 +160,10 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
         return convertView;
     }
 
-    //pokusati izbaciti iz adaptera i treba azurirati accommodation
     private void addFavouriteAccommodation(Accommodation accommodation, boolean isSelected) {
         //add favourite
         if (isSelected) {
-            Call<GuestDTO> call = ServiceUtils.guestService.addFavouriteAccommodation(3L,accommodation);
-
+            Call<GuestDTO> call = ServiceUtils.guestService.addFavouriteAccommodation(3L,accommodation.getId());
             call.enqueue(new Callback<GuestDTO>() {
                 @Override
                 public void onResponse(Call<GuestDTO> call, Response<GuestDTO> response) {
@@ -180,7 +192,7 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
                         //Toast.makeText(getActivity(), "Something went wrong!", Toast.LENGTH_SHORT).show();
                         return;
                     }
-
+                    GuestDTO guestDTO = response.body();
                 }
                 @Override
                 public void onFailure(Call<GuestDTO> call, Throwable t) {
@@ -188,6 +200,26 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
                 }
             });
         }
+    }
+
+    private void getFavouriteAccommodations() {
+            favouriteAccommodations = new ArrayList<>();
+            Call<ArrayList<AccommodationDTO>> call = ServiceUtils.guestService.getFavouriteAccommodation(3L);
+            call.enqueue(new Callback<ArrayList<AccommodationDTO>>() {
+                @Override
+                public void onResponse(Call<ArrayList<AccommodationDTO>> call, Response<ArrayList<AccommodationDTO>> response) {
+                    if (response.code() == 200){
+                        System.out.println(response.body());
+                        Log.i("AZURIRANO",response.body().toString());
+                        favouriteAccommodations = response.body();
+                        Log.i("FAVOURITE GET",favouriteAccommodations.toString());
+                    }
+                }
+                @Override
+                public void onFailure(Call<ArrayList<AccommodationDTO>> call, Throwable t) {
+                    Log.d("REZ123", t.getMessage() != null?t.getMessage():"error");
+                }
+            });
     }
 
 }

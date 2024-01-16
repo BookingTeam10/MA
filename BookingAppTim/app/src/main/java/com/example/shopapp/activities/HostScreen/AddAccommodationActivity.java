@@ -9,6 +9,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.shopapp.R;
+import com.example.shopapp.activities.HostScreen.visak.LoadAccSreen;
 
 public class AddAccommodationActivity extends AppCompatActivity {
 
@@ -30,8 +31,6 @@ public class AddAccommodationActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
 
     }
     @Override

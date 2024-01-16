@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.shopapp.activities.HostScreen.LoadScreen;
+import com.example.shopapp.activities.HostScreen.visak.LoadScreen;
 import com.example.shopapp.databinding.FragmentAddAccommodationBinding;
 
 /**

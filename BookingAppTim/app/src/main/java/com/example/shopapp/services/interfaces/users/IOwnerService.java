@@ -44,4 +44,8 @@ public interface IOwnerService {
 
     @DELETE("owners/{id}")
     Call deleteOwner(@Path("id") Long id);
+
+    @GET("owners/{idOwner}/requestsReservations")
+    Call<ArrayList<ReservationDTO>> getOwnersRequests(@Path("idOwner") Long idOwner);
+
 }

@@ -5,6 +5,7 @@ import com.example.shopapp.model.accommodation.Accommodation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -38,8 +39,8 @@ public interface IAccommodationService {
     @GET("accommodations/accommodationsSearch")
     Call<ArrayList<Accommodation>>  getSearchedAccommodations(
             @Query("location") String location,
-            @Query("start") String start, // Datum formatiran kao String
-            @Query("end") String end,     // Datum formatiran kao String
+            @Query("start") String start,
+            @Query("end") String end,
             @Query("numPeople") Integer numPeople,
             @Query("minPrice") String minPrice,
             @Query("maxPrice") String maxPrice,
@@ -52,6 +53,8 @@ public interface IAccommodationService {
     @POST("accommodations/add")
     Call<Accommodation> createAccommodation(@Body Accommodation accommodation);
 
-    @PUT("accommodations/{id}")
-    Call<Accommodation> updateAccommodation(@Body Accommodation accommodation,@Path("id") Long id);
+//    @PUT("accommodations/{id}")
+//    Call<Accommodation> updateAccommodation(@Body Accommodation accommodation,@Path("id") Long id);
+@PUT("accommodations/{id}")
+Call<Map<String, String>> updateAccommodation(@Body Accommodation accommodation, @Path("id") Long id);
 }

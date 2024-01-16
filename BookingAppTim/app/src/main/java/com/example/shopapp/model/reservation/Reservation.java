@@ -11,13 +11,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Reservation implements Serializable {
 
     private long id;
     private double totalPrice;
     private ReservationStatus status;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date startDate;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date endDate;
     private int numberOfNights = 1;
     private Accommodation accommodation;
@@ -37,6 +41,18 @@ public class Reservation implements Serializable {
         this.guest = guest;
         this.numberOfNights = numberOfNights;
         this.reviews = new ArrayList<>();
+    }
+
+    public Reservation( Long id,int totalPrice,ReservationStatus reservationStatus, Date startDate, Date endDate,int numberOfNights,Accommodation accommodation,Guest guest,List<Review> reviews) {
+        this.id = id;
+        this.totalPrice = totalPrice;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = reservationStatus;
+        this.accommodation = accommodation;
+        this.guest = guest;
+        this.numberOfNights = numberOfNights;
+        this.reviews = reviews;
     }
 
     public Reservation( Long id, Date startDate, Date endDate,Accommodation accommodation) {
@@ -154,6 +170,4 @@ public class Reservation implements Serializable {
 
     public void copyValues(Reservation reservation) {
     }
-
-
 }

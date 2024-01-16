@@ -1,37 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
-
-    <TextView
-        android:id="@+id/tvHotelName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="Aparment 1"
-        android:textSize="24sp"
-        android:textStyle="bold"/>
-
-    <!-- Centralno pozicionirana slika hotela -->
-    <ImageView
-        android:id="@+id/ivHotel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvHotelName"
-        android:layout_centerInParent="true"
-        android:src="@drawable/apartment1"
-        android:contentDescription="abc"/>
-
-    <!-- Tekstualni opis ispod slike -->
-    <TextView
-        android:id="@+id/tvHotelDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivHotel"
-        android:layout_marginTop="16dp"
-        android:text="@string/description_apartment"
-        android:textSize="16sp"/>
 
     <LinearLayout
         android:id="@+id/linearLayoutPrice"
@@ -41,17 +12,69 @@
         android:orientation="vertical"
         android:padding="10dp">
         <TextView
+            android:id="@+id/tvHotelName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Aparment 1"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:id="@+id/ivHotel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvHotelName"
+            android:layout_centerInParent="true"
+            android:src="@drawable/apartment1" />
+
+        <TextView
+            android:id="@+id/tvHotelDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivHotel"
+            android:layout_marginTop="16dp"
+            android:text="@string/description_apartment"
+            android:textSize="16sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvHotelDescription"
+            android:layout_above="@+id/linearLayoutPrice"
+            android:layout_marginTop="8dp"/>
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Number guests"/>
+
+        <CalendarView
+            android:id="@+id/calendarViewStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <!-- Drugi CalendarView -->
+        <CalendarView
+            android:id="@+id/calendarViewEnd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
             android:id="@+id/textViewAmenity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Amenity: WIFI"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
+
         <Button
             android:id="@+id/buttonMapsAAA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/view_map" />
+            android:text="@string/view_map"/>
 
         <TextView
             android:id="@+id/textViewPrice"
@@ -59,13 +82,14 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Cena za 1 noćenje je 3000"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
         <Button
             android:id="@+id/buttonBook"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/book_now" />
+            android:text="@string/book_now"/>
 
     </LinearLayout>
-</RelativeLayout>
+
+</ScrollView>

@@ -38,7 +38,9 @@ public class RequestFragment extends Fragment {
     private RecyclerView recyclerViewGuest;
     private ReservationListAdapter adapter;
     private List<Reservation> reservationList;
+    private List<Reservation> reservationList2;
     private List<ReservationDTO> reservationDTOS;
+    private List<ReservationDTO> reservationDTOS2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,7 +66,17 @@ public class RequestFragment extends Fragment {
         recyclerViewGuest.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         getGuestRequests();
+        getDeleteRequests();
 
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Log.i("UDjE OVDE","UDJE OVDE");
+                String selectedStatus = spinnerRequestStatus.getSelectedItem().toString();
+                searchRequests(nameAccommodation,selectedStatus);
+            }
+        });
 
         return view;
     }
@@ -81,8 +93,8 @@ public class RequestFragment extends Fragment {
                     for(ReservationDTO reservationDTO : reservationDTOS){
                         reservationList.add(new Reservation(reservationDTO));
                     }
-                    ReservationListAdapter adapter1 = new ReservationListAdapter(reservationList,true);
-                    recyclerView.setAdapter(adapter1);
+                    //ReservationListAdapter adapter1 = new ReservationListAdapter(reservationList,true);
+                    //recyclerView.setAdapter(adapter1);
 
                     ReservationListAdapter adapter2 = new ReservationListAdapter(reservationList,false);
                     //OBIRSATI OBAVEZNO KAD DOBAVIM NOV GET
@@ -96,5 +108,62 @@ public class RequestFragment extends Fragment {
             }
         });
 
+    }
+
+    private void getDeleteRequests(){
+        reservationList2 = new ArrayList<>();
+        Call<ArrayList<ReservationDTO>> call = ServiceUtils.guestService.notAcceptedReservationByGuest(3L);
+        Log.d("CALL", call.toString());
+        call.enqueue(new Callback<ArrayList<ReservationDTO>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ReservationDTO>> call, Response<ArrayList<ReservationDTO>> response) {
+                if (response.code() == 200){
+                    reservationDTOS2 = response.body();
+                    for(ReservationDTO reservationDTO : reservationDTOS2){
+                        reservationList2.add(new Reservation(reservationDTO));
+                    }
+                    ReservationListAdapter adapter1 = new ReservationListAdapter(reservationList2,true);
+                    recyclerView.setAdapter(adapter1);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ReservationDTO>> call, Throwable t) {
+                Log.d("REZ", t.getMessage() != null?t.getMessage():"error");
+            }
+        });
+
+    }
+
+    private void searchRequests(String nameAccommodation, String selectedStatus) {
+        adapter = new ReservationListAdapter(reservationList2,false);
+        Call<ArrayList<ReservationDTO>> call = ServiceUtils.ownerService.searchedRequests(selectedStatus,"","",nameAccommodation,1L);
+        call.enqueue(new Callback<ArrayList<ReservationDTO>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ReservationDTO>> call, Response<ArrayList<ReservationDTO>> response) {
+                if (response.code() == 200){
+                    Log.i("UDJE U RESPONSE BODY SEARCH",response.body().toString());
+                    reservationDTOS2 = response.body();
+                    reservationList2.clear();
+                    for(ReservationDTO reservationDTO : reservationDTOS2){
+                        reservationList2.add(new Reservation(reservationDTO));
+                    }
+                    if(adapter != null) {
+                        adapter.notifyDataSetChanged();
+                        adapter = new ReservationListAdapter(reservationList2);
+                        recyclerViewGuest.setAdapter(adapter);
+                    } else {
+                        // Ako adapter nije prethodno postavljen, kreirajte ga i postavite
+                        adapter = new ReservationListAdapter(reservationList2);
+                        recyclerViewGuest.setAdapter(adapter);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<ArrayList<ReservationDTO>> call, Throwable t) {
+                Log.d("REZ", t.getMessage() != null?t.getMessage():"error");
+            }
+        });
     }
 }

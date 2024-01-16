@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,17 +40,12 @@ import retrofit2.Response;
 
 public class DefinitionAccommodationActivity extends AppCompatActivity {
 
-
-    int redKolone=0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_definition_accommodation);
         Accommodation accommodation = getIntent().getParcelableExtra("accommodation");
         if (accommodation != null) {
-            Log.d("USLOOOOOOOO","ACCCCCCCCCcc");
-            Log.d("PROSLEDJENO",accommodation.toString());
             EditText weekendText = findViewById(R.id.WeekendText);
             EditText holidayText = findViewById(R.id.HolidayText);
             EditText summerText = findViewById(R.id.SummerText);
@@ -81,16 +77,12 @@ public class DefinitionAccommodationActivity extends AppCompatActivity {
             }
         }
 
-        //addPriceDate
-
         Button addPriceDatebutton=findViewById(R.id.addPriceDateDefinition);
 
         Button editDefinitionbutton=findViewById(R.id.editAccommodationDefinition);
 
-
         List<Price> priceList=accommodation.getPrices();
 
-        Log.d("PRICES LIST", String.valueOf(priceList.size()));
 
         TableLayout tableLayout = findViewById(R.id.tableDefinition);
 
@@ -129,17 +121,14 @@ public class DefinitionAccommodationActivity extends AppCompatActivity {
 
             tableRow.setTag(price.getId());
 
-            // Dodavanje TextView za datum početka
             TextView startDateView = new TextView(this);
             startDateView.setText(DateFormat.format("dd-MM-yyyy", price.getStartDate()));
             startDateView.setPadding(4, 4, 4, 4);
 
-            // Dodavanje TextView za datum završetka
             TextView endDateView = new TextView(this);
             endDateView.setText(DateFormat.format("dd-MM-yyyy", price.getEndDate()));
             endDateView.setPadding(4, 4, 4, 4);
 
-            // Dodavanje TextView za cenu
             TextView priceView = new TextView(this);
             priceView.setText(String.valueOf(price.getPrice()));
             priceView.setPadding(4, 4, 4, 4);
@@ -279,17 +268,17 @@ public class DefinitionAccommodationActivity extends AppCompatActivity {
 
                 //slati ovo na put
 
-                Call<Accommodation> call = ServiceUtils.accommodationService.updateAccommodation(accommodation,accommodation.getId());
+                Call<Map<String, String>> call = ServiceUtils.accommodationService.updateAccommodation(accommodation,accommodation.getId());
 
-                call.enqueue(new Callback<Accommodation>() {
+                call.enqueue(new Callback<Map<String, String>>() {
                     @Override
-                    public void onResponse(Call<Accommodation> call, Response<Accommodation> response) {
+                    public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
                         Log.d("RESPONSE CODE AAA","A");
                         if (response.code() == 200){
-                            Log.d("REZ","Meesage recieved");
-                            System.out.println(response.body());
-                            Accommodation accommodation1 = response.body();
-                            System.out.println(accommodation1);
+                            Log.d("pogodi puT","POGODI PUT");
+//                            System.out.println(response.body());
+//                            Accommodation accommodation1 = response.body();
+//                            System.out.println(accommodation1);
                             //getActivity().getSupportFragmentManager().popBackStack();
                         }else{
                             Log.d("REZ","Meesage recieved: "+response.code());
@@ -297,7 +286,7 @@ public class DefinitionAccommodationActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<Accommodation> call, Throwable t) {
+                    public void onFailure(Call<Map<String, String>> call, Throwable t) {
                         Log.d("REZ", t.getMessage() != null?t.getMessage():"error");
                     }
                 });
