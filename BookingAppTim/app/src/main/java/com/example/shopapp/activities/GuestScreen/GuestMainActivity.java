@@ -163,7 +163,6 @@ public class GuestMainActivity extends AppCompatActivity {
                         transaction.commit();
                         return true;
                     }
-
                     if (item.getItemId() == requestMenuItem.getItemId()) {
                         includedLayout.setVisibility(View.GONE);
                         RequestFragment fragment = new RequestFragment();
@@ -173,6 +172,7 @@ public class GuestMainActivity extends AppCompatActivity {
                         transaction.commit();
                         return true;
                     }
+
 
                     if (item.getItemId() == logOutMenuItem.getItemId()) {
                         Intent intent = new Intent(GuestMainActivity.this, LoginActivity.class);

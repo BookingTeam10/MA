@@ -1,8 +1,12 @@
 package com.example.shopapp.model.user;
 
+import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
-public class Owner extends User implements Serializable {
+public class Owner extends User implements Serializable, Parcelable {
     private double totalPrice;
     private double rating;
 
@@ -20,6 +24,30 @@ public class Owner extends User implements Serializable {
 
     public void setRateAccomodationNotification(boolean rateAccommodationNotification) {
         this.rateAccommodationNotification = rateAccommodationNotification;
+    }
+
+    public void setRateAccommodationNotification(boolean rateAccommodationNotification) {
+        this.rateAccommodationNotification = rateAccommodationNotification;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public boolean isCreatedNotification() {
+        return createdNotification;
+    }
+
+    public boolean isRateMeNotification() {
+        return rateMeNotification;
+    }
+
+    public boolean isCancelledNotification() {
+        return cancelledNotification;
+    }
+
+    public boolean isRateAccommodationNotification() {
+        return rateAccommodationNotification;
     }
 
     private boolean createdNotification;
@@ -92,6 +120,65 @@ public class Owner extends User implements Serializable {
     }
     public Long id() {
         return super.getId();
+    }
+
+
+    protected Owner(Parcel in) {
+        this.setEmail(in.readString());
+        this.setName(in.readString());
+        this.setSurname(in.readString());
+        this.setPhone(in.readString());
+        this.setAddress(in.readString());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            this.cancelledNotification = in.readBoolean();
+            this.createdNotification = in.readBoolean();
+            this.rateMeNotification = in.readBoolean();
+            this.rateAccommodationNotification = in.readBoolean();
+        }else{
+            this.cancelledNotification = Boolean.parseBoolean(in.readString());
+            this.createdNotification = Boolean.parseBoolean(in.readString());
+            this.rateMeNotification = Boolean.parseBoolean(in.readString());
+            this.rateAccommodationNotification = Boolean.parseBoolean(in.readString());
+        }
+    }
+
+    public final Creator<Owner> CREATOR = new Creator<Owner>() {
+        @Override
+        public Owner createFromParcel(Parcel in) {
+
+            return new Owner(in);
+        }
+
+        @Override
+        public Owner[] newArray(int size) {
+            return new Owner[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.getEmail());
+        dest.writeString(this.getName());
+        dest.writeString(this.getSurname());
+        dest.writeString(this.getPhone());
+        dest.writeString(this.getAddress());
+        dest.writeString(this.getPassword());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            dest.writeBoolean(this.cancelledNotification);
+            dest.writeBoolean(this.rateAccommodationNotification);
+            dest.writeBoolean(this.rateMeNotification);
+            dest.writeBoolean(this.createdNotification);
+        }else{
+            dest.writeString(String.valueOf(this.cancelledNotification));
+            dest.writeString(String.valueOf(this.rateAccommodationNotification));
+            dest.writeString(String.valueOf(this.rateMeNotification));
+            dest.writeString(String.valueOf(this.createdNotification));
+        }
     }
 
 }
