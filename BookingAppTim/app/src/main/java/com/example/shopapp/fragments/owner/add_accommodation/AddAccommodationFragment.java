@@ -119,7 +119,7 @@ public class AddAccommodationFragment extends Fragment {
         addAccommodationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("RateOwnerButton", "Dugme rateOwner je kliknuto.");
+                Log.d("Add accommodation", "Add accommodation");
                 EditText nameAccommodation = view.findViewById(R.id.nazivEditText);
                 String textName = nameAccommodation.getText().toString();
 
@@ -166,7 +166,6 @@ public class AddAccommodationFragment extends Fragment {
                 int intmaxPeople = Integer.parseInt(textmaxPeople);
 
 
-
                 RadioGroup radioGroup = view.findViewById(R.id.myRadioGroup);
                 int selectedId = radioGroup.getCheckedRadioButtonId();
                 if(selectedId==-1 || intminPeople>intmaxPeople){
@@ -179,9 +178,7 @@ public class AddAccommodationFragment extends Fragment {
                 }else{
                     RadioButton radioButton = view.findViewById(selectedId);
                     String selectedValue = radioButton.getText().toString();
-
                     TypeAccommodation type=TypeAccommodation.APARTMENT;
-
 
                     Accommodation accommodation=new Accommodation(100L,false,false,textDescribe,intminPeople,intmaxPeople,textName,photos,TypeAccommodation.APARTMENT,0,0,prices,takenDates,amenities,l,new Owner(1L),reservations,0,0,0,true, AccommodationStatus.CREATED);
                     Log.d("ACCOMMODATION DODATO",accommodation.toString());

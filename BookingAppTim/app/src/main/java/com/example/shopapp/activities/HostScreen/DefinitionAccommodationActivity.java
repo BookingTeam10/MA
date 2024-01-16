@@ -40,17 +40,12 @@ import retrofit2.Response;
 
 public class DefinitionAccommodationActivity extends AppCompatActivity {
 
-
-    int redKolone=0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_definition_accommodation);
         Accommodation accommodation = getIntent().getParcelableExtra("accommodation");
         if (accommodation != null) {
-            Log.d("USLOOOOOOOO","ACCCCCCCCCcc");
-            Log.d("PROSLEDJENO",accommodation.toString());
             EditText weekendText = findViewById(R.id.WeekendText);
             EditText holidayText = findViewById(R.id.HolidayText);
             EditText summerText = findViewById(R.id.SummerText);
@@ -82,16 +77,12 @@ public class DefinitionAccommodationActivity extends AppCompatActivity {
             }
         }
 
-        //addPriceDate
-
         Button addPriceDatebutton=findViewById(R.id.addPriceDateDefinition);
 
         Button editDefinitionbutton=findViewById(R.id.editAccommodationDefinition);
 
-
         List<Price> priceList=accommodation.getPrices();
 
-        Log.d("PRICES LIST", String.valueOf(priceList.size()));
 
         TableLayout tableLayout = findViewById(R.id.tableDefinition);
 
@@ -130,17 +121,14 @@ public class DefinitionAccommodationActivity extends AppCompatActivity {
 
             tableRow.setTag(price.getId());
 
-            // Dodavanje TextView za datum početka
             TextView startDateView = new TextView(this);
             startDateView.setText(DateFormat.format("dd-MM-yyyy", price.getStartDate()));
             startDateView.setPadding(4, 4, 4, 4);
 
-            // Dodavanje TextView za datum završetka
             TextView endDateView = new TextView(this);
             endDateView.setText(DateFormat.format("dd-MM-yyyy", price.getEndDate()));
             endDateView.setPadding(4, 4, 4, 4);
 
-            // Dodavanje TextView za cenu
             TextView priceView = new TextView(this);
             priceView.setText(String.valueOf(price.getPrice()));
             priceView.setPadding(4, 4, 4, 4);

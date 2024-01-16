@@ -30,6 +30,7 @@ import com.example.shopapp.activities.GuestScreen.AccommodationDetailsScreen;
 import com.example.shopapp.activities.HostScreen.reports.AccommodationReportActivity;
 import com.example.shopapp.activities.HostScreen.DefinitionAccommodationActivity;
 import com.example.shopapp.configuration.ServiceUtils;
+import com.example.shopapp.dto.AccommodationDTO;
 import com.example.shopapp.dto.GuestDTO;
 import com.example.shopapp.fragments.guest.favourite_accomodations.FavouriteAccommodationPageViewModel;
 import com.example.shopapp.fragments.guest.favourite_accomodations.FavouriteAccommodationsListFragment;
@@ -48,6 +49,8 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
     private ArrayList<Accommodation> aAccomodation;
     private FragmentManager fragmentManager;
     private FavouriteAccommodationPageViewModel productsViewModel;
+    private ArrayList<AccommodationDTO> favouriteAccommodations;
+
 
     public AccomodationListAdapter(Context context, FragmentManager supportFragmentManager, ArrayList<Accommodation> accomodations){
         super(context, R.layout.accomodation_card, accomodations);
@@ -97,29 +100,12 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
 
         Button editButton=convertView.findViewById(R.id.button_edit);
 
+        getFavouriteAccommodations();
+
         if(accommodation != null){
             List<String> photos = accommodation.getPhotos();
 
             String firstPhoto = accommodation.getPhotos().get(0);
-
-//            String apartmentId = "R.id.apartment2"; // String koji predstavlja resursni identifikator
-//            int resourceId = 0; // Inicijalno postavljamo na 0
-//            Log.i("AAAA", String.valueOf(convertView));
-//            Log.i("BBBB", String.valueOf(getContext().getPackageName()));
-//            try {
-//                // Pokušavamo da dobijemo resursni identifikator
-//                resourceId = convertView.getResources().getIdentifier("apartment2.jpeg", "p", getContext().getPackageName());
-//            } catch (Exception e) {
-//                // U slučaju greške (npr. ako apartmentId nije validan), resourceId će ostati 0
-//            }
-//            Log.d("PRVA SLIKA", String.valueOf(resourceId));
-//            if (resourceId != 0) {
-//                // Postavljamo resursni identifikator na odgovarajući View ili resurs
-//                imageView.setImageResource(resourceId);
-//                // Možete nastaviti raditi sa imageView ili drugim resursima
-//            } else {
-//                // Handlujemo slučaj kada resursni identifikator nije pronađen
-//            }
 
             productTitle.setText(accommodation.getName());
             productDescription.setText(accommodation.getDescription());
@@ -140,8 +126,8 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
                 imageButton.setVisibility(View.INVISIBLE);
             }
 
-
             imageButton.setOnClickListener(v -> {
+
                 v.setSelected(!v.isSelected());
                 addFavouriteAccommodation(accommodation,v.isSelected());
 
@@ -174,12 +160,10 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
         return convertView;
     }
 
-    //pokusati izbaciti iz adaptera i treba azurirati accommodation
     private void addFavouriteAccommodation(Accommodation accommodation, boolean isSelected) {
         //add favourite
         if (isSelected) {
-            Call<GuestDTO> call = ServiceUtils.guestService.addFavouriteAccommodation(3L,accommodation);
-
+            Call<GuestDTO> call = ServiceUtils.guestService.addFavouriteAccommodation(3L,accommodation.getId());
             call.enqueue(new Callback<GuestDTO>() {
                 @Override
                 public void onResponse(Call<GuestDTO> call, Response<GuestDTO> response) {
@@ -208,7 +192,7 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
                         //Toast.makeText(getActivity(), "Something went wrong!", Toast.LENGTH_SHORT).show();
                         return;
                     }
-
+                    GuestDTO guestDTO = response.body();
                 }
                 @Override
                 public void onFailure(Call<GuestDTO> call, Throwable t) {
@@ -216,6 +200,26 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
                 }
             });
         }
+    }
+
+    private void getFavouriteAccommodations() {
+            favouriteAccommodations = new ArrayList<>();
+            Call<ArrayList<AccommodationDTO>> call = ServiceUtils.guestService.getFavouriteAccommodation(3L);
+            call.enqueue(new Callback<ArrayList<AccommodationDTO>>() {
+                @Override
+                public void onResponse(Call<ArrayList<AccommodationDTO>> call, Response<ArrayList<AccommodationDTO>> response) {
+                    if (response.code() == 200){
+                        System.out.println(response.body());
+                        Log.i("AZURIRANO",response.body().toString());
+                        favouriteAccommodations = response.body();
+                        Log.i("FAVOURITE GET",favouriteAccommodations.toString());
+                    }
+                }
+                @Override
+                public void onFailure(Call<ArrayList<AccommodationDTO>> call, Throwable t) {
+                    Log.d("REZ123", t.getMessage() != null?t.getMessage():"error");
+                }
+            });
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.shopapp.activities.GuestScreen;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -13,6 +14,8 @@ import com.example.shopapp.R;
 import com.example.shopapp.activities.MapsActivity;
 import com.example.shopapp.adapters.CommentsListAdapter;
 import com.example.shopapp.adapters.MyReservationListAdapter;
+import com.example.shopapp.adapters.ReservationListAdapter;
+import com.example.shopapp.enums.ReviewStatus;
 import com.example.shopapp.model.accommodation.Accommodation;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +29,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,10 +60,13 @@ import retrofit2.Response;
 
 public class AccommodationDetailsScreen extends AppCompatActivity {
 
-    private AccommodationDetailsViewModel viewModel;
     ArrayList<ReservationDTO> reservationDTOS = new ArrayList<>();
+    ArrayList<Reservation> reservations = new ArrayList<>();
     ArrayList<Review> reviews = new ArrayList<>();
     RecyclerView recyclerView = null;
+    ReservationListAdapter adapter;
+    String date1,date2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +78,8 @@ public class AccommodationDetailsScreen extends AppCompatActivity {
         TextView textViewAmenity = findViewById(R.id.textViewAmenity);
         TextView textViewPrice = findViewById(R.id.textViewPrice);
         tvHotelName.setText(accommodation.getName());
+        CalendarView calendarViewStart;
+        CalendarView calendarViewEnd;
 
         tvHotelDescription.setText(accommodation.getDescription());
         StringBuilder amenitiesBuilder = new StringBuilder();
@@ -92,7 +101,6 @@ public class AccommodationDetailsScreen extends AppCompatActivity {
         textViewPrice.setText("Cena za 1 noćenje je " + price);
         loadReservations(accommodation);
 
-
         Button mapButton = findViewById(R.id.buttonMapsAAA);
         Button buttonBook = findViewById(R.id.buttonBook);
         mapButton.setOnClickListener(new View.OnClickListener() {
@@ -109,49 +117,42 @@ public class AccommodationDetailsScreen extends AppCompatActivity {
         if (!role.equals("Guest")) {
             buttonBook.setVisibility(View.INVISIBLE);
         }
+        double finalPrice = price;
+
+        calendarViewStart = findViewById(R.id.calendarViewStart);
+        calendarViewEnd = findViewById(R.id.calendarViewEnd);
+
+
+        calendarViewStart.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                date1 = year + "-" + (month + 1) + "-" + dayOfMonth;
+
+            }
+        });
+        calendarViewEnd.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                date2 = year + "-" + (month + 1) + "-" + dayOfMonth;
+            }
+        });
         buttonBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar startCal = Calendar.getInstance();
-                startCal.set(2025, Calendar.JANUARY, 1);
-                Date startDate = startCal.getTime();
-                SimpleDateFormat originalFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss 'CET' yyyy", Locale.ENGLISH);
-                originalFormat.setTimeZone(TimeZone.getTimeZone("CET"));
-
-                Date date = null;
-                try {
-                    date = originalFormat.parse("Wed Jan 01 18:24:20 CET 2025");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                Log.i("DATUM FORMAT", String.valueOf(date));
-                // Postavljanje kalendara na krajnji datum
-                Calendar endCal = Calendar.getInstance();
-                endCal.set(2025, Calendar.JANUARY, 15);
-                Date endDate = endCal.getTime();
-
-                List<Review> reviews = new ArrayList<>();
-                reviews.add(new Review());
-                Reservation reservation = new Reservation(100L, 100, ReservationStatus.WAITING, endDate, endDate, 1, accommodation, new Guest(3L),reviews);
-                Log.d("REZERVACIJA",reservation.toString());
-
-                Toast.makeText(AccommodationDetailsScreen.this, "Book now clicked!", Toast.LENGTH_SHORT).show();
-                Call<ReservationDTO> call = ServiceUtils.guestService.createReservation(reservation);
+                //prepraviti posle kada dobavimo gosta
+                Log.i("AUTOMATIC", String.valueOf(accommodation.isAutomaticConfirmation()));
+                Log.i("Date1",date1);
+                Log.i("Date2",date2);
+                Call<ReservationDTO> call = ServiceUtils.guestService.createReservation(finalPrice,date1,date2, accommodation.getId(), 3L, accommodation.isAutomaticConfirmation());
 
                 call.enqueue(new Callback<ReservationDTO>() {
                     @Override
                     public void onResponse(Call<ReservationDTO> call, Response<ReservationDTO> response) {
-                        Log.d("RESPONSE", String.valueOf(response.code()));
-                        Log.d("RESPONSE", String.valueOf(response.body()));
                         if (response.isSuccessful()) {
                             Toast.makeText(AccommodationDetailsScreen.this, "Request is created", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        else{
-                            Toast.makeText(AccommodationDetailsScreen.this, "Request is not created", Toast.LENGTH_SHORT).show();
-                        }
                     }
-
                     @Override
                     public void onFailure(Call<ReservationDTO> call, Throwable t) {
                         Log.d("REZ", t.getMessage() != null ? t.getMessage() : "error");
@@ -159,8 +160,6 @@ public class AccommodationDetailsScreen extends AppCompatActivity {
                 });
             }
         });
-
-
     }
 
     private void loadReservations(Accommodation accommodation){
@@ -180,7 +179,6 @@ public class AccommodationDetailsScreen extends AppCompatActivity {
             }
         });
     }
-
     private void loadReviews(){
         for(ReservationDTO reservationDTO:reservationDTOS){
 
@@ -191,11 +189,8 @@ public class AccommodationDetailsScreen extends AppCompatActivity {
                     if (response.code() == 200){
                         System.out.println(response.body());
                         reviews.add(response.body());
-
                         CommentsListAdapter adapter = new CommentsListAdapter(reviews);
                         recyclerView.setAdapter(adapter);
-
-
                     }
                 }
                 @Override

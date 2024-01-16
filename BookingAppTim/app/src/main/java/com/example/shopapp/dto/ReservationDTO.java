@@ -10,12 +10,15 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class ReservationDTO implements Serializable {
     private long id;
     private double totalPrice;
     private ReservationStatus status;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date startDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date endDate;
     private int numberOfNights;
     private Accommodation accommodation;
@@ -152,3 +155,4 @@ public class ReservationDTO implements Serializable {
         return Objects.hash(id);
     }
 }
+
