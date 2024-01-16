@@ -1,5 +1,6 @@
 package com.example.shopapp.model.accommodation;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -266,12 +267,6 @@ public class Accommodation implements Parcelable {
         this.image = image;
     }
 
-
-//    @Override
-//    public String toString() {
-//        return name ;
-//    }
-
     @Override
     public String toString() {
         return   name;
@@ -289,12 +284,10 @@ public class Accommodation implements Parcelable {
         dest.writeString(description);
         dest.writeInt(image);
         dest.writeTypedList(amenities);
-//        if (Build.VERSION.SDK_INT >= 29) {
-//            dest.writeBoolean(automaticConfirmation);
-//        } else {
-//            dest.writeInt(automaticConfirmation ? 1 : 0);
-//        }
         dest.writeTypedList(prices);
+        if (Build.VERSION.SDK_INT >= 29) {
+            dest.writeBoolean(automaticConfirmation);
+        }
     }
 
     protected Accommodation(Parcel in) {
@@ -302,17 +295,13 @@ public class Accommodation implements Parcelable {
         name = in.readString();
         description = in.readString();
         image = in.readInt();
-//        if (Build.VERSION.SDK_INT >= 29) {
-//            automaticConfirmation = in.readBoolean();
-//        } else {
-//            automaticConfirmation = in.readInt() != 0;
-//        }
         amenities = new ArrayList<>();
         in.readTypedList(amenities, Amenity.CREATOR);
         prices = new ArrayList<>();
         in.readTypedList(prices, Price.CREATOR);
-
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            automaticConfirmation = in.readBoolean();
+        }
     }
 
     public static final Creator<Accommodation> CREATOR = new Creator<Accommodation>() {

@@ -177,6 +177,7 @@ public class AccomodationsPageFragment extends Fragment {
 
         Button btnAddAcc = binding.btnAddAccommodation;
         btnAddAcc.setOnClickListener(v -> {
+
             AddAccommodationFragment fragment = new AddAccommodationFragment();
             FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
             Fragment currentFragment = fragmentManager.findFragmentById(R.id.HomePage);
@@ -186,7 +187,6 @@ public class AccomodationsPageFragment extends Fragment {
                 transaction.remove(currentFragment); // Uklonite fragment
                 transaction.commit();
             }
-
             transaction.replace(R.id.HomePage, fragment);
             transaction.addToBackStack(null);
             transaction.commit();

@@ -22,7 +22,10 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.example.shopapp.R;
+import com.example.shopapp.activities.GuestScreen.GuestMainActivity;
 import com.example.shopapp.activities.Login.LoginActivity;
+import com.example.shopapp.activities.Notifications.GuestNotificationActivity;
+import com.example.shopapp.activities.Notifications.OwnerNotificationActivity;
 import com.example.shopapp.databinding.ActivityHomeBinding;
 import com.example.shopapp.fragments.accomodations.AccomodationsListFragment;
 import com.example.shopapp.fragments.owner.user_accommodation.UserAccommodationListFragment;
@@ -114,6 +117,7 @@ public class HostMainActivity extends AppCompatActivity {
                 MenuItem profileMenuItem = navigationView.getMenu().findItem(R.id.nav_profile);
                 MenuItem accommodationMenuItem=navigationView.getMenu().findItem(R.id.nav_products);
                 View includedLayout = findViewById(R.id.fragment_nav_content_main);
+                MenuItem notificationMenuItem = navigationView.getMenu().findItem(R.id.notifications);
 
 
                 if (item.getItemId() == accommodationMenuItem.getItemId()) {
@@ -155,6 +159,11 @@ public class HostMainActivity extends AppCompatActivity {
                     transaction.replace(R.id.fragment_container, fragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
+                    return true;
+                }
+                if (item.getItemId() == notificationMenuItem.getItemId()) {
+                    Intent intent = new Intent(HostMainActivity.this, OwnerNotificationActivity.class);
+                    startActivity(intent);
                     return true;
                 }
 

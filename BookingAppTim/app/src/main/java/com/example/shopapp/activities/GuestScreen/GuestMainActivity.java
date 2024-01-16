@@ -30,6 +30,7 @@ import android.view.View;
 
 import com.example.shopapp.R;
 import com.example.shopapp.activities.Login.LoginActivity;
+import com.example.shopapp.activities.Notifications.GuestNotificationActivity;
 import com.example.shopapp.databinding.ActivityHomeBinding;
 import com.example.shopapp.fragments.accomodations.AccomodationsListFragment;
 import com.example.shopapp.fragments.accomodations.AccomodationsPageFragment;
@@ -148,6 +149,7 @@ public class GuestMainActivity extends AppCompatActivity {
                     MenuItem profileMenuItem = navigationView.getMenu().findItem(R.id.nav_profile);
                     MenuItem favouriteMenuItem = navigationView.getMenu().findItem(R.id.nav_favourite);
                     MenuItem homeMenuItem = navigationView.getMenu().findItem(R.id.nav_products);
+                    MenuItem notificationMenuItem = navigationView.getMenu().findItem(R.id.notifications);
                     View includedLayout = findViewById(R.id.fragment_nav_content_main);
 
                     Log.d("MENI 123", "NAPRAVILO SE");
@@ -206,6 +208,11 @@ public class GuestMainActivity extends AppCompatActivity {
                         //transaction.replace(R.id.fragment_container, fragment2);
                         transaction.addToBackStack(null);
                         transaction.commit();
+                        return true;
+                    }
+                    if (item.getItemId() == notificationMenuItem.getItemId()) {
+                        Intent intent = new Intent(GuestMainActivity.this, GuestNotificationActivity.class);
+                        startActivity(intent);
                         return true;
                     }
 

@@ -18,7 +18,7 @@ public interface IReservationService {
             "Content-Type:application/json"
     })
     @GET("reservations")
-    Call<ArrayList<Reservation>> getGuestsRequests();
+    Call<ArrayList<Reservation>> getGuestsReservations();
 
     @GET("reservations/byGuest/{idGuest}")
     Call<ArrayList<Reservation>> getReservationsByGuest(@Path("idGuest") Long idGuest);
