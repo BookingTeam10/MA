@@ -143,7 +143,6 @@ public class GuestMainActivity extends AppCompatActivity {
                     transaction.replace(R.id.fragment_container, fragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
-                    return true;
                 }
                 if (item.getItemId() == favouriteMenuItem.getItemId()) {
                     includedLayout.setVisibility(View.GONE);
@@ -164,7 +163,7 @@ public class GuestMainActivity extends AppCompatActivity {
                     transaction.replace(R.id.fragment_container, fragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
-                    return true;
+
                 }
 
                 // Zatvori navigacijski izbornik

@@ -5,6 +5,7 @@ import com.example.shopapp.dto.GuestDTO;
 import com.example.shopapp.dto.ReservationDTO;
 import com.example.shopapp.model.accommodation.Accommodation;
 import com.example.shopapp.model.reservation.Reservation;
+import com.example.shopapp.model.user.Guest;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface IGuestService {
@@ -38,4 +40,17 @@ public interface IGuestService {
 
     @GET("guests/{id}/favouriteAccommodations")
     Call<ArrayList<AccommodationDTO>> getFavouriteAccommodation(@Path("id") Long id);
+
+    @GET("guests/username/{username}")
+    Call<Guest> getUserByUsername(@Path("username") String username);
+
+    @DELETE("guests/{id}")
+    Call<Void> deleteGuest(@Path("id") Long id);
+
+
+    @PUT("guests/{id}")
+    Call<GuestDTO> updateGuestProfile(@Path("id") Long id, @Body Guest updatedGuest);
+
+    @GET("users/exists/{email}")
+    Call<Boolean> checkUsername(@Path("email") String email);
 }

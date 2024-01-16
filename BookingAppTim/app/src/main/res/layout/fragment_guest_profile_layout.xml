@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/profile_container"
-    >
+    android:background="@android:color/white">
 
     <!-- Header Layout -->
 
-    <include layout="@layout/nav_header"/>
+    <include layout="@layout/nav_header" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +23,6 @@
 
         <!-- Email -->
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -37,8 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="100dp"
-                android:textSize="18sp"
-                />
+                android:textSize="18sp"/>
         </LinearLayout>
 
         <!-- Name -->
@@ -47,9 +43,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            >
-
+            android:paddingBottom="8dp">
 
             <TextView
                 android:id="@+id/nameTextView"
@@ -66,8 +60,6 @@
             android:orientation="horizontal"
             android:paddingTop="8dp"
             android:paddingBottom="8dp">
-
-
 
             <TextView
                 android:id="@+id/surnameTextView"
@@ -110,7 +102,31 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:id="@+id/notificationsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="100dp"
+                android:text="Turn on Notifications"
+                android:textSize="18sp"/>
+
+            <CheckBox
+                android:id="@+id/notificationsCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:layout_marginStart="16dp"/>
+        </LinearLayout>
+
     </LinearLayout>
+
     <Button
         android:id="@+id/editProfileButton"
         android:layout_width="wrap_content"
@@ -118,8 +134,5 @@
         android:text="@string/edit"
         android:layout_gravity="center_horizontal|bottom"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="30dp"
-        />
-
-
+        android:layout_marginBottom="30dp"/>
 </LinearLayout>
