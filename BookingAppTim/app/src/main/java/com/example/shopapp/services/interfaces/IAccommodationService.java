@@ -57,4 +57,10 @@ public interface IAccommodationService {
 //    Call<Accommodation> updateAccommodation(@Body Accommodation accommodation,@Path("id") Long id);
 @PUT("accommodations/{id}")
 Call<Map<String, String>> updateAccommodation(@Body Accommodation accommodation, @Path("id") Long id);
+
+
+    @POST("accommodations/approve/{id}")
+    Call<Void> approveAccommodation(@Path("id") Long id , @Body Accommodation accommodation);
+    @POST("accommodations/reject/{id}")
+    Call<Void> rejectAccommodation(@Path("id") Long id, @Body Accommodation accommodation);
 }

@@ -143,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
                 String email = jwt.getClaim("sub").asString();
                 Long id = jwt.getClaim("id").asLong();
                 Log.d("EMAIL UCITAN", String.valueOf(email));
-                Log.d("ID UCITAN", String.valueOf(id));
+                Log.d("ID UCITAN", String.valueOf(userRole));
                 //Token token = Token.getInstance();
                 //token.setJwt(loginResponse.getJwt());
 
