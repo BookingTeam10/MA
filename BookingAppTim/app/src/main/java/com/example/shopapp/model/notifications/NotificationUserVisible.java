@@ -1,36 +1,34 @@
 package com.example.shopapp.model.notifications;
 
-
 import com.example.shopapp.enums.NotificationStatus;
-import com.example.shopapp.model.user.Owner;
 import com.example.shopapp.model.user.Guest;
+import com.example.shopapp.model.user.Owner;
 
-import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
-
-public class Notification implements Serializable {
-
+public class NotificationUserVisible {
     private Long id;
     private String text;
     private NotificationStatus status;
     private Guest guest;
     private Owner owner;
-    private Date sentDate;
+    private String sentDate;
+    private String userRate;
 
-    public Notification() {
-    }
-
-    public Notification(String text, NotificationStatus status, Guest guest, Owner owner, Date sentDate) {
+    public NotificationUserVisible(Long id, String text, NotificationStatus status, Guest guest, Owner owner, String sentDate, String userRate) {
+        this.id = id;
         this.text = text;
         this.status = status;
         this.guest = guest;
         this.owner = owner;
         this.sentDate = sentDate;
+        this.userRate = userRate;
     }
+    public NotificationUserVisible() {
+
+    }
+
     public Long getId() {
-        if(id == null){return 0L;}
         return id;
     }
 
@@ -49,7 +47,6 @@ public class Notification implements Serializable {
     public NotificationStatus getStatus() {
         return status;
     }
-
     public void setStatus(NotificationStatus status) {
         this.status = status;
     }
@@ -57,28 +54,39 @@ public class Notification implements Serializable {
     public Guest getGuest() {
         return guest;
     }
-
     public void setGuest(Guest guest) {
         this.guest = guest;
     }
-
     public Owner getOwner() {
         return owner;
     }
-
     public void setOwner(Owner owner) {
         this.owner = owner;
     }
-
-    public Date getSentDate() {
+    public String getSentDate() {
         return sentDate;
     }
-
-    public void setSentDate(Date sentDate) {
+    public void setSentDate(String sentDate) {
         this.sentDate = sentDate;
     }
+    public String getUserRate() {
+        return userRate;
+    }
 
-    public void copyValues(Notification notification) {
+    public void setUserRate(String userRate) {
+        this.userRate = userRate;
+    }
+
+    @Override
+    public String toString() {
+        return "NotificationUserVisible{" +
+                "id=" + id +
+                ", text='" + text + '\'' +
+                ", status=" + status +
+                ", guest=" + guest +
+                ", owner=" + owner +
+                ", sentDate=" + sentDate +
+                ", userRate='" + userRate + '\'' +
+                '}';
     }
 }
-

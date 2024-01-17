@@ -15,6 +15,7 @@ import com.example.shopapp.activities.MapsActivity;
 import com.example.shopapp.adapters.CommentsListAdapter;
 import com.example.shopapp.adapters.MyReservationListAdapter;
 import com.example.shopapp.adapters.ReservationListAdapter;
+import com.example.shopapp.enums.NotificationStatus;
 import com.example.shopapp.enums.ReviewStatus;
 import com.example.shopapp.model.accommodation.Accommodation;
 
@@ -40,9 +41,11 @@ import com.example.shopapp.dto.ReservationDTO;
 import com.example.shopapp.enums.ReservationStatus;
 import com.example.shopapp.model.accommodation.Accommodation;
 import com.example.shopapp.model.accommodation.Amenity;
+import com.example.shopapp.model.notifications.NotificationUserVisible;
 import com.example.shopapp.model.reservation.Reservation;
 import com.example.shopapp.model.review.Review;
 import com.example.shopapp.model.user.Guest;
+import com.example.shopapp.model.user.Owner;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -65,6 +68,8 @@ public class AccommodationDetailsScreen extends AppCompatActivity {
     ArrayList<Review> reviews = new ArrayList<>();
     RecyclerView recyclerView = null;
     ReservationListAdapter adapter;
+
+   // NotificationUserVisible notificationUserVisible = null;
     String date1,date2;
 
     @Override
@@ -140,9 +145,7 @@ public class AccommodationDetailsScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //prepraviti posle kada dobavimo gosta
-                Log.i("AUTOMATIC", String.valueOf(accommodation.isAutomaticConfirmation()));
-                Log.i("Date1",date1);
-                Log.i("Date2",date2);
+
                 Call<ReservationDTO> call = ServiceUtils.guestService.createReservation(finalPrice,date1,date2, accommodation.getId(), 3L, accommodation.isAutomaticConfirmation());
 
                 call.enqueue(new Callback<ReservationDTO>() {
@@ -150,6 +153,9 @@ public class AccommodationDetailsScreen extends AppCompatActivity {
                     public void onResponse(Call<ReservationDTO> call, Response<ReservationDTO> response) {
                         if (response.isSuccessful()) {
                             Toast.makeText(AccommodationDetailsScreen.this, "Request is created", Toast.LENGTH_SHORT).show();
+                            String text = "Request is created for accommodation with ID = "+accommodation.getId()+", name = " + accommodation.getName();
+                            NotificationUserVisible notificationUserVisible = new NotificationUserVisible(100L,text, NotificationStatus.NOT_VISIBLE,new Guest(3L),new Owner(1L),"today","GO");
+                            createNotification(notificationUserVisible);
                             return;
                         }
                     }
@@ -199,5 +205,21 @@ public class AccommodationDetailsScreen extends AppCompatActivity {
                 }
             });
         }
+    }
+    private void createNotification(NotificationUserVisible notification){
+            Call<NotificationUserVisible> call = ServiceUtils.notificationService.createNotification(notification.getText(),notification.getGuest().getId(),notification.getOwner().getId(),notification.getUserRate());
+            call.enqueue(new Callback<NotificationUserVisible>() {
+                @Override
+                public void onResponse(Call<NotificationUserVisible> call, Response<NotificationUserVisible> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(AccommodationDetailsScreen.this, "Notification is send", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                @Override
+                public void onFailure(Call<NotificationUserVisible> call, Throwable t) {
+                    Log.d("REZ", t.getMessage() != null?t.getMessage():"error");
+                }
+            });
     }
 }

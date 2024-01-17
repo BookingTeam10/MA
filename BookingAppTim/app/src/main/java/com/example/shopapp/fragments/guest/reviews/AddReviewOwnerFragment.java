@@ -15,13 +15,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.shopapp.R;
+import com.example.shopapp.activities.GuestScreen.AccommodationDetailsScreen;
 import com.example.shopapp.configuration.ServiceUtils;
+import com.example.shopapp.enums.NotificationStatus;
 import com.example.shopapp.enums.ReviewStatus;
+import com.example.shopapp.model.notifications.NotificationUserVisible;
 import com.example.shopapp.model.reservation.Reservation;
 import com.example.shopapp.model.review.ReviewOwner;
 import com.example.shopapp.model.user.Guest;
+import com.example.shopapp.model.user.Owner;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -107,11 +112,14 @@ public class AddReviewOwnerFragment extends Fragment {
                     call.enqueue(new Callback<ReviewOwner>() {
                         @Override
                         public void onResponse(Call<ReviewOwner> call, Response<ReviewOwner> response) {
-                            if (response.code() == 200){
+                            Log.d("RESEPONSE CODE DUGME MATIJA", String.valueOf(response.code()));
+                            if (response.code() == 201){
                                 Log.d("REZ","Meesage recieved");
                                 System.out.println(response.body());
                                 ReviewOwner product1 = response.body();
                                 System.out.println(product1);
+                                Log.d("TREBA DA KREIRA NOTIFIKACIJU","UDJE00");
+                                createNotification(new NotificationUserVisible(100L,"SVETSKI MEGA CAR", NotificationStatus.NOT_VISIBLE,new Guest(3L),new Owner(1L),"today","GO"));
                                 getActivity().getSupportFragmentManager().popBackStack();
                             }else{
                                 Log.d("REZ","Meesage recieved: "+response.code());
@@ -126,6 +134,23 @@ public class AddReviewOwnerFragment extends Fragment {
 
 
                 }
+            }
+        });
+    }
+
+    private void createNotification(NotificationUserVisible notification){
+        Call<NotificationUserVisible> call = ServiceUtils.notificationService.createNotification(notification.getText(),notification.getGuest().getId(),notification.getOwner().getId(),notification.getUserRate());
+        call.enqueue(new Callback<NotificationUserVisible>() {
+            @Override
+            public void onResponse(Call<NotificationUserVisible> call, Response<NotificationUserVisible> response) {
+                if (response.isSuccessful()) {
+                    //Toast.makeText(AccommodationDetailsScreen.this, "Notification is send", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+            @Override
+            public void onFailure(Call<NotificationUserVisible> call, Throwable t) {
+                Log.d("REZ", t.getMessage() != null?t.getMessage():"error");
             }
         });
     }
