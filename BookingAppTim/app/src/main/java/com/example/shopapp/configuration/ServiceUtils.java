@@ -4,6 +4,7 @@ package com.example.shopapp.configuration;
 import java.util.concurrent.TimeUnit;
 
 import com.example.shopapp.services.interfaces.IAccommodationService;
+import com.example.shopapp.services.interfaces.INotificationService;
 import com.example.shopapp.services.interfaces.IReservationService;
 import com.example.shopapp.services.interfaces.IReviewService;
 import com.example.shopapp.services.interfaces.users.IAdminService;
@@ -58,7 +59,6 @@ public class ServiceUtils {
     public static IReportUserService reportService = retrofit.create(IReportUserService.class);
     public static IGuestService guestService = retrofit.create(IGuestService.class);
     public static IOwnerService ownerService = retrofit.create(IOwnerService.class);
+    public static INotificationService notificationService = retrofit.create(INotificationService.class);
     public static IAdminService adminService = retrofit.create(IAdminService.class);
-
-
 }
