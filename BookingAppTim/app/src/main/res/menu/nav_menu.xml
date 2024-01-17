@@ -31,6 +31,11 @@
             android:icon="@drawable/ic_account"
             android:orderInCategory="300" />
 
+        <item android:id="@+id/nav_approval_accommodation"
+            android:title="Approve accommodations"
+            android:icon="@drawable/ic_account"
+            android:orderInCategory="300" />
+
         <item android:id="@+id/nav_logout"
             android:title="@string/logout"
             android:icon="@drawable/ic_logout"

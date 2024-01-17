@@ -58,6 +58,12 @@
         tools:layout="@layout/fragment_guest_edit_profile" />
 
     <fragment
+        android:id="@+id/nav_approval_accommodation"
+        android:name="com.example.shopapp.fragments.admin.AccommodationApprovalFragment"
+        android:label="fragment_guest_edit_profile"
+        tools:layout="@layout/fragment_accommodation_approval" />
+
+    <fragment
         android:id="@+id/nav_admin_edit_profile"
         android:name="com.example.shopapp.fragments.profile.AdminEditProfileFragment"
         android:label="fragment_admin_edit_profile"
@@ -82,5 +88,7 @@
         app:popUpTo="@+id/nav_products"
         app:popUpToInclusive="true"
         />
+
+
 
 </navigation>
