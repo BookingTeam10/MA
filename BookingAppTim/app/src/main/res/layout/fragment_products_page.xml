@@ -45,6 +45,14 @@
             android:layout_marginRight="10dp"
             android:orientation="horizontal"
             android:weightSum="3">
+<!--            <Button-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="#4CAF50"-->
+<!--                android:text="FFF"-->
+<!--                tools:ignore="TextContrastCheck"-->
+<!--                android:onClick="sendGuest"/>-->
 
             <Button
                 android:id="@+id/btnFilters"
@@ -73,6 +81,7 @@
                 android:background="#4CAF50"
                 android:text="Report"
                 tools:ignore="TextContrastCheck" />
+
         </LinearLayout>
 
 

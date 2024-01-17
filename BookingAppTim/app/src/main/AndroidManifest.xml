@@ -110,10 +110,6 @@
         <activity
             android:name=".activities.MapsActivity"
             android:exported="false" />
-
-        <activity
-            android:name=".activities.AdminScreen.AdminMainActivity"
-            android:exported="false" />
         <activity
             android:name=".fragments.owner.new_accomodation.EditAccommodationActivity"
             android:exported="false"

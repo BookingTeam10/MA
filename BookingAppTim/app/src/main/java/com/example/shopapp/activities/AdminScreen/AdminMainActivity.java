@@ -11,7 +11,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -19,7 +18,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.shopapp.R;
 import com.example.shopapp.databinding.ActivityHomeBinding;
-import com.example.shopapp.fragments.profile.ProfileFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.HashSet;
@@ -79,24 +77,6 @@ public class AdminMainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
 
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                MenuItem profileMenuItem = navigationView.getMenu().findItem(R.id.nav_profile);
-
-                if (item.getItemId() == profileMenuItem.getItemId()) {
-                    ProfileFragment fragment = new ProfileFragment();
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragment_container, fragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                }
-
-                return true;
-            }
-        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

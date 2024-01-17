@@ -5,8 +5,7 @@
     android:layout_height="wrap_content"
     android:padding="20dp"
     android:background="@color/nav_profile_grey"
-    android:gravity="bottom"
-    android:id="@+id/nav_header">
+    android:gravity="bottom">
 
     <ImageView
         android:id="@+id/user_image"
@@ -17,6 +16,7 @@
         android:id="@+id/user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Luka Popovic"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="30sp"

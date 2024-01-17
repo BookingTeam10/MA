@@ -1,16 +1,11 @@
 package com.example.shopapp.model.user;
 
-import android.os.Build;
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import com.example.shopapp.dto.GuestDTO;
 import com.example.shopapp.model.accommodation.Accommodation;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Guest extends User implements Parcelable {
+public class Guest extends User {
     private int numberCanceledReservation;
 
     private boolean turnOnNotification;
@@ -86,52 +81,4 @@ public class Guest extends User implements Parcelable {
                 ", favouriteAccommodations=" + favouriteAccommodations +
                 '}';
     }
-
-
-    protected Guest(Parcel in) {
-        this.setEmail(in.readString());
-        this.setName(in.readString());
-        this.setSurname(in.readString());
-        this.setPhone(in.readString());
-        this.setAddress(in.readString());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            this.turnOnNotification = in.readBoolean();
-        }else{
-            this.turnOnNotification = Boolean.parseBoolean(in.readString());
-        }
-    }
-
-    public final Creator<Guest> CREATOR = new Creator<Guest>() {
-        @Override
-        public Guest createFromParcel(Parcel in) {
-
-            return new Guest(in);
-        }
-
-        @Override
-        public Guest[] newArray(int size) {
-            return new Guest[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.getEmail());
-        dest.writeString(this.getName());
-        dest.writeString(this.getSurname());
-        dest.writeString(this.getPhone());
-        dest.writeString(this.getAddress());
-        dest.writeString(this.getPassword());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            dest.writeBoolean(this.turnOnNotification);
-        }else{
-            dest.writeString(String.valueOf(this.turnOnNotification));
-        }
-    }
-
 }

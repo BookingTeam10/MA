@@ -165,7 +165,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
                 else if(userRole.equalsIgnoreCase("ROLE_Administrator")) {
-                    setSharedPreferences("Administrator", email, id);
+                    //setSharedPreferences("DRIVER", email, id);
                     //setTokenPreference(loginResponse.getToken(), loginResponse.getRefreshToken());
                     Intent intent = new Intent(LoginActivity.this, AdminMainActivity.class);
                     startActivity(intent);
