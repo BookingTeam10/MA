@@ -40,10 +40,16 @@
             android:icon="@drawable/ic_account"
             android:orderInCategory="300" />
 
+        <item android:id="@+id/nav_approval_accommodation"
+            android:title="Approve Accommodation"
+            android:icon="@drawable/ic_account"
+            android:orderInCategory="300" />
+
         <item android:id="@+id/nav_favourite"
             android:title="@string/favourite"
             android:icon="@drawable/ic_account"
             android:orderInCategory="300" />
+
         <item android:id="@+id/notifications"
             android:title="@string/notifications"
             android:icon="@drawable/ic_notification"

@@ -56,6 +56,7 @@ public interface IAccommodationService {
 
 //    @PUT("accommodations/{id}")
 //    Call<Accommodation> updateAccommodation(@Body Accommodation accommodation,@Path("id") Long id);
+  
     @Headers({
         "User-Agent: Mobile-Android",
         "Content-Type:application/json"
@@ -76,4 +77,10 @@ public interface IAccommodationService {
             @Query("isNight") boolean isNight,
             @Query("cancelDeadline") int cancelDeadline
     );
+
+    @POST("accommodations/approve/{id}")
+    Call<Void> approveAccommodation(@Path("id") Long id , @Body Accommodation accommodation);
+    @POST("accommodations/reject/{id}")
+    Call<Void> rejectAccommodation(@Path("id") Long id, @Body Accommodation accommodation);
+
 }
