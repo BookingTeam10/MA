@@ -7,6 +7,7 @@ import com.example.shopapp.services.interfaces.IAccommodationService;
 import com.example.shopapp.services.interfaces.INotificationService;
 import com.example.shopapp.services.interfaces.IReservationService;
 import com.example.shopapp.services.interfaces.IReviewService;
+import com.example.shopapp.services.interfaces.IUserReportService;
 import com.example.shopapp.services.interfaces.users.IAdminService;
 import com.example.shopapp.services.interfaces.users.IGuestService;
 import com.example.shopapp.services.interfaces.users.IOwnerService;
@@ -61,4 +62,5 @@ public class ServiceUtils {
     public static IOwnerService ownerService = retrofit.create(IOwnerService.class);
     public static INotificationService notificationService = retrofit.create(INotificationService.class);
     public static IAdminService adminService = retrofit.create(IAdminService.class);
+    public static IUserReportService userReportService = retrofit.create(IUserReportService.class);
 }
