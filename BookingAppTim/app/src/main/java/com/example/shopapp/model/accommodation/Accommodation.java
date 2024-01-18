@@ -288,6 +288,13 @@ public class Accommodation implements Parcelable {
         if (Build.VERSION.SDK_INT >= 29) {
             dest.writeBoolean(automaticConfirmation);
         }
+
+        dest.writeInt(minPeople);
+        dest.writeInt(maxPeople);
+        dest.writeInt(cancelDeadline);
+        dest.writeDouble(weekendPrice);
+        dest.writeDouble(holidayPrice);
+        dest.writeDouble(summerPrice);
     }
 
     protected Accommodation(Parcel in) {
@@ -302,6 +309,13 @@ public class Accommodation implements Parcelable {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             automaticConfirmation = in.readBoolean();
         }
+
+        minPeople = in.readInt();
+        maxPeople = in.readInt();
+        cancelDeadline = in.readInt();
+        weekendPrice = in.readDouble();
+        holidayPrice = in.readDouble();
+        summerPrice = in.readDouble();
     }
 
     public static final Creator<Accommodation> CREATOR = new Creator<Accommodation>() {
@@ -346,5 +360,34 @@ public class Accommodation implements Parcelable {
         this.summerPrice=summerPrice;
         this.isNight=isNight;
         this.name = name;
+    }
+
+    public String toString1() {
+        return "Accommodation{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", accepted=" + accepted +
+                ", automaticActivation=" + automaticActivation +
+                ", minPeople=" + minPeople +
+                ", maxPeople=" + maxPeople +
+                ", photos=" + photos +
+                ", typeAccommodation=" + typeAccommodation +
+                ", accommodationStatus=" + accommodationStatus +
+                ", isNight=" + isNight +
+                ", takenDates=" + takenDates +
+                ", amenities=" + amenities +
+                ", location=" + location +
+                ", owner=" + owner +
+                ", reservations=" + reservations +
+                ", automaticConfirmation=" + automaticConfirmation +
+                ", rating=" + rating +
+                ", cancelDeadline=" + cancelDeadline +
+                ", prices=" + prices +
+                ", weekendPrice=" + weekendPrice +
+                ", holidayPrice=" + holidayPrice +
+                ", summerPrice=" + summerPrice +
+                ", image=" + image +
+                '}';
     }
 }

@@ -67,7 +67,7 @@ public class HostMainActivity extends AppCompatActivity {
         navigationView = binding.navView;
         toolbar = binding.activityHomeBase.toolbar;
         MenuItem reservationsMenuItem = navigationView.getMenu().findItem(R.id.nav_reservations);
-        reservationsMenuItem.setVisible(false);
+//        reservationsMenuItem.setVisible(false);
         MenuItem menuItem = navigationView.getMenu().findItem(R.id.nav_requests);
         menuItem.setVisible(false);
         MenuItem favouriteItem = navigationView.getMenu().findItem(R.id.nav_favourite);
@@ -128,6 +128,12 @@ public class HostMainActivity extends AppCompatActivity {
 
                 if (item.getItemId() == logOutMenuItem.getItemId()) {
                     Intent intent=new Intent(HostMainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+
+                if (item.getItemId() ==reservationsMenuItem.getItemId()) {
+                    Intent intent=new Intent(HostMainActivity.this, OwnerReservationActivity.class);
                     startActivity(intent);
                     return true;
                 }

@@ -99,8 +99,8 @@ public class AddReviewFragment extends Fragment {
 
                     Review review=new Review(100L,Double.parseDouble(selectedValue),text,ReviewStatus.PENDING,reservation);
                     Log.d("REVIEW DODATO",review.toString());
-                    Call<ReviewDTO> call = ServiceUtils.reviewService.createReview(review);
-
+                   // Call<ReviewDTO> call = ServiceUtils.reviewService.createReview(review);
+                    Call<ReviewDTO> call = ServiceUtils.reviewService.createReviewAllParam(Double.parseDouble(selectedValue),text, reservation.getId());
                     call.enqueue(new Callback<ReviewDTO>() {
                         @Override
                         public void onResponse(Call<ReviewDTO> call, Response<ReviewDTO> response) {

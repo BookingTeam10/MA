@@ -45,6 +45,7 @@ public class DefinitionAccommodationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_definition_accommodation);
         Accommodation accommodation = getIntent().getParcelableExtra("accommodation");
+        Log.d("ACCOMMODATION",accommodation.toString1());
         if (accommodation != null) {
             EditText weekendText = findViewById(R.id.WeekendText);
             EditText holidayText = findViewById(R.id.HolidayText);
@@ -264,22 +265,19 @@ public class DefinitionAccommodationActivity extends AppCompatActivity {
 //                accommodation.setOwner(new Owner(1L));
 //                accommodation.setReservations(new ArrayList<Reservation>());
 
-                Log.d("KONACNO ACCOMMODATION EDIT",accommodation.toString());
+                Log.d("KONACNO ACCOMMODATION EDIT",accommodation.toString1());
 
                 //slati ovo na put
-
-                Call<Map<String, String>> call = ServiceUtils.accommodationService.updateAccommodation(accommodation,accommodation.getId());
-
+                //Call<Map<String, String>> call = ServiceUtils.accommodationService.updateAccommodation(accommodation,accommodation.getId());
+                //Call<Map<String, String>> call = ServiceUtils.accommodationService.updateAccommodationMobile(accommodation);
+                Call<Map<String, String>> call = ServiceUtils.accommodationService.updateAccommodationMobile(accommodation.getId(),60,55,55,false,44);
                 call.enqueue(new Callback<Map<String, String>>() {
                     @Override
                     public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
                         Log.d("RESPONSE CODE AAA","A");
                         if (response.code() == 200){
                             Log.d("pogodi puT","POGODI PUT");
-//                            System.out.println(response.body());
-//                            Accommodation accommodation1 = response.body();
-//                            System.out.println(accommodation1);
-                            //getActivity().getSupportFragmentManager().popBackStack();
+                            //staviti TOAST
                         }else{
                             Log.d("REZ","Meesage recieved: "+response.code());
                         }

@@ -22,10 +22,11 @@ public interface IReservationService {
 
     @GET("reservations/byGuest/{idGuest}")
     Call<ArrayList<Reservation>> getReservationsByGuest(@Path("idGuest") Long idGuest);
-
-
     @DELETE("request/{reqId}")
     Call<Reservation> deleteGuestReservation(@Path("reqId") Long reqId);
     @GET("reservations/{idAccommodation}/reservations")
     Call<ArrayList<ReservationDTO>> getByAccommodations(@Path("idAccommodation") Long idAccommodation);
+
+    @GET("reservations/byOwner/{idOwner}")
+    Call<ArrayList<Reservation>> getReservationsByOwner(@Path("idOwner") Long idOwner);
 }

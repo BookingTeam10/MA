@@ -92,6 +92,8 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
             holder.buttonAction.setVisibility(View.INVISIBLE);
         }
 
+//        holder.buttonReport.setOnClickListener(view -> {
+//        });
     }
 
     private void deleteRequest(Reservation reservation, int adapterPosition) {
@@ -124,7 +126,7 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
     public static class ReservationViewHolder extends RecyclerView.ViewHolder {
 
         public TextView textViewId, textViewStart, textViewEnd,textViewAccommodation,textViewStatus;
-        public Button buttonAction;
+        public Button buttonAction,buttonReport;
 
         public ReservationViewHolder(View view) {
             super(view);
@@ -135,9 +137,13 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
             textViewAccommodation= view.findViewById(R.id.textViewAccommodation);
             textViewStatus= view.findViewById(R.id.textViewStatus);
             buttonAction = view.findViewById(R.id.buttonAction);
+            //buttonReport = view.findViewById(R.id.buttonNEPREKLAPASEID);
             if(!role.equals("Guest")){
                 buttonAction.setVisibility(View.INVISIBLE);
             }
+//            if(!role.equals("Owner")){
+//                buttonReport.setVisibility(View.INVISIBLE);
+//            }
         }
     }
 }
