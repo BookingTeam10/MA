@@ -5,5 +5,6 @@ public enum ReviewStatus {
 
     PENDING,
     DELETED,
-    REPORTED
+    REPORTED,
+    WAITING
 }
