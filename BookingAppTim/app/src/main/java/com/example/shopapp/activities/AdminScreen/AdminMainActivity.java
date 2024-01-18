@@ -23,9 +23,11 @@ import com.example.shopapp.R;
 import com.example.shopapp.activities.GuestScreen.GuestMainActivity;
 import com.example.shopapp.activities.Login.LoginActivity;
 import com.example.shopapp.activities.Notifications.GuestNotificationActivity;
+import com.example.shopapp.adapters.AccomodationListAdapter;
 import com.example.shopapp.databinding.ActivityHomeBinding;
 import com.example.shopapp.fragments.accomodations.AccomodationsListFragment;
 import com.example.shopapp.fragments.admin.AccommodationApprovalFragment;
+import com.example.shopapp.fragments.admin.UserReportsAdminFragment;
 import com.example.shopapp.fragments.guest.favourite_accomodations.FavouriteAccommodationsListFragment;
 import com.example.shopapp.fragments.guest.reservations.RequestFragment;
 import com.example.shopapp.fragments.guest.reservations.myReservations.MyReservationListFragment;
@@ -102,6 +104,7 @@ public class AdminMainActivity extends AppCompatActivity {
                 MenuItem favouriteMenuItem = navigationView.getMenu().findItem(R.id.nav_favourite);
                 MenuItem homeMenuItem = navigationView.getMenu().findItem(R.id.nav_products);
                 MenuItem notificationMenuItem = navigationView.getMenu().findItem(R.id.notifications);
+                MenuItem userReports = navigationView.getMenu().findItem(R.id.nav_user_reports);
                 MenuItem approveAccommodationMenuItem = navigationView.getMenu().findItem(R.id.nav_approval_accommodation);
                 View includedLayout = findViewById(R.id.fragment_nav_content_main);
 
@@ -142,6 +145,14 @@ public class AdminMainActivity extends AppCompatActivity {
                     return true;
                 }
 
+                if (item.getItemId() == userReports.getItemId()) {
+                    UserReportsAdminFragment fragment = new UserReportsAdminFragment();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragment_container, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                    return true;
+                }
 
                 if (item.getItemId() == profileMenuItem.getItemId()) {
                     ProfileFragment fragment = new ProfileFragment();
