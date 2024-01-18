@@ -43,6 +43,11 @@ public class AccommodationApprovalFragment extends Fragment implements Accommoda
 
         recyclerView = view.findViewById(R.id.recyclerView);
 
+//        adapter = new AccommodationTableAdapter(accommodations);
+//        recyclerView.setAdapter(adapter);
+//
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         loadAccommodations();
     }
 

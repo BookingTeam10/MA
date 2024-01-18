@@ -3,7 +3,6 @@ package com.example.shopapp.services.interfaces.users;
 import com.example.shopapp.dto.PasswordDto;
 import com.example.shopapp.model.login.LoginDTO;
 import com.example.shopapp.model.login.Token;
-import com.example.shopapp.model.review.UserReport;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -18,7 +17,4 @@ public interface IUserService {
     @PUT("users/change-password/{id}")
     Call<Void> changePassword(@Path("id") Long id, @Body PasswordDto passwordDto);
 
-    @PUT("users/block/{id}")
-    Call<Void> blockUser(@Path("id") Long id, @Body
-    UserReport report);
 }
