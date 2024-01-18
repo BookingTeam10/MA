@@ -5,6 +5,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
@@ -12,11 +15,14 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.Manifest;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -60,6 +66,7 @@ public class GuestMainActivity extends AppCompatActivity {
     private Sensor lightSensor;
     public static String SYNC_DATA = "SYNC_DATA";
     private static String GUEST_CHANNEL = "Guest channel";
+    private static String OWNER_CHANNEL = "Owner channel";
 
     private final SensorEventListener lightSensorListener = new SensorEventListener() {
         @Override
@@ -222,10 +229,8 @@ public class GuestMainActivity extends AppCompatActivity {
                     return true;
                 }
             });
-        createNotificationChannel();
-        setUpService();
-        //initializeSockets();
-
+        createNotificationChannelGuest();
+        createNotificationChannelOwner();
     }
 
     @Override
@@ -243,7 +248,7 @@ public class GuestMainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 
-    private void createNotificationChannel() {
+    private void createNotificationChannelGuest() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Notification channel";
             String description = "Description";
@@ -255,9 +260,63 @@ public class GuestMainActivity extends AppCompatActivity {
         }
     }
 
-    private void setUpService(){
-        Intent alarmIntent = new Intent(this, GuestMessageService.class);
-        startService(alarmIntent);
+    private void createNotificationChannelOwner() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Notification channel";
+            String description = "Description";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(OWNER_CHANNEL, name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    public void sendGuest(View v) {
+        Log.d("UDJE U SEND","UDJE");
+        Notification notification = new NotificationCompat.Builder(this, GUEST_CHANNEL)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle("Title")
+                .setContentText("Message")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        notificationManagerCompat.notify(1, notification);
+    }
+
+    public void sendOwner(View v) {
+        Log.d("UDJE OVDE DA POSALJE PORUKU","UDJEEE");
+        Notification notification = new NotificationCompat.Builder(this,OWNER_CHANNEL)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle("Title")
+                .setContentText("Message")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        notificationManagerCompat.notify(1, notification);
+
     }
 
 }
