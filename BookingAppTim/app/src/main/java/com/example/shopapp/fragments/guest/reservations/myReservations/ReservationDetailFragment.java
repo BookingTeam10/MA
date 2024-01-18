@@ -293,8 +293,8 @@ public class ReservationDetailFragment extends Fragment {
                     Log.d("POSTUJES","POSTUJES");
                     if(reservation.getEndDate()==null){
                         new AlertDialog.Builder(getContext())
-                                .setTitle("Report Owner Unavailable")
-                                .setMessage("You cannot report the owner, because the reservation hasn't finished.")
+                                .setTitle("Report Guest Unavailable")
+                                .setMessage("You cannot report the guest, because the reservation hasn't finished.")
                                 .setPositiveButton(android.R.string.ok, null)
                                 .setIcon(android.R.drawable.ic_dialog_alert)
                                 .show();
@@ -302,8 +302,8 @@ public class ReservationDetailFragment extends Fragment {
                     }
                     if(reservation.getEndDate().after(new Date())){
                         new AlertDialog.Builder(getContext())
-                                .setTitle("Report Owner Unavailable")
-                                .setMessage("You cannot report the owner, because the reservation hasn't finished.")
+                                .setTitle("Report Guest Unavailable")
+                                .setMessage("You cannot report the guest, because the reservation hasn't finished.")
                                 .setPositiveButton(android.R.string.ok, null)
                                 .setIcon(android.R.drawable.ic_dialog_alert)
                                 .show();
@@ -320,8 +320,8 @@ public class ReservationDetailFragment extends Fragment {
                     transaction.commit();
                 }else{
                     new AlertDialog.Builder(getContext())
-                            .setTitle("Report Owner Unavailable")
-                            .setMessage("You cannot report the owner, because you have reported owner.")
+                            .setTitle("Report Guest Unavailable")
+                            .setMessage("You cannot report the guest, because you have reported guest.")
                             .setPositiveButton(android.R.string.ok, null)
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
