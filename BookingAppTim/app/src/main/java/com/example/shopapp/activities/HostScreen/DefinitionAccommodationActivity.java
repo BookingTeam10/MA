@@ -45,7 +45,7 @@ public class DefinitionAccommodationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_definition_accommodation);
         Accommodation accommodation = getIntent().getParcelableExtra("accommodation");
-        Log.d("ACCOMMODATION",accommodation.toString1());
+        Log.d("ACCOMMODATION EDIT",accommodation.toString1());
         if (accommodation != null) {
             EditText weekendText = findViewById(R.id.WeekendText);
             EditText holidayText = findViewById(R.id.HolidayText);
@@ -228,6 +228,8 @@ public class DefinitionAccommodationActivity extends AppCompatActivity {
                 EditText summerText = findViewById(R.id.SummerText);
                 accommodation.setSummerPrice(Double.parseDouble(summerText.getText().toString()));
 
+                //accommodation.setWeekendPrice(Double.parseDouble(weekendText.getText().toString()));
+
                 RadioGroup typeRadioGroup1 = findViewById(R.id.RadioGroupDefinition1);
                 RadioButton guestRadioButton = findViewById(R.id.guestRadioButtonDefinition);
                 RadioButton nightRadioButton = findViewById(R.id.nightRadioButtonDefinition);
@@ -245,32 +247,18 @@ public class DefinitionAccommodationActivity extends AppCompatActivity {
                 RadioButton noAutomaticRadioButton = findViewById(R.id.NoAutomaticDefinition);
 
                 int selectedRadioButtonId2 = typeRadioGroup2.getCheckedRadioButtonId();
-
+                boolean isNight = false;
                 if (selectedRadioButtonId2 == automaticRadioButton.getId()) {
                     accommodation.setAutomaticConfirmation(true);
+                    isNight = true;
                 } else {
                     accommodation.setAutomaticConfirmation(false);
+                    isNight = false;
                 }
 
                 accommodation.setPrices(priceList);
 
-
-                //zbog luke menjati
-
-//                accommodation.setPhotos(new ArrayList<String>());
-//                accommodation.setTypeAccommodation(TypeAccommodation.APARTMENT);
-//                accommodation.setAccommodationStatus(AccommodationStatus.CREATED);
-//                accommodation.setTakenDates(new ArrayList<TakenDate>());
-//                accommodation.setLocation(new Location(1L,"Srbija","Novi Sad","Gunduliceva",21));
-//                accommodation.setOwner(new Owner(1L));
-//                accommodation.setReservations(new ArrayList<Reservation>());
-
-                Log.d("KONACNO ACCOMMODATION EDIT",accommodation.toString1());
-
-                //slati ovo na put
-                //Call<Map<String, String>> call = ServiceUtils.accommodationService.updateAccommodation(accommodation,accommodation.getId());
-                //Call<Map<String, String>> call = ServiceUtils.accommodationService.updateAccommodationMobile(accommodation);
-                Call<Map<String, String>> call = ServiceUtils.accommodationService.updateAccommodationMobile(accommodation.getId(),60,55,55,false,44);
+                Call<Map<String, String>> call = ServiceUtils.accommodationService.updateAccommodationMobile(accommodation.getId(),Double.parseDouble(String.valueOf(weekendText.getText())),Double.parseDouble(String.valueOf(holidayText.getText())),Double.parseDouble(String.valueOf(summerText.getText())),isNight,24);
                 call.enqueue(new Callback<Map<String, String>>() {
                     @Override
                     public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {

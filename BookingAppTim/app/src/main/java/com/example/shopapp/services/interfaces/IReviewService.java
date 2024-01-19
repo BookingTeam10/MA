@@ -25,7 +25,10 @@ public interface IReviewService {
 
     @GET("reviews/rateFull/{idOwner}/{idGuest}")
     Call<ReviewOwner> getReviewOwnerByReservation(@Path("idOwner") Long idOwner,@Path("idGuest") Long idGuest);
-
+    @Headers({
+            "User-Agent: Mobile-Android",
+            "Content-Type:application/json"
+    })
     @POST("reviews/rate/{idOwner}/{idGuest}")
     Call<ReviewOwner> addRate(@Path("idOwner") Long idOwner,@Path("idGuest") Long idGuest,@Body ReviewOwner reviewOwner);
 

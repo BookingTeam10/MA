@@ -84,6 +84,12 @@ public class HostMainActivity extends AppCompatActivity {
         menuItem.setVisible(false);
         MenuItem favouriteItem = navigationView.getMenu().findItem(R.id.nav_favourite);
         favouriteItem.setVisible(false);
+        MenuItem userReportMenuItem = navigationView.getMenu().findItem(R.id.nav_user_reports);
+        userReportMenuItem.setVisible(false);
+        MenuItem myReservationMenuItem = navigationView.getMenu().findItem(R.id.nav_new);
+        myReservationMenuItem.setVisible(false);
+        MenuItem aproveMenuItem = navigationView.getMenu().findItem(R.id.nav_approval_accommodation);
+        aproveMenuItem.setVisible(false);
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
         if(actionBar != null){

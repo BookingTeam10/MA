@@ -41,6 +41,10 @@ public interface IGuestService {
     //@POST("guests/{id}/favouriteAccommodations/add")
     //Call<GuestDTO> addFavouriteAccommodation(@Path("id") Long id, @Body Accommodation accommodation);
 
+    @Headers({
+            "User-Agent: Mobile-Android",
+            "Content-Type:application/json"
+    })
     @DELETE("guests/{idGuest}/favouriteAccommodations/{idAccommodation}")
     Call<GuestDTO> deleteFavouriteAccommodation(@Path("idGuest") Long idGuest,@Path("idAccommodation") Long idAccommodation);
 
@@ -69,7 +73,23 @@ public interface IGuestService {
     @GET(value = "guests/{idGuest}/not-accepted-requests")
     Call<ArrayList<ReservationDTO>> notAcceptedReservationByGuest(@Path("idGuest") Long idGuest);
 
-
+    @Headers({
+            "User-Agent: Mobile-Android",
+            "Content-Type:application/json"
+    })
     @POST("guests/{id}/favouriteAccommodationsMobile/add/{idAccommodation}")
     Call<GuestDTO> addFavouriteAccommodation(@Path("id") Long id,@Path("idAccommodation") Long idAccommodation);
+
+    @Headers({
+            "User-Agent: Mobile-Android",
+            "Content-Type:application/json"
+    })
+    @GET("guests/requestsSearchGuest")
+    Call<ArrayList<ReservationDTO>> searchedRequests(@Query("type") String type,
+                                                     @Query("start") String start,
+                                                     @Query("end") String  end,
+                                                     @Query("nameAccommodation") String  nameAccommodation,
+                                                     @Query("idGuest") Long idGuest
+    );
+
 }

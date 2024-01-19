@@ -185,7 +185,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences.Editor spEditor = this.sharedPreferences.edit();
         spEditor.putString("pref_role", role);
         spEditor.putString("pref_email", email);
-        //spEditor.putLong("pref_id", id);
+       // spEditor.putLong("pref_id", id);
         spEditor.apply();
 
     }

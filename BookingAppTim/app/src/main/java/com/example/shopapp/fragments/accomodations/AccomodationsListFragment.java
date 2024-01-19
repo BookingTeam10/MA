@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -56,6 +57,7 @@ public class AccomodationsListFragment extends ListFragment implements SensorEve
     private boolean isAscending = true;
     public static AccomodationsListFragment newInstance(ArrayList<Accommodation> accommodations){
         AccomodationsListFragment fragment = new AccomodationsListFragment();
+
         return fragment;
     }
 
@@ -65,6 +67,7 @@ public class AccomodationsListFragment extends ListFragment implements SensorEve
         Log.i("ShopApp", "onCreateView Products List Fragment");
         binding = FragmentProductsListBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
 
         //potencijalno obrisati
         sharedPreferences = requireActivity().getSharedPreferences("pref_file", Context.MODE_PRIVATE);

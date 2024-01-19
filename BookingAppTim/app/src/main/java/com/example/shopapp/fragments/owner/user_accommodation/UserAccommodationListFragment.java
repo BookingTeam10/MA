@@ -51,7 +51,7 @@ public class UserAccommodationListFragment extends ListFragment {
         View root = binding.getRoot();
         Button addButton = root.findViewById(R.id.addButton);
         productsViewModel = new ViewModelProvider(this).get(UserAccommodationPageViewModel.class);
-        adapter = new AccomodationListAdapter(getActivity(), getChildFragmentManager(), new ArrayList<>());
+        adapter = new AccomodationListAdapter(getActivity(), getChildFragmentManager(), new ArrayList<>(),true);
         setListAdapter(adapter);
         productsViewModel.getAccommodations().observe(getViewLifecycleOwner(), new Observer<List<Accommodation>>() {
             @Override
