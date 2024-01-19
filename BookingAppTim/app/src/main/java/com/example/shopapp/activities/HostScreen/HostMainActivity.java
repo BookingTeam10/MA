@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,15 +36,22 @@ import com.example.shopapp.activities.GuestScreen.GuestMainActivity;
 import com.example.shopapp.activities.Login.LoginActivity;
 import com.example.shopapp.activities.Notifications.GuestNotificationActivity;
 import com.example.shopapp.activities.Notifications.OwnerNotificationActivity;
+import com.example.shopapp.configuration.ServiceUtils;
 import com.example.shopapp.databinding.ActivityHomeBinding;
 import com.example.shopapp.fragments.accomodations.AccomodationsListFragment;
 import com.example.shopapp.fragments.owner.user_accommodation.UserAccommodationListFragment;
 import com.example.shopapp.fragments.owner.requests.ListRequestFragment;
 import com.example.shopapp.fragments.profile.ProfileFragment;
+import com.example.shopapp.model.user.Guest;
+import com.example.shopapp.model.user.Owner;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 //SVE STO JE ZAKOMENTARISANO NE BRISATI
 public class HostMainActivity extends AppCompatActivity {
@@ -61,6 +69,7 @@ public class HostMainActivity extends AppCompatActivity {
     public static String SYNC_DATA = "SYNC_DATA";
     private static String OWNER_CHANNEL = "Owner channel";
     private static String GUEST_CHANNEL = "Guest channel";
+    private Owner owner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +131,23 @@ public class HostMainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
 
+        String email = sharedPreferences.getString("pref_email", "undefined");
+
+        Call<Owner> call = ServiceUtils.ownerService.getOwnerByUsername(email);
+        call.enqueue(new Callback<Owner>() {
+            @Override
+            public void onResponse(Call<Owner> call, Response<Owner> response) {
+                if (response.isSuccessful()) {
+                    owner= response.body();
+                    Log.d("OWNER",owner.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Owner> call, Throwable t) {
+                Log.e("ProfileFragment", "Failed to retrieve user information: " + t.getMessage());
+            }
+        });
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -159,6 +185,7 @@ public class HostMainActivity extends AppCompatActivity {
                 if (item.getItemId() == profileMenuItem.getItemId()) {
                     includedLayout.setVisibility(View.GONE);
                     ProfileFragment fragment = new ProfileFragment();
+
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragment_container, fragment);
                     transaction.addToBackStack(null);
@@ -179,6 +206,10 @@ public class HostMainActivity extends AppCompatActivity {
                 if (item.getItemId() == requestMenuItem.getItemId()) {
                     includedLayout.setVisibility(View.GONE);
                     ListRequestFragment fragment = new ListRequestFragment();
+                    Bundle bundle = new Bundle();
+                    Log.d("OCE OWNR",owner.toString());
+                    bundle.putParcelable("owner", (Parcelable) owner);
+                    fragment.setArguments(bundle);
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragment_container, fragment);
                     transaction.addToBackStack(null);
