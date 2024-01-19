@@ -50,6 +50,16 @@
             android:icon="@drawable/ic_account"
             android:orderInCategory="300" />
 
+        <item android:id="@+id/nav_acc_reviews"
+            android:title="Accommodation Reviews"
+            android:icon="@drawable/ic_account"
+            android:orderInCategory="300" />
+
+        <item android:id="@+id/nav_owner_reviews"
+            android:title="Owner Reviews"
+            android:icon="@drawable/ic_account"
+            android:orderInCategory="300" />
+
         <item android:id="@+id/nav_favourite"
             android:title="@string/favourite"
             android:icon="@drawable/ic_account"
@@ -59,6 +69,8 @@
             android:title="@string/notifications"
             android:icon="@drawable/ic_notification"
             android:orderInCategory="300" />
+
+
 
         <item android:id="@+id/nav_logout"
             android:title="@string/logout"
