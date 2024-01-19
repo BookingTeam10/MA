@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn="navigation_view_owner">
+
+    <group android:checkableBehavior="single">
+
+        <item android:id="@+id/nav_products"
+            android:title="@string/home"
+            android:icon="@drawable/ic_home"
+            android:orderInCategory="100" />
+
+        <item android:id="@+id/nav_reservations"
+            android:title="@string/reservations"
+            android:icon="@drawable/ic_reservation"
+            android:orderInCategory="200"/>
+        <item android:id="@+id/nav_requests"
+            android:title="@string/requests"
+            android:icon="@drawable/ic_reservation"
+            android:orderInCategory="200"/>
+
+        <item android:id="@+id/nav_requests_owner"
+            android:title="@string/requests"
+            android:icon="@drawable/ic_reservation"
+            android:orderInCategory="200"/>
+
+        <item android:id="@+id/nav_new"
+            android:title="@string/allOwnerAccommodations"
+            android:icon="@drawable/ic_notification"
+            android:orderInCategory="200"/>
+
+        <item android:id="@+id/nav_my_accommodations"
+            android:title="@string/allOwnerAccommodations1"
+            android:icon="@drawable/ic_notification"
+            android:orderInCategory="200"/>
+
+        <item android:id="@+id/nav_profile"
+            android:title="@string/account"
+            android:icon="@drawable/ic_account"
+            android:orderInCategory="300" />
+
+        <item android:id="@+id/nav_approval_accommodation"
+            android:title="Approve Accommodation"
+            android:icon="@drawable/ic_account"
+            android:orderInCategory="300" />
+
+        <item android:id="@+id/nav_user_reports"
+            android:title="User Reports"
+            android:icon="@drawable/ic_account"
+            android:orderInCategory="300" />
+
+        <item android:id="@+id/nav_favourite"
+            android:title="@string/favourite"
+            android:icon="@drawable/ic_account"
+            android:orderInCategory="300" />
+
+        <item android:id="@+id/notifications"
+            android:title="@string/notifications"
+            android:icon="@drawable/ic_notification"
+            android:orderInCategory="300" />
+
+        <item android:id="@+id/nav_logout"
+            android:title="@string/logout"
+            android:icon="@drawable/ic_logout"
+            android:orderInCategory="300" />
+    </group>
+</menu>

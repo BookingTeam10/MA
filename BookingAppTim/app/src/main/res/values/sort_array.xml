@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_array">
+        <item>Price ASC</item>
+        <item>Price DSC</item>
+        <item>Rating ASC</item>
+        <item>Rating DSC</item>
+    </string-array>
+    <array name="spinner_items">
+        <item>Belgrade</item>
+        <item>Novi Sad</item>
+        <item>Sabac</item>
+        <item>Rome</item>
+        <item>Prague</item>
+        <!-- Dodajte druge opcije po potrebi -->
+    </array>
+    <array name="request_status">
+        <item>ACCEPTED</item>
+        <item>REJECTED</item>
+        <item>WAITING</item>
+    </array>
+</resources>

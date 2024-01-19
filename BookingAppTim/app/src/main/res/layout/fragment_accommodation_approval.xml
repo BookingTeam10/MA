@@ -1,0 +1,77 @@
+<!-- fragment_accommodation_approval.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/accommodationImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/city"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/accommodationImage"
+        android:padding="8dp"
+        android:gravity="bottom"
+        android:layout_marginHorizontal="15dp">
+        <TextView
+            android:id="@+id/headerRoomId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Room ID"/>
+
+        <TextView
+            android:id="@+id/headerOwnerId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Owner Name"/>
+
+        <TextView
+            android:id="@+id/headerStatusId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Status"/>
+
+        <TextView
+            android:id="@+id/headerActionId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Approve"/>
+
+        <TextView
+            android:id="@+id/rejectID"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Reject"/>
+
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/accommodationImage"
+        android:layout_centerHorizontal="true"
+        android:background="#FFFFFF"
+        android:layout_marginTop="100dp"
+        android:layout_marginHorizontal="15dp"/>
+
+</RelativeLayout>
