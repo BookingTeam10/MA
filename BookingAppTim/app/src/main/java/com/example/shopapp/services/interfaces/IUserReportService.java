@@ -1,6 +1,8 @@
 package com.example.shopapp.services.interfaces;
 
 import com.example.shopapp.model.review.UserReport;
+import com.example.shopapp.model.user.Owner;
+import com.example.shopapp.model.user.ReportUser;
 
 import java.util.ArrayList;
 
@@ -21,4 +23,5 @@ public interface IUserReportService {
 
     @DELETE("reportUser/{id}")
     Call<Void> delete(@Path("id") int id);
+
 }

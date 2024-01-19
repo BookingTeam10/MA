@@ -58,4 +58,7 @@ public interface IReviewService {
                                          @Query("text") String text,
                                          @Query("reservationId") Long reservationId
                                         );
+
+    @GET("reviews/reportCommentAccommodationByOwner/{id}")
+    Call<Review> getReportComment(@Path("id") Long id);
 }

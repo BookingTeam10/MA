@@ -41,7 +41,7 @@ public class OwnerReservationActivity extends AppCompatActivity {
                 if (response.code() == 200){
                     System.out.println(response.body());
                     reservationList = response.body();
-                    adapter = new ReservationListAdapter(reservationList); // Inicijalizujte vaš adapter kako je potrebno
+                    adapter = new ReservationListAdapter(reservationList,getSupportFragmentManager()); // Inicijalizujte vaš adapter kako je potrebno
                     recyclerView.setAdapter(adapter);
                 }
             }
