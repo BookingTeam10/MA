@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments.owner.requests.ListRequestFragment">
 
-    <!-- Koristimo LinearLayout kao root element kako bi sve bilo jedno ispod drugog -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -44,7 +43,27 @@
 
         </LinearLayout>
 
-        <!-- RecyclerView će sada zauzeti preostali prostor -->
+        <!-- Novi LinearLayout za kalendare -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CalendarView
+                android:id="@+id/calendarViewForSearch12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <CalendarView
+                android:id="@+id/calendarViewForSearch22"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <!-- RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

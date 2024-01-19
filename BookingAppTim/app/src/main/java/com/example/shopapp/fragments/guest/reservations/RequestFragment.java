@@ -2,6 +2,7 @@ package com.example.shopapp.fragments.guest.reservations;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -41,6 +43,10 @@ public class RequestFragment extends Fragment {
     private List<Reservation> reservationList2;
     private List<ReservationDTO> reservationDTOS;
     private List<ReservationDTO> reservationDTOS2;
+    String date1 = "";
+    String date2 = "";
+    private CalendarView calendarView1;
+    private CalendarView calendarView2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,6 +71,30 @@ public class RequestFragment extends Fragment {
         recyclerViewGuest = view.findViewById(R.id.recyclerViewAllRequestsGuest);
         recyclerViewGuest.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+      // calendarView1 = view.findViewById(R.id.calendarViewForSearch1);
+      // calendarView2 = view.findViewById(R.id.calendarViewForSearch2);
+
+
+
+//        calendarView1.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+//            @Override
+//            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+//                // Implement your logic for calendarView1 date change here
+//                // The month value is 0-based (i.e., 0 for January)
+//                Log.i("UDJE OVDE1","UDJE OVDE1");
+//                date1 = handleDateChange(calendarView1, year, month, dayOfMonth);
+//                Log.i("UDJE OVDE2",date1);
+//            }
+//        });
+//
+//        calendarView2.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+//            @Override
+//            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+//                // Implement your logic for calendarView2 date change here
+//                date2 = handleDateChange(calendarView2, year, month, dayOfMonth);
+//                Log.i("UDJE OVDE3",date2);
+//            }
+//        });
         getGuestRequests();
         getDeleteRequests();
 
@@ -138,7 +168,7 @@ public class RequestFragment extends Fragment {
 
     private void searchRequests(String nameAccommodation, String selectedStatus) {
         adapter = new ReservationListAdapter(reservationList2,false);
-        Call<ArrayList<ReservationDTO>> call = ServiceUtils.ownerService.searchedRequests(selectedStatus,"","",nameAccommodation,1L);
+        Call<ArrayList<ReservationDTO>> call = ServiceUtils.guestService.searchedRequests(selectedStatus,"","",nameAccommodation,3L);
         call.enqueue(new Callback<ArrayList<ReservationDTO>>() {
             @Override
             public void onResponse(Call<ArrayList<ReservationDTO>> call, Response<ArrayList<ReservationDTO>> response) {
@@ -165,5 +195,12 @@ public class RequestFragment extends Fragment {
                 Log.d("REZ", t.getMessage() != null?t.getMessage():"error");
             }
         });
+    }
+
+    //gpt izgenerisao
+    private String handleDateChange(CalendarView calendarView, int year, int month, int dayOfMonth) {
+
+        String formattedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
+        return formattedDate;
     }
 }

@@ -76,7 +76,7 @@ public class GuestMainActivity extends AppCompatActivity {
             Log.d("LIGHTVALUE", String.valueOf(lightValue));
             if (lightValue < nightModeThreshold) {
                 Log.d("UDJE U SENZOR","UDJE U SENZOR");
-                // Aktivirajte noćni režim
+                // Aktivirajte noćni režim, ovo odkomentarisati pred odbranu
                //setTheme(R.style.ShopApp);
                // recreate();
 
@@ -102,8 +102,6 @@ public class GuestMainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("preferences", Context.MODE_PRIVATE);
         String role = sharedPreferences.getString("pref_role", "undefined");
 
-        Log.i("UserRoleGUEST", "Role: " + role);
-
         drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         toolbar = binding.activityHomeBase.toolbar;
@@ -118,6 +116,15 @@ public class GuestMainActivity extends AppCompatActivity {
         myAccommodationMenuItem.setVisible(false);
         MenuItem menuItem = navigationView.getMenu().findItem(R.id.nav_requests_owner);
         menuItem.setVisible(false);
+        MenuItem userReportMenuItem = navigationView.getMenu().findItem(R.id.nav_user_reports);
+        userReportMenuItem.setVisible(false);
+        MenuItem myReservationMenuItem = navigationView.getMenu().findItem(R.id.nav_new);
+        myReservationMenuItem.setVisible(false);
+
+        MenuItem aproveMenuItem = navigationView.getMenu().findItem(R.id.nav_approval_accommodation);
+        aproveMenuItem.setVisible(false);
+
+
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
         if (actionBar != null) {

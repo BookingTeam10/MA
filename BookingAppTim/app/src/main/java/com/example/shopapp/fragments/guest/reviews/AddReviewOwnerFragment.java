@@ -1,10 +1,16 @@
 package com.example.shopapp.fragments.guest.reviews;
 
+import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -41,6 +47,7 @@ import retrofit2.Response;
 public class AddReviewOwnerFragment extends Fragment {
 
     Reservation reservation;
+    private static String OWNER_CHANNEL = "Owner channel";
 
     public AddReviewOwnerFragment() {
         // Required empty public constructor
@@ -106,6 +113,8 @@ public class AddReviewOwnerFragment extends Fragment {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
+
+
                     ReviewOwner reviewOwner=new ReviewOwner(100L,Double.parseDouble(selectedValue),text, ReviewStatus.ACTIVE,null,reservation.getAccommodation().getOwner(), new Guest(3L),false);
                     Call<ReviewOwner> call = ServiceUtils.reviewService.addRate(reservation.getAccommodation().getOwner().getId(),3L,reviewOwner);
 
@@ -115,12 +124,10 @@ public class AddReviewOwnerFragment extends Fragment {
                             Log.d("RESEPONSE CODE DUGME MATIJA", String.valueOf(response.code()));
                             if (response.code() == 201){
                                 Log.d("REZ","Meesage recieved");
-                                System.out.println(response.body());
                                 ReviewOwner product1 = response.body();
-                                System.out.println(product1);
-                                Log.d("TREBA DA KREIRA NOTIFIKACIJU","UDJE00");
-                                createNotification(new NotificationUserVisible(100L,"SVETSKI MEGA CAR", NotificationStatus.NOT_VISIBLE,new Guest(3L),new Owner(1L),"today","GO"));
-                                getActivity().getSupportFragmentManager().popBackStack();
+                                createNotification(new NotificationUserVisible(100L,text, NotificationStatus.NOT_VISIBLE,new Guest(3L),new Owner(1L),"today","GO"));
+                                sendOwner(view,text);
+                                //getActivity().getSupportFragmentManager().popBackStack();
                             }else{
                                 Log.d("REZ","Meesage recieved: "+response.code());
                             }
@@ -144,7 +151,7 @@ public class AddReviewOwnerFragment extends Fragment {
             @Override
             public void onResponse(Call<NotificationUserVisible> call, Response<NotificationUserVisible> response) {
                 if (response.isSuccessful()) {
-                    //Toast.makeText(AccommodationDetailsScreen.this, "Notification is send", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Notification is send", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
@@ -153,5 +160,29 @@ public class AddReviewOwnerFragment extends Fragment {
                 Log.d("REZ", t.getMessage() != null?t.getMessage():"error");
             }
         });
+    }
+
+    public void sendOwner(View v,String message) {
+        Log.d("UDJE OVDE DA POSALJE PORUKU","UDJEEE");
+        Notification notification = new NotificationCompat.Builder(getActivity(),OWNER_CHANNEL)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle("Guest created request for accommodation")
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getActivity());
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        notificationManagerCompat.notify(0, notification);
+
     }
 }

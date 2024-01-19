@@ -78,8 +78,16 @@ public interface IAccommodationService {
             @Query("cancelDeadline") int cancelDeadline
     );
 
+    @Headers({
+            "User-Agent: Mobile-Android",
+            "Content-Type:application/json"
+    })
     @POST("accommodations/approve/{id}")
     Call<Void> approveAccommodation(@Path("id") Long id , @Body Accommodation accommodation);
+    @Headers({
+            "User-Agent: Mobile-Android",
+            "Content-Type:application/json"
+    })
     @POST("accommodations/reject/{id}")
     Call<Void> rejectAccommodation(@Path("id") Long id, @Body Accommodation accommodation);
 

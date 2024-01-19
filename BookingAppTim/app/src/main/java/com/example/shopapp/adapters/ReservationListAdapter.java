@@ -41,7 +41,7 @@ import retrofit2.Response;
 public class ReservationListAdapter extends RecyclerView.Adapter<ReservationListAdapter.ReservationViewHolder> {
 
     private List<Reservation> reservationList;
-    private boolean showButton;
+    private boolean showButton = false;
 
     private ReportUser reportUser;
 
@@ -218,6 +218,13 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
 //                }
             }
         });
+        if (!showButton) {
+//            editButton.setVisibility(View.GONE); // Sakrij dugme
+//            reportAccommodation.setVisibility(View.GONE);
+        } else {
+//            editButton.setVisibility(View.VISIBLE); // Prikaz dugmeta
+//            reportAccommodation.setVisibility(View.VISIBLE);
+        }
 
 //        holder.buttonReport.setOnClickListener(view -> {
 //        });

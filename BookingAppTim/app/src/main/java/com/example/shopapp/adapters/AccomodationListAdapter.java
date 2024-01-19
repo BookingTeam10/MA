@@ -51,11 +51,20 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
     private FavouriteAccommodationPageViewModel productsViewModel;
     private ArrayList<AccommodationDTO> favouriteAccommodations;
 
+    private boolean shouldHideButton = false;
+
 
     public AccomodationListAdapter(Context context, FragmentManager supportFragmentManager, ArrayList<Accommodation> accomodations){
         super(context, R.layout.accomodation_card, accomodations);
         aAccomodation = accomodations;
         fragmentManager=supportFragmentManager;
+    }
+
+    public AccomodationListAdapter(Context context, FragmentManager supportFragmentManager, ArrayList<Accommodation> accomodations, boolean shouldHideButton) {
+        super(context, R.layout.accomodation_card, accomodations);
+        aAccomodation = accomodations;
+        fragmentManager=supportFragmentManager;
+        this.shouldHideButton = shouldHideButton;
     }
 
     public String getRole(Context context) {
@@ -137,6 +146,14 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
                 editButton.setVisibility(View.INVISIBLE);
             }
 
+            if (!shouldHideButton) {
+                editButton.setVisibility(View.GONE); // Sakrij dugme
+                reportAccommodation.setVisibility(View.GONE);
+            } else {
+                editButton.setVisibility(View.VISIBLE); // Prikaz dugmeta
+                reportAccommodation.setVisibility(View.VISIBLE);
+            }
+
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -145,6 +162,8 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
                     getContext().startActivity(intent);
                 }
             });
+
+
 
             reportAccommodation.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -162,7 +181,9 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
 
     private void addFavouriteAccommodation(Accommodation accommodation, boolean isSelected) {
         //add favourite
+        Log.d("SELETKED", String.valueOf(isSelected));
         if (isSelected) {
+            Log.d("ACCOMMODATION POST",String.valueOf(accommodation.getId()));
             Call<GuestDTO> call = ServiceUtils.guestService.addFavouriteAccommodation(3L,accommodation.getId());
             call.enqueue(new Callback<GuestDTO>() {
                 @Override
@@ -172,6 +193,7 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
                         Log.i("AZURIRANO",response.body().toString());
                         //treba gosta azurirati
                         GuestDTO guestDTO = response.body();
+                        Log.d("NOVI ACCOMMODATIONS",guestDTO.getFavouriteAccommodations().toString());
                     }
                 }
                 @Override

@@ -24,6 +24,7 @@ public interface IReportUserService {
             "User-Agent: Mobile-Android",
             "Content-Type:application/json"
     })
+
     @GET("reportUser/OG/{idOwner}/{idGuest}")
     Call<ReportUser> getUserReportOG(@Path("idOwner") Long idOwner,@Path("idGuest") Long idGuest);
 
@@ -31,6 +32,7 @@ public interface IReportUserService {
             "User-Agent: Mobile-Android",
             "Content-Type:application/json"
     })
+
     @POST("reportUser/{idOwner}/{idGuest}")
     Call<ReportUser> addReport(@Path("idOwner") Long idOwner,@Path("idGuest") Long idGuest,@Body ReportUser reportUser);
 
