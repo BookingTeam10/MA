@@ -26,6 +26,8 @@ import com.example.shopapp.databinding.FragmentProductsListBinding;
 import com.example.shopapp.fragments.accomodations.AccomodationPageViewModel;
 import com.example.shopapp.fragments.accomodations.AccomodationsListFragment;
 import com.example.shopapp.model.accommodation.Accommodation;
+import com.example.shopapp.model.user.Guest;
+import com.example.shopapp.model.user.Owner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +51,7 @@ public class UserAccommodationListFragment extends ListFragment {
         Log.i("ShopApp", "onCreateView Products List Fragment");
         binding = FragmentProductsListBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
         Button addButton = root.findViewById(R.id.addButton);
         productsViewModel = new ViewModelProvider(this).get(UserAccommodationPageViewModel.class);
         adapter = new AccomodationListAdapter(getActivity(), getChildFragmentManager(), new ArrayList<>(),true);

@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.shopapp.adapters.AccomodationListAdapter;
 import com.example.shopapp.databinding.FragmentProductsListBinding;
 import com.example.shopapp.model.accommodation.Accommodation;
+import com.example.shopapp.model.user.Guest;
 
 import java.util.ArrayList;
 import java.util.List;

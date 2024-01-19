@@ -16,6 +16,7 @@ import com.example.shopapp.adapters.MyReservationListAdapter;
 import com.example.shopapp.adapters.ReservationListAdapter;
 import com.example.shopapp.configuration.ServiceUtils;
 import com.example.shopapp.model.reservation.Reservation;
+import com.example.shopapp.model.user.Guest;
 
 import java.util.ArrayList;
 
@@ -45,13 +46,11 @@ public class MyReservationListFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerViewRes);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        Bundle bundle = getArguments();
+        Guest guest = bundle.getParcelable("guest");
+        Log.d("UCITAN GUEST U FRAGMENT MY RESERVATION",guest.toString());
 
-        //Log.d("GOST ID",);
-
-
-        //Call<ArrayList<Reservation>> call = ServiceUtils.reservationService.getGuestsRequests();
-
-        Call<ArrayList<Reservation>> call = ServiceUtils.reservationService.getReservationsByGuest(3L);
+        Call<ArrayList<Reservation>> call = ServiceUtils.reservationService.getReservationsByGuest(guest.getId());
 
         call.enqueue(new Callback<ArrayList<Reservation>>() {
             @Override

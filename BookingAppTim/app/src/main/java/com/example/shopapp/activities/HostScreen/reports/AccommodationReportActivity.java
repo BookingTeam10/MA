@@ -74,7 +74,7 @@ public class AccommodationReportActivity extends AppCompatActivity {
 
     public void generatePDF(View view) {
         PdfDocument pdfDocument = new PdfDocument();
-        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(300, 600, 1).create();
+        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(1080, 1920, 1).create();
         PdfDocument.Page page = pdfDocument.startPage(pageInfo);
 
         Canvas canvas = page.getCanvas();
@@ -84,8 +84,8 @@ public class AccommodationReportActivity extends AppCompatActivity {
         Bitmap chartBitmap = getChartBitmap(barChart);
         Bitmap chartBitmap2 = getChartBitmap(barChart2);
 
-        drawChartOnPdfPage(page, chartBitmap, 0, 0); // Koordinate x i y su primeri
-        drawChartOnPdfPage(page, chartBitmap2, 50, 400); // Koordinate x i y su primeri
+        drawChartOnPdfPage(page, chartBitmap, 50, 50); // Koordinate x i y su primeri
+        drawChartOnPdfPage(page, chartBitmap2, 50, 540); // Koordinate x i y su primeri
 
         // Završite stranicu
         pdfDocument.finishPage(page);
