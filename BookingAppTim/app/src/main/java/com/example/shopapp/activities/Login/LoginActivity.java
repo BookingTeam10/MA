@@ -111,73 +111,95 @@ public class LoginActivity extends AppCompatActivity {
     }
     public void login(String email, String password){
         LoginDTO loginDTO = new LoginDTO(email, password);
-        Call<Token> call = ServiceUtils.userService.loginUser(loginDTO);
 
-        call.enqueue(new Callback<Token>() {
+        Call<Boolean> callBlocked = ServiceUtils.userService.isBlocked(email);
+
+        callBlocked.enqueue(new Callback<Boolean>() {
             @Override
-            public void onResponse(@NonNull Call<Token> call, @NonNull Response<Token> response) {
-                Log.d("TOKEN",response.body().toString());
-                if(!response.isSuccessful()) {
-                    Log.d("Login Fail", "Response error");
-                    Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
-                    return;
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if(response.isSuccessful()){
+                    boolean isBlocked = response.body();
+                    if(isBlocked){
+                        Toast.makeText(LoginActivity.this, "User is blocked", Toast.LENGTH_SHORT).show();
+                        return;
+                    }else{
+                        Call<Token> callLogin = ServiceUtils.userService.loginUser(loginDTO);
+
+                        callLogin.enqueue(new Callback<Token>() {
+                            @Override
+                            public void onResponse(@NonNull Call<Token> call, @NonNull Response<Token> response) {
+                                Log.d("TOKEN",response.body().toString());
+                                if(!response.isSuccessful()) {
+                                    Log.d("Login Fail", "Response error");
+                                    Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+                                Token loginResponse = response.body();
+                                String userRole = "";
+
+                                if(loginResponse.getJwt().equals("NEUSPESNO")){
+                                    Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+                                JWT jwt = new JWT(loginResponse.getJwt());
+
+                                List<HashMap> role =
+                                        jwt.getClaim("role").asList(HashMap.class);
+                                for (Object values: role.get(0).values()){
+                                    userRole = values.toString();
+                                    break;
+                                }
+
+                                String email = jwt.getClaim("sub").asString();
+                                Long id = jwt.getClaim("id").asLong();
+                                Log.d("EMAIL UCITAN", String.valueOf(email));
+                                Log.d("ID UCITAN", String.valueOf(userRole));
+                                //Token token = Token.getInstance();
+                                //token.setJwt(loginResponse.getJwt());
+
+
+                                //ovo ostaviti i posle roknuti
+                                if(userRole.equals("ROLE_Guest")){
+                                    setSharedPreferences("Guest", email, id);
+                                    //setTokenPreference(loginResponse.getToken(), loginResponse.getRefreshToken());
+                                    Intent intent = new Intent(LoginActivity.this,GuestMainActivity.class);
+                                    startActivity(intent);
+
+                                }
+
+                                else if(userRole.equals("ROLE_Owner")) {
+                                    setSharedPreferences("Owner", email, id);
+                                    //setTokenPreference(loginResponse.getToken(), loginResponse.getRefreshToken());
+                                    Intent intent = new Intent(LoginActivity.this,HostMainActivity.class);
+                                    startActivity(intent);
+
+                                }
+                                else if(userRole.equalsIgnoreCase("ROLE_Administrator")) {
+                                    setSharedPreferences("Administrator", email, id);
+                                    //setTokenPreference(loginResponse.getToken(), loginResponse.getRefreshToken());
+                                    Intent intent = new Intent(LoginActivity.this, AdminMainActivity.class);
+                                    startActivity(intent);
+                                }
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<Token> call, Throwable t) {
+                                Log.d("Login Failed", t.getMessage());
+                            }
+                        });
+                    }
                 }
-
-                Token loginResponse = response.body();
-                String userRole = "";
-
-                if(loginResponse.getJwt().equals("NEUSPESNO")){
-                    Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                JWT jwt = new JWT(loginResponse.getJwt());
-
-                List<HashMap> role =
-                        jwt.getClaim("role").asList(HashMap.class);
-                for (Object values: role.get(0).values()){
-                    userRole = values.toString();
-                    break;
-                }
-
-                String email = jwt.getClaim("sub").asString();
-                Long id = jwt.getClaim("id").asLong();
-                Log.d("EMAIL UCITAN", String.valueOf(email));
-                Log.d("ID UCITAN", String.valueOf(userRole));
-                //Token token = Token.getInstance();
-                //token.setJwt(loginResponse.getJwt());
-
-
-                //ovo ostaviti i posle roknuti
-                if(userRole.equals("ROLE_Guest")){
-                    setSharedPreferences("Guest", email, id);
-                    //setTokenPreference(loginResponse.getToken(), loginResponse.getRefreshToken());
-                    Intent intent = new Intent(LoginActivity.this,GuestMainActivity.class);
-                    startActivity(intent);
-
-                }
-
-                else if(userRole.equals("ROLE_Owner")) {
-                    setSharedPreferences("Owner", email, id);
-                    //setTokenPreference(loginResponse.getToken(), loginResponse.getRefreshToken());
-                    Intent intent = new Intent(LoginActivity.this,HostMainActivity.class);
-                    startActivity(intent);
-
-                }
-                else if(userRole.equalsIgnoreCase("ROLE_Administrator")) {
-                    setSharedPreferences("Administrator", email, id);
-                    //setTokenPreference(loginResponse.getToken(), loginResponse.getRefreshToken());
-                    Intent intent = new Intent(LoginActivity.this, AdminMainActivity.class);
-                    startActivity(intent);
-                }
-
             }
 
             @Override
-            public void onFailure(Call<Token> call, Throwable t) {
-                Log.d("Login Failed", t.getMessage());
+            public void onFailure(Call<Boolean> call, Throwable t) {
+
             }
         });
+
     }
 
     private void setSharedPreferences(String role, String email, Long id){
