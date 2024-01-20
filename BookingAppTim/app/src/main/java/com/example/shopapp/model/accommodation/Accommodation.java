@@ -295,6 +295,12 @@ public class Accommodation implements Parcelable {
         dest.writeDouble(weekendPrice);
         dest.writeDouble(holidayPrice);
         dest.writeDouble(summerPrice);
+
+        dest.writeString(name);
+        dest.writeInt(minPeople);
+        dest.writeInt(maxPeople);
+        Location loc = location;
+        dest.writeParcelable(loc, flags);
     }
 
     protected Accommodation(Parcel in) {
@@ -316,6 +322,11 @@ public class Accommodation implements Parcelable {
         weekendPrice = in.readDouble();
         holidayPrice = in.readDouble();
         summerPrice = in.readDouble();
+
+        name = in.readString();
+        minPeople = in.readInt();
+        maxPeople =in.readInt();
+        location = in.readParcelable(Location.class.getClassLoader());
     }
 
     public static final Creator<Accommodation> CREATOR = new Creator<Accommodation>() {

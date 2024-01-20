@@ -15,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 import com.example.shopapp.R;
 import com.example.shopapp.configuration.ServiceUtils;
@@ -22,6 +23,7 @@ import com.example.shopapp.dto.ReviewDTO;
 import com.example.shopapp.enums.AccommodationStatus;
 import com.example.shopapp.enums.TypeAccommodation;
 import com.example.shopapp.model.accommodation.Accommodation;
+import com.example.shopapp.model.accommodation.Amenity;
 import com.example.shopapp.model.accommodation.Location;
 import com.example.shopapp.model.accommodation.Price;
 import com.example.shopapp.model.accommodation.TakenDate;
@@ -40,6 +42,9 @@ import retrofit2.Response;
 
 public class DefinitionAccommodationActivity extends AppCompatActivity {
 
+    private EditText nameText, minPeopleText, maxPeopleText, amenityText, streetText, cityText, countryText, descriptionText;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +52,22 @@ public class DefinitionAccommodationActivity extends AppCompatActivity {
         Accommodation accommodation = getIntent().getParcelableExtra("accommodation");
         Log.d("ACCOMMODATION EDIT",accommodation.toString1());
         if (accommodation != null) {
+
+            nameText = findViewById(R.id.nameText);
+            minPeopleText = findViewById(R.id.minPeopleText);
+            maxPeopleText = findViewById(R.id.maxPeopleText);
+            amenityText = findViewById(R.id.amenityText);
+            streetText = findViewById(R.id.streetText);
+            cityText = findViewById(R.id.cityText);
+            countryText = findViewById(R.id.countryText);
+            descriptionText = findViewById(R.id.descriptionText);
+
+
             EditText weekendText = findViewById(R.id.WeekendText);
             EditText holidayText = findViewById(R.id.HolidayText);
             EditText summerText = findViewById(R.id.SummerText);
             EditText limitText = findViewById(R.id.limitText);
+
 
             RadioGroup typeRadioGroup1 = findViewById(R.id.RadioGroupDefinition1);
             RadioButton guestRadioButton = findViewById(R.id.guestRadioButtonDefinition);
@@ -59,6 +76,24 @@ public class DefinitionAccommodationActivity extends AppCompatActivity {
             RadioGroup typeRadioGroup2 = findViewById(R.id.RadioGroupDefinition2);
             RadioButton automaticRadioButton = findViewById(R.id.AutomaticConfirmationDefinition);
             RadioButton noAutomaticRadioButton = findViewById(R.id.NoAutomaticDefinition);
+
+            StringBuilder ret = new StringBuilder();
+            List<Amenity> amenities = accommodation.getAmenities();
+            for (int i = 0; i < amenities.size() - 1; i++) {
+                ret.append(amenities.get(i).getName()).append(", ");
+            }
+
+            ret.append(amenities.get(amenities.size() - 1).getName());
+            String amen = ret.toString();
+
+            nameText.setText(accommodation.getName());
+            minPeopleText.setText(String.valueOf(accommodation.getMinPeople()));
+            maxPeopleText.setText(String.valueOf(accommodation.getMaxPeople()));
+            amenityText.setText(amen);
+            streetText.setText(accommodation.getLocation().getStreet() + " " + String.valueOf(accommodation.getLocation().getNumber()));
+            cityText.setText(accommodation.getLocation().getCity());
+            countryText.setText(accommodation.getLocation().getCountry());
+            descriptionText.setText(accommodation.getDescription());
 
             weekendText.setText(String.valueOf(accommodation.getWeekendPrice()));
             holidayText.setText(String.valueOf(accommodation.getHolidayPrice()));
@@ -230,6 +265,30 @@ public class DefinitionAccommodationActivity extends AppCompatActivity {
 
                 //accommodation.setWeekendPrice(Double.parseDouble(weekendText.getText().toString()));
 
+                String name = getValueById(nameText);
+                String minPeople = getValueById(minPeopleText);
+                String maxPeople = getValueById(maxPeopleText);
+                String country = getValueById(countryText);
+                String city = getValueById(cityText);
+                String street = getValueById(streetText).split(" ")[0];
+                String number = getValueById(streetText).split(" ")[1];
+                String amenity = getValueById(amenityText);
+
+                if (name == null || minPeople == null || maxPeople == null || country == null
+                        || city == null || street == null) {
+                    wrongInput();
+                    return;
+                }
+
+                String[] amenityArray = amenity.split(", ");
+                List<Amenity> amenities = new ArrayList<>();
+                for (String amenityName : amenityArray) {
+                    Amenity amenityObject = new Amenity(amenityName);
+                    amenities.add(amenityObject);
+                }
+
+
+
                 RadioGroup typeRadioGroup1 = findViewById(R.id.RadioGroupDefinition1);
                 RadioButton guestRadioButton = findViewById(R.id.guestRadioButtonDefinition);
                 RadioButton nightRadioButton = findViewById(R.id.nightRadioButtonDefinition);
@@ -258,7 +317,8 @@ public class DefinitionAccommodationActivity extends AppCompatActivity {
 
                 accommodation.setPrices(priceList);
 
-                Call<Map<String, String>> call = ServiceUtils.accommodationService.updateAccommodationMobile(accommodation.getId(),Double.parseDouble(String.valueOf(weekendText.getText())),Double.parseDouble(String.valueOf(holidayText.getText())),Double.parseDouble(String.valueOf(summerText.getText())),isNight,24);
+                Call<Map<String, String>> call = ServiceUtils.accommodationService.updateAccommodationMobile(accommodation.getId(),Double.parseDouble(String.valueOf(weekendText.getText())),Double.parseDouble(String.valueOf(holidayText.getText())),Double.parseDouble(String.valueOf(summerText.getText())),isNight,24,
+                name,Integer.parseInt(minPeople), Integer.parseInt(maxPeople), Integer.parseInt(number), street, city, country,  amenities);
                 call.enqueue(new Callback<Map<String, String>>() {
                     @Override
                     public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
@@ -281,5 +341,14 @@ public class DefinitionAccommodationActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void wrongInput() {
+        Toast.makeText(getBaseContext(), "Invalid inputs", Toast.LENGTH_SHORT);
+    }
+
+    private String getValueById(EditText editText) {
+        return editText.getText().toString().trim();
     }
 }
