@@ -47,6 +47,24 @@ public class GuestNotificationActivity extends AppCompatActivity {
                     adapter = new NotificationAdapter(notificationList);
                     recyclerView.setAdapter(adapter);
 
+                    for(NotificationUserVisible not: notificationList){
+                        Call<Void> deleteNotCall = ServiceUtils.notificationService.deleteNotVisible(not.getId());
+
+                        deleteNotCall.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if(response.isSuccessful()){
+                                    return;
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+
+                            }
+                        });
+                    }
+
                 }
             }
             @Override
