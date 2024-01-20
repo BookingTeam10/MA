@@ -22,12 +22,7 @@ import com.example.shopapp.model.reservation.Reservation;
 public class EditAccommodationFragment extends Fragment {
 
     Accommodation accommodation;
-//    public static EditAccommodationFragment newInstance() {
-//        EditAccommodationFragment fragment = new EditAccommodationFragment();
-//        Bundle args = new Bundle();
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
+
     public static EditAccommodationFragment newInstance(Accommodation accommodation) {
         EditAccommodationFragment fragment = new EditAccommodationFragment();
         Bundle args = new Bundle();
@@ -39,11 +34,6 @@ public class EditAccommodationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            accommodation = (Accommodation) getArguments().getParcelable("accommodation");
-//            Log.d("USLO2","USLO");
-//            Log.d("ACCOMMODATION",accommodation.toString());
-//        }
     }
 
     @Override

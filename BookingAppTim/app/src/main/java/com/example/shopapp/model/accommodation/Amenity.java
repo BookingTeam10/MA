@@ -23,9 +23,7 @@ public class Amenity implements Parcelable {
 
     @Override
     public String toString() {
-        return "Amenity{" +
-                "name='" + name + '\'' +
-                '}';
+        return name;
     }
     protected Amenity(Parcel in) {
         name = in.readString();

@@ -8,6 +8,23 @@ import java.util.List;
 public class Location  implements Parcelable{
     private Long id;
     private String country;
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public List<Accommodation> getAccommodations() {
+        return accommodations;
+    }
+
+    public void setAccommodations(List<Accommodation> accommodations) {
+        this.accommodations = accommodations;
+    }
+
     private String city;
     private String street;
     private int number;
@@ -25,7 +42,39 @@ public class Location  implements Parcelable{
         this.number = number;
     }
 
-    protected Location(Parcel in) {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public Location(Parcel in) {
         if (in.readByte() == 0) {
             id = null;
         } else {
