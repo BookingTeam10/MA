@@ -1,5 +1,7 @@
 package com.example.shopapp.activities.HostScreen;
 
+import static com.example.shopapp.configuration.ServiceUtils.ownerService;
+
 import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -39,6 +41,7 @@ import com.example.shopapp.activities.Notifications.OwnerNotificationActivity;
 import com.example.shopapp.configuration.ServiceUtils;
 import com.example.shopapp.databinding.ActivityHomeBinding;
 import com.example.shopapp.fragments.accomodations.AccomodationsListFragment;
+import com.example.shopapp.fragments.owner.reservations.OwnerReservationsFragment;
 import com.example.shopapp.fragments.owner.user_accommodation.UserAccommodationListFragment;
 import com.example.shopapp.fragments.owner.requests.ListRequestFragment;
 import com.example.shopapp.fragments.profile.ProfileFragment;
@@ -133,7 +136,7 @@ public class HostMainActivity extends AppCompatActivity {
 
         String email = sharedPreferences.getString("pref_email", "undefined");
 
-        Call<Owner> call = ServiceUtils.ownerService.getOwnerByUsername(email);
+        Call<Owner> call = ownerService.getOwnerByUsername(email);
         call.enqueue(new Callback<Owner>() {
             @Override
             public void onResponse(Call<Owner> call, Response<Owner> response) {
@@ -159,6 +162,7 @@ public class HostMainActivity extends AppCompatActivity {
                 MenuItem requestMenuItem = navigationView.getMenu().findItem(R.id.nav_requests_owner);
                 MenuItem logOutMenuItem = navigationView.getMenu().findItem(R.id.nav_logout);
                 MenuItem profileMenuItem = navigationView.getMenu().findItem(R.id.nav_profile);
+                MenuItem ownerRes = navigationView.getMenu().findItem(R.id.nav_owner_reservations);
                 MenuItem accommodationMenuItem=navigationView.getMenu().findItem(R.id.nav_products);
                 View includedLayout = findViewById(R.id.fragment_nav_content_main);
                 MenuItem notificationMenuItem = navigationView.getMenu().findItem(R.id.notifications);
@@ -182,6 +186,7 @@ public class HostMainActivity extends AppCompatActivity {
                     return true;
                 }
 
+
                 if (item.getItemId() == profileMenuItem.getItemId()) {
                     includedLayout.setVisibility(View.GONE);
                     ProfileFragment fragment = new ProfileFragment();
@@ -193,6 +198,35 @@ public class HostMainActivity extends AppCompatActivity {
                     return true;
                 }
 
+                if (item.getItemId() == ownerRes.getItemId()) {
+                    String email = sharedPreferences.getString("pref_email", "");
+
+                    Call<Owner> call = ownerService.getOwnerByUsername(email);
+
+                    call.enqueue(new Callback<Owner>() {
+                        @Override
+                        public void onResponse(Call<Owner> call, Response<Owner> response) {
+                            if(response.isSuccessful()){
+                                Bundle bundle = new Bundle();
+                                Owner owner =   response.body();
+                                bundle.putParcelable("owner",owner);
+                                OwnerReservationsFragment fragment = new OwnerReservationsFragment();
+                                fragment.setArguments(bundle);
+                                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                                transaction.replace(R.id.fragment_container, fragment);
+                                transaction.addToBackStack(null);
+                                transaction.commit();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Owner> call, Throwable t) {
+
+                        }
+                    });
+
+
+                }
 
                 if (item.getItemId() == myAccommodationMenuItem.getItemId()) {
                     includedLayout.setVisibility(View.GONE);

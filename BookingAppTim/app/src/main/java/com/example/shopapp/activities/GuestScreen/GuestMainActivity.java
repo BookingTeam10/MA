@@ -44,6 +44,7 @@ import com.example.shopapp.fragments.accomodations.AccomodationsListFragment;
 import com.example.shopapp.fragments.accomodations.AccomodationsPageFragment;
 import com.example.shopapp.fragments.guest.favourite_accomodations.FavouriteAccommodationsListFragment;
 import com.example.shopapp.fragments.guest.favourite_accomodations.FavouriteAccommodationsPageFragment;
+import com.example.shopapp.fragments.guest.reservation_management.GuestReservationFragment;
 import com.example.shopapp.fragments.profile.ProfileFragment;
 import com.example.shopapp.fragments.guest.reservations.RequestFragment;
 import com.example.shopapp.fragments.guest.reservations.myReservations.MyReservationListFragment;
@@ -191,6 +192,7 @@ public class GuestMainActivity extends AppCompatActivity {
                     MenuItem favouriteMenuItem = navigationView.getMenu().findItem(R.id.nav_favourite);
                     MenuItem homeMenuItem = navigationView.getMenu().findItem(R.id.nav_products);
                     MenuItem notificationMenuItem = navigationView.getMenu().findItem(R.id.notifications);
+                    MenuItem guestReservations = navigationView.getMenu().findItem(R.id.nav_guest_reservations);
                     View includedLayout = findViewById(R.id.fragment_nav_content_main);
 
                     Log.d("MENI 123", "NAPRAVILO SE");
@@ -222,6 +224,34 @@ public class GuestMainActivity extends AppCompatActivity {
                         return true;
                     }
 
+                    if (item.getItemId() == guestReservations.getItemId()) {
+
+                        String email = sharedPreferences.getString("pref_email", "undefined");
+                        Call<Guest> guestCall = ServiceUtils.guestService.getUserByUsername(email);
+
+                        guestCall.enqueue(new Callback<Guest>() {
+                            @Override
+                            public void onResponse(Call<Guest> call, Response<Guest> response) {
+                                if(response.isSuccessful()){
+                                    Bundle bundle = new Bundle();
+                                    Guest guest = response.body();
+                                    bundle.putParcelable("guest", guest);
+                                    GuestReservationFragment fragment = new GuestReservationFragment();
+                                    fragment.setArguments(bundle);
+                                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                                    transaction.replace(R.id.fragment_container, fragment);
+                                    transaction.addToBackStack(null);
+                                    transaction.commit();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Guest> call, Throwable t) {
+
+                            }
+                        });
+                        return true;
+                    }
 
                     if (item.getItemId() == logOutMenuItem.getItemId()) {
                         Intent intent = new Intent(GuestMainActivity.this, LoginActivity.class);
