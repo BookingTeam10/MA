@@ -61,6 +61,29 @@ public class AdminMainActivity extends AppCompatActivity {
         //navigationView = binding.navView;
         NavigationView navigationView = findViewById(R.id.nav_view);
         toolbar = binding.activityHomeBase.toolbar;
+
+        //ne treba
+        //
+        //2 active reservation, notifikaije i favourtie
+        MenuItem myAccommodationMenuItem = navigationView.getMenu().findItem(R.id.nav_reservations);
+        myAccommodationMenuItem.setVisible(false);
+        MenuItem menuItem = navigationView.getMenu().findItem(R.id.nav_requests);
+        menuItem.setVisible(false);
+        MenuItem myAccommodationMenuItem1 = navigationView.getMenu().findItem(R.id.nav_my_accommodations);
+        myAccommodationMenuItem1.setVisible(false);
+        MenuItem menuItem2 = navigationView.getMenu().findItem(R.id.nav_requests_owner);
+        menuItem2.setVisible(false);
+        MenuItem myAccommodationMenuItem3 = navigationView.getMenu().findItem(R.id.nav_new);
+        myAccommodationMenuItem3.setVisible(false);
+        MenuItem myAccommodationMenuItem4 = navigationView.getMenu().findItem(R.id.nav_owner_reservations);
+        myAccommodationMenuItem4.setVisible(false);
+        MenuItem menuItem5 = navigationView.getMenu().findItem(R.id.nav_guest_reservations);
+        menuItem5.setVisible(false);
+        MenuItem myAccommodationMenuItem6 = navigationView.getMenu().findItem(R.id.nav_favourite);
+        myAccommodationMenuItem6.setVisible(false);
+        MenuItem menuItem7 = navigationView.getMenu().findItem(R.id.notifications);
+        menuItem7.setVisible(false);
+
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
         if(actionBar != null){

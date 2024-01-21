@@ -38,8 +38,9 @@ public class ListRequestFragment extends Fragment {
     private ReservationListAdapter adapter;
     private List<Reservation> reservationList;
     private List<ReservationDTO> reservationDTOS;
-    String date1 = "";
-    String date2="";
+    private String date1 = "";
+    private String date2 = "";
+    private EditText nameText;
 
 
     @Override
@@ -52,8 +53,6 @@ public class ListRequestFragment extends Fragment {
                 getResources().getStringArray(R.array.request_status));
         arrayAdapterStatus.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRequestStatus.setAdapter(arrayAdapterStatus);
-        EditText nameAccommodationEditText = view.findViewById(R.id.nameAccommodation);
-        String nameAccommodation = nameAccommodationEditText.getText().toString();
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -63,27 +62,6 @@ public class ListRequestFragment extends Fragment {
         CalendarView calendarView1 = view.findViewById(R.id.calendarViewForSearch12);
         CalendarView calendarView2 = view.findViewById(R.id.calendarViewForSearch22);
 
-        calendarView1.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                // Implement your logic for calendarView1 date change here
-                // The month value is 0-based (i.e., 0 for January)
-                Log.i("UDJE OVDE1","UDJE OVDE1");
-                date1 = handleDateChange(calendarView1, year, month, dayOfMonth);
-            }
-        });
-        Log.i("UDJE OVDE2",date1);
-        calendarView2.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                // Implement your logic for calendarView2 date change here
-                date2 = handleDateChange(calendarView2, year, month, dayOfMonth);
-                Log.i("UDJE OVDE3",date2);
-            }
-        });
-
-        Log.d("DATUMIIII1",date1);
-
         getOwnersRequest(owner.getId());
         buttonSearch.setOnClickListener(new View.OnClickListener() {
 
@@ -91,7 +69,23 @@ public class ListRequestFragment extends Fragment {
             public void onClick(View v) {
                 Log.i("UDjE OVDE","UDJE OVDE");
                 String selectedStatus = spinnerRequestStatus.getSelectedItem().toString();
-               searchRequests(nameAccommodation,selectedStatus,date1,date2);
+                nameText = view.findViewById(R.id.nameAccommodation);
+                String nameAccommodation = getValueById(nameText);
+                calendarView1.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                    @Override
+                    public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                        Log.i("UDJE OVDE1","UDJE OVDE1");
+                        date1 = handleDateChange(calendarView1, year, month, dayOfMonth);
+                    }
+                });
+                calendarView2.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                    @Override
+                    public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                        // Implement your logic for calendarView2 date change here
+                        date2 = handleDateChange(calendarView2, year, month, dayOfMonth);
+                    }
+                });
+                searchRequests(nameAccommodation,selectedStatus,date1,date2);
             }
         });
 
@@ -156,8 +150,11 @@ public class ListRequestFragment extends Fragment {
     }
 
     private String handleDateChange(CalendarView calendarView, int year, int month, int dayOfMonth) {
-
         String formattedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
         return formattedDate;
+    }
+
+    private String getValueById(EditText editText) {
+        return editText.getText().toString().trim();
     }
 }

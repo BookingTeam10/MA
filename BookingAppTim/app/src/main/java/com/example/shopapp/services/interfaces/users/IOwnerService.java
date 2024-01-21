@@ -20,12 +20,12 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface IOwnerService {
-    @GET("owners/requestsSearch")
+    @GET("owners/requestsSearchMobile")
     Call<ArrayList<ReservationDTO>> searchedRequests(@Query("type") String type,
                                                       @Query("start") String start,
                                                       @Query("end") String  end,
                                                      @Query("nameAccommodation") String  nameAccommodation,
-                                                      @Query("IdOwner") Long idOwner
+                                                      @Query("idOwner") Long idOwner
     );
 
     @GET("owners/{idAccommodation}/reportYear")

@@ -131,6 +131,16 @@ public class GuestMainActivity extends AppCompatActivity {
         userReportMenuItem.setVisible(false);
         MenuItem myReservationMenuItem = navigationView.getMenu().findItem(R.id.nav_new);
         myReservationMenuItem.setVisible(false);
+        MenuItem ownerItem = navigationView.getMenu().findItem(R.id.nav_new);
+        ownerItem.setVisible(false);
+        MenuItem accReview = navigationView.getMenu().findItem(R.id.nav_acc_reviews);
+        accReview.setVisible(false);
+        MenuItem ownerReview = navigationView.getMenu().findItem(R.id.nav_owner_reviews);
+        ownerReview.setVisible(false);
+        MenuItem ownerReservation= navigationView.getMenu().findItem(R.id.nav_owner_reservations);
+        ownerReservation.setVisible(false);
+
+
 
         MenuItem aproveMenuItem = navigationView.getMenu().findItem(R.id.nav_approval_accommodation);
         aproveMenuItem.setVisible(false);

@@ -102,6 +102,12 @@ public class HostMainActivity extends AppCompatActivity {
         myReservationMenuItem.setVisible(false);
         MenuItem aproveMenuItem = navigationView.getMenu().findItem(R.id.nav_approval_accommodation);
         aproveMenuItem.setVisible(false);
+        MenuItem accReview = navigationView.getMenu().findItem(R.id.nav_acc_reviews);
+        accReview.setVisible(false);
+        MenuItem ownerReview = navigationView.getMenu().findItem(R.id.nav_owner_reviews);
+        ownerReview.setVisible(false);
+        MenuItem guestReview = navigationView.getMenu().findItem(R.id.nav_guest_reservations);
+        guestReview.setVisible(false);
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
         if(actionBar != null){
