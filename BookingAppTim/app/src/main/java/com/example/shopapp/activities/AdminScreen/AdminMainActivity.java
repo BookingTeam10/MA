@@ -20,12 +20,13 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.shopapp.R;
-import com.example.shopapp.activities.GuestScreen.GuestMainActivity;
 import com.example.shopapp.activities.Login.LoginActivity;
 import com.example.shopapp.activities.Notifications.GuestNotificationActivity;
 import com.example.shopapp.databinding.ActivityHomeBinding;
 import com.example.shopapp.fragments.accomodations.AccomodationsListFragment;
 import com.example.shopapp.fragments.admin.AccommodationApprovalFragment;
+import com.example.shopapp.fragments.admin.AccommodationRateReportFragment;
+import com.example.shopapp.fragments.admin.OwnerRateReportFragment;
 import com.example.shopapp.fragments.admin.UserReportsAdminFragment;
 import com.example.shopapp.fragments.guest.favourite_accomodations.FavouriteAccommodationsListFragment;
 import com.example.shopapp.fragments.guest.reservations.RequestFragment;
@@ -60,6 +61,29 @@ public class AdminMainActivity extends AppCompatActivity {
         //navigationView = binding.navView;
         NavigationView navigationView = findViewById(R.id.nav_view);
         toolbar = binding.activityHomeBase.toolbar;
+
+        //ne treba
+        //
+        //2 active reservation, notifikaije i favourtie
+        MenuItem myAccommodationMenuItem = navigationView.getMenu().findItem(R.id.nav_reservations);
+        myAccommodationMenuItem.setVisible(false);
+        MenuItem menuItem = navigationView.getMenu().findItem(R.id.nav_requests);
+        menuItem.setVisible(false);
+        MenuItem myAccommodationMenuItem1 = navigationView.getMenu().findItem(R.id.nav_my_accommodations);
+        myAccommodationMenuItem1.setVisible(false);
+        MenuItem menuItem2 = navigationView.getMenu().findItem(R.id.nav_requests_owner);
+        menuItem2.setVisible(false);
+        MenuItem myAccommodationMenuItem3 = navigationView.getMenu().findItem(R.id.nav_new);
+        myAccommodationMenuItem3.setVisible(false);
+        MenuItem myAccommodationMenuItem4 = navigationView.getMenu().findItem(R.id.nav_owner_reservations);
+        myAccommodationMenuItem4.setVisible(false);
+        MenuItem menuItem5 = navigationView.getMenu().findItem(R.id.nav_guest_reservations);
+        menuItem5.setVisible(false);
+        MenuItem myAccommodationMenuItem6 = navigationView.getMenu().findItem(R.id.nav_favourite);
+        myAccommodationMenuItem6.setVisible(false);
+        MenuItem menuItem7 = navigationView.getMenu().findItem(R.id.notifications);
+        menuItem7.setVisible(false);
+
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
         if(actionBar != null){
@@ -104,8 +128,11 @@ public class AdminMainActivity extends AppCompatActivity {
                 MenuItem homeMenuItem = navigationView.getMenu().findItem(R.id.nav_products);
                 MenuItem notificationMenuItem = navigationView.getMenu().findItem(R.id.notifications);
                 MenuItem userReports = navigationView.getMenu().findItem(R.id.nav_user_reports);
+                MenuItem accommodationReviews = navigationView.getMenu().findItem(R.id.nav_acc_reviews);
                 MenuItem approveAccommodationMenuItem = navigationView.getMenu().findItem(R.id.nav_approval_accommodation);
+                MenuItem ownerReviews = navigationView.getMenu().findItem(R.id.nav_owner_reviews);
                 View includedLayout = findViewById(R.id.fragment_nav_content_main);
+
 
                 Log.d("MENI 123", "NAPRAVILO SE");
 
@@ -137,6 +164,24 @@ public class AdminMainActivity extends AppCompatActivity {
 
                 if (item.getItemId() == approveAccommodationMenuItem.getItemId()) {
                     AccommodationApprovalFragment fragment = new AccommodationApprovalFragment();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragment_container, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                    return true;
+                }
+
+                if (item.getItemId() == accommodationReviews.getItemId()) {
+                    AccommodationRateReportFragment fragment = new AccommodationRateReportFragment();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragment_container, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                    return true;
+                }
+
+                if (item.getItemId() == ownerReviews.getItemId()) {
+                    OwnerRateReportFragment fragment = new OwnerRateReportFragment();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragment_container, fragment);
                     transaction.addToBackStack(null);

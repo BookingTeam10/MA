@@ -29,6 +29,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,18 +38,25 @@ import android.view.View;
 import com.example.shopapp.R;
 import com.example.shopapp.activities.Login.LoginActivity;
 import com.example.shopapp.activities.Notifications.GuestNotificationActivity;
+import com.example.shopapp.configuration.ServiceUtils;
 import com.example.shopapp.databinding.ActivityHomeBinding;
 import com.example.shopapp.fragments.accomodations.AccomodationsListFragment;
 import com.example.shopapp.fragments.accomodations.AccomodationsPageFragment;
 import com.example.shopapp.fragments.guest.favourite_accomodations.FavouriteAccommodationsListFragment;
 import com.example.shopapp.fragments.guest.favourite_accomodations.FavouriteAccommodationsPageFragment;
+import com.example.shopapp.fragments.guest.reservation_management.GuestReservationFragment;
 import com.example.shopapp.fragments.profile.ProfileFragment;
 import com.example.shopapp.fragments.guest.reservations.RequestFragment;
 import com.example.shopapp.fragments.guest.reservations.myReservations.MyReservationListFragment;
+import com.example.shopapp.model.user.Guest;
 import com.example.shopapp.services.GuestMessageService;
 import com.google.android.material.navigation.NavigationView;
 import java.util.HashSet;
 import java.util.Set;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class GuestMainActivity extends AppCompatActivity {
     private ActivityHomeBinding binding;
@@ -64,6 +72,7 @@ public class GuestMainActivity extends AppCompatActivity {
 
     private SensorManager sensorManager;
     private Sensor lightSensor;
+    private Guest guest;
     public static String SYNC_DATA = "SYNC_DATA";
     private static String GUEST_CHANNEL = "Guest channel";
     private static String OWNER_CHANNEL = "Owner channel";
@@ -102,6 +111,8 @@ public class GuestMainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("preferences", Context.MODE_PRIVATE);
         String role = sharedPreferences.getString("pref_role", "undefined");
 
+
+
         drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         toolbar = binding.activityHomeBase.toolbar;
@@ -120,6 +131,16 @@ public class GuestMainActivity extends AppCompatActivity {
         userReportMenuItem.setVisible(false);
         MenuItem myReservationMenuItem = navigationView.getMenu().findItem(R.id.nav_new);
         myReservationMenuItem.setVisible(false);
+        MenuItem ownerItem = navigationView.getMenu().findItem(R.id.nav_new);
+        ownerItem.setVisible(false);
+        MenuItem accReview = navigationView.getMenu().findItem(R.id.nav_acc_reviews);
+        accReview.setVisible(false);
+        MenuItem ownerReview = navigationView.getMenu().findItem(R.id.nav_owner_reviews);
+        ownerReview.setVisible(false);
+        MenuItem ownerReservation= navigationView.getMenu().findItem(R.id.nav_owner_reservations);
+        ownerReservation.setVisible(false);
+
+
 
         MenuItem aproveMenuItem = navigationView.getMenu().findItem(R.id.nav_approval_accommodation);
         aproveMenuItem.setVisible(false);
@@ -154,6 +175,23 @@ public class GuestMainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
 
+        String email = sharedPreferences.getString("pref_email", "undefined");
+
+        Call<Guest> call = ServiceUtils.guestService.getUserByUsername(email);
+        call.enqueue(new Callback<Guest>() {
+            @Override
+            public void onResponse(Call<Guest> call, Response<Guest> response) {
+                if (response.isSuccessful()) {
+                    guest= response.body();
+                    Log.d("UCITAN GUEST",guest.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Guest> call, Throwable t) {
+                Log.e("ProfileFragment", "Failed to retrieve user information: " + t.getMessage());
+            }
+        });
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -164,6 +202,7 @@ public class GuestMainActivity extends AppCompatActivity {
                     MenuItem favouriteMenuItem = navigationView.getMenu().findItem(R.id.nav_favourite);
                     MenuItem homeMenuItem = navigationView.getMenu().findItem(R.id.nav_products);
                     MenuItem notificationMenuItem = navigationView.getMenu().findItem(R.id.notifications);
+                    MenuItem guestReservations = navigationView.getMenu().findItem(R.id.nav_guest_reservations);
                     View includedLayout = findViewById(R.id.fragment_nav_content_main);
 
                     Log.d("MENI 123", "NAPRAVILO SE");
@@ -171,6 +210,10 @@ public class GuestMainActivity extends AppCompatActivity {
                     if (item.getItemId() == reservationsMenuItem.getItemId()) {
                         includedLayout.setVisibility(View.GONE);
                         MyReservationListFragment fragment = new MyReservationListFragment();
+                        Bundle bundle = new Bundle();
+                        Log.d("OCE GUEST",guest.toString());
+                        bundle.putParcelable("guest", (Parcelable) guest);
+                        fragment.setArguments(bundle);
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.fragment_container, fragment);
                         transaction.addToBackStack(null);
@@ -180,6 +223,10 @@ public class GuestMainActivity extends AppCompatActivity {
                     if (item.getItemId() == requestMenuItem.getItemId()) {
                         includedLayout.setVisibility(View.GONE);
                         RequestFragment fragment = new RequestFragment();
+                        Bundle bundle = new Bundle();
+                        Log.d("OCE GUEST",guest.toString());
+                        bundle.putParcelable("guest", (Parcelable) guest);
+                        fragment.setArguments(bundle);
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.fragment_container, fragment);
                         transaction.addToBackStack(null);
@@ -187,6 +234,34 @@ public class GuestMainActivity extends AppCompatActivity {
                         return true;
                     }
 
+                    if (item.getItemId() == guestReservations.getItemId()) {
+
+                        String email = sharedPreferences.getString("pref_email", "undefined");
+                        Call<Guest> guestCall = ServiceUtils.guestService.getUserByUsername(email);
+
+                        guestCall.enqueue(new Callback<Guest>() {
+                            @Override
+                            public void onResponse(Call<Guest> call, Response<Guest> response) {
+                                if(response.isSuccessful()){
+                                    Bundle bundle = new Bundle();
+                                    Guest guest = response.body();
+                                    bundle.putParcelable("guest", guest);
+                                    GuestReservationFragment fragment = new GuestReservationFragment();
+                                    fragment.setArguments(bundle);
+                                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                                    transaction.replace(R.id.fragment_container, fragment);
+                                    transaction.addToBackStack(null);
+                                    transaction.commit();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Guest> call, Throwable t) {
+
+                            }
+                        });
+                        return true;
+                    }
 
                     if (item.getItemId() == logOutMenuItem.getItemId()) {
                         Intent intent = new Intent(GuestMainActivity.this, LoginActivity.class);

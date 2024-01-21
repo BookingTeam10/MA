@@ -1,5 +1,7 @@
 package com.example.shopapp.activities.HostScreen;
 
+import static com.example.shopapp.configuration.ServiceUtils.ownerService;
+
 import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -10,6 +12,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,15 +38,23 @@ import com.example.shopapp.activities.GuestScreen.GuestMainActivity;
 import com.example.shopapp.activities.Login.LoginActivity;
 import com.example.shopapp.activities.Notifications.GuestNotificationActivity;
 import com.example.shopapp.activities.Notifications.OwnerNotificationActivity;
+import com.example.shopapp.configuration.ServiceUtils;
 import com.example.shopapp.databinding.ActivityHomeBinding;
 import com.example.shopapp.fragments.accomodations.AccomodationsListFragment;
+import com.example.shopapp.fragments.owner.reservations.OwnerReservationsFragment;
 import com.example.shopapp.fragments.owner.user_accommodation.UserAccommodationListFragment;
 import com.example.shopapp.fragments.owner.requests.ListRequestFragment;
 import com.example.shopapp.fragments.profile.ProfileFragment;
+import com.example.shopapp.model.user.Guest;
+import com.example.shopapp.model.user.Owner;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 //SVE STO JE ZAKOMENTARISANO NE BRISATI
 public class HostMainActivity extends AppCompatActivity {
@@ -61,6 +72,7 @@ public class HostMainActivity extends AppCompatActivity {
     public static String SYNC_DATA = "SYNC_DATA";
     private static String OWNER_CHANNEL = "Owner channel";
     private static String GUEST_CHANNEL = "Guest channel";
+    private Owner owner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +102,12 @@ public class HostMainActivity extends AppCompatActivity {
         myReservationMenuItem.setVisible(false);
         MenuItem aproveMenuItem = navigationView.getMenu().findItem(R.id.nav_approval_accommodation);
         aproveMenuItem.setVisible(false);
+        MenuItem accReview = navigationView.getMenu().findItem(R.id.nav_acc_reviews);
+        accReview.setVisible(false);
+        MenuItem ownerReview = navigationView.getMenu().findItem(R.id.nav_owner_reviews);
+        ownerReview.setVisible(false);
+        MenuItem guestReview = navigationView.getMenu().findItem(R.id.nav_guest_reservations);
+        guestReview.setVisible(false);
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
         if(actionBar != null){
@@ -122,6 +140,23 @@ public class HostMainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
 
+        String email = sharedPreferences.getString("pref_email", "undefined");
+
+        Call<Owner> call = ownerService.getOwnerByUsername(email);
+        call.enqueue(new Callback<Owner>() {
+            @Override
+            public void onResponse(Call<Owner> call, Response<Owner> response) {
+                if (response.isSuccessful()) {
+                    owner= response.body();
+                    Log.d("OWNER",owner.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Owner> call, Throwable t) {
+                Log.e("ProfileFragment", "Failed to retrieve user information: " + t.getMessage());
+            }
+        });
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -133,6 +168,7 @@ public class HostMainActivity extends AppCompatActivity {
                 MenuItem requestMenuItem = navigationView.getMenu().findItem(R.id.nav_requests_owner);
                 MenuItem logOutMenuItem = navigationView.getMenu().findItem(R.id.nav_logout);
                 MenuItem profileMenuItem = navigationView.getMenu().findItem(R.id.nav_profile);
+                MenuItem ownerRes = navigationView.getMenu().findItem(R.id.nav_owner_reservations);
                 MenuItem accommodationMenuItem=navigationView.getMenu().findItem(R.id.nav_products);
                 View includedLayout = findViewById(R.id.fragment_nav_content_main);
                 MenuItem notificationMenuItem = navigationView.getMenu().findItem(R.id.notifications);
@@ -156,9 +192,11 @@ public class HostMainActivity extends AppCompatActivity {
                     return true;
                 }
 
+
                 if (item.getItemId() == profileMenuItem.getItemId()) {
                     includedLayout.setVisibility(View.GONE);
                     ProfileFragment fragment = new ProfileFragment();
+
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragment_container, fragment);
                     transaction.addToBackStack(null);
@@ -166,6 +204,35 @@ public class HostMainActivity extends AppCompatActivity {
                     return true;
                 }
 
+                if (item.getItemId() == ownerRes.getItemId()) {
+                    String email = sharedPreferences.getString("pref_email", "");
+
+                    Call<Owner> call = ownerService.getOwnerByUsername(email);
+
+                    call.enqueue(new Callback<Owner>() {
+                        @Override
+                        public void onResponse(Call<Owner> call, Response<Owner> response) {
+                            if(response.isSuccessful()){
+                                Bundle bundle = new Bundle();
+                                Owner owner =   response.body();
+                                bundle.putParcelable("owner",owner);
+                                OwnerReservationsFragment fragment = new OwnerReservationsFragment();
+                                fragment.setArguments(bundle);
+                                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                                transaction.replace(R.id.fragment_container, fragment);
+                                transaction.addToBackStack(null);
+                                transaction.commit();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Owner> call, Throwable t) {
+
+                        }
+                    });
+
+
+                }
 
                 if (item.getItemId() == myAccommodationMenuItem.getItemId()) {
                     includedLayout.setVisibility(View.GONE);
@@ -179,6 +246,10 @@ public class HostMainActivity extends AppCompatActivity {
                 if (item.getItemId() == requestMenuItem.getItemId()) {
                     includedLayout.setVisibility(View.GONE);
                     ListRequestFragment fragment = new ListRequestFragment();
+                    Bundle bundle = new Bundle();
+                    Log.d("OCE OWNR",owner.toString());
+                    bundle.putParcelable("owner", (Parcelable) owner);
+                    fragment.setArguments(bundle);
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragment_container, fragment);
                     transaction.addToBackStack(null);

@@ -2,7 +2,6 @@ package com.example.shopapp.fragments.guest.reservations;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,14 +20,10 @@ import com.example.shopapp.R;
 import com.example.shopapp.adapters.ReservationListAdapter;
 import com.example.shopapp.configuration.ServiceUtils;
 import com.example.shopapp.dto.ReservationDTO;
-import com.example.shopapp.model.accommodation.Accommodation;
 import com.example.shopapp.model.reservation.Reservation;
+import com.example.shopapp.model.user.Guest;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -53,7 +48,9 @@ public class RequestFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_request, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerView);
-
+        Bundle bundle = getArguments();
+        Guest guest = bundle.getParcelable("guest");
+        Log.d("UCITAN GUEST U FRAGMENT",guest.toString());
 
         Button buttonSearch = view.findViewById(R.id.buttonSearchGuest);
         Spinner spinnerRequestStatus =  view.findViewById(R.id.spinnerRequestStatusGuest);
@@ -62,8 +59,6 @@ public class RequestFragment extends Fragment {
                 getResources().getStringArray(R.array.request_status));
         arrayAdapterStatus.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRequestStatus.setAdapter(arrayAdapterStatus);
-        EditText nameAccommodationEditText = view.findViewById(R.id.nameAccommodationGuest);
-        String nameAccommodation = nameAccommodationEditText.getText().toString();
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -95,25 +90,27 @@ public class RequestFragment extends Fragment {
 //                Log.i("UDJE OVDE3",date2);
 //            }
 //        });
-        getGuestRequests();
-        getDeleteRequests();
+        getGuestRequests(guest.getId());
+        getDeleteRequests(guest.getId());
 
         buttonSearch.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 Log.i("UDjE OVDE","UDJE OVDE");
+                EditText nameAccommodationEditText = view.findViewById(R.id.nameAccommodationGuest);
+                String nameAccommodation = nameAccommodationEditText.getText().toString();
                 String selectedStatus = spinnerRequestStatus.getSelectedItem().toString();
-                searchRequests(nameAccommodation,selectedStatus);
+                searchRequests(nameAccommodation,selectedStatus,guest.getId());
             }
         });
 
         return view;
     }
 
-    private void getGuestRequests(){
+    private void getGuestRequests(Long id){
         reservationList = new ArrayList<>();
-        Call<ArrayList<ReservationDTO>> call = ServiceUtils.guestService.allGuestRequests(3L);
+        Call<ArrayList<ReservationDTO>> call = ServiceUtils.guestService.allGuestRequests(id);
         Log.d("CALL", call.toString());
         call.enqueue(new Callback<ArrayList<ReservationDTO>>() {
             @Override
@@ -140,9 +137,9 @@ public class RequestFragment extends Fragment {
 
     }
 
-    private void getDeleteRequests(){
+    private void getDeleteRequests(Long id){
         reservationList2 = new ArrayList<>();
-        Call<ArrayList<ReservationDTO>> call = ServiceUtils.guestService.notAcceptedReservationByGuest(3L);
+        Call<ArrayList<ReservationDTO>> call = ServiceUtils.guestService.notAcceptedReservationByGuest(id);
         Log.d("CALL", call.toString());
         call.enqueue(new Callback<ArrayList<ReservationDTO>>() {
             @Override
@@ -166,9 +163,9 @@ public class RequestFragment extends Fragment {
 
     }
 
-    private void searchRequests(String nameAccommodation, String selectedStatus) {
+    private void searchRequests(String nameAccommodation, String selectedStatus, Long id) {
         adapter = new ReservationListAdapter(reservationList2,false);
-        Call<ArrayList<ReservationDTO>> call = ServiceUtils.guestService.searchedRequests(selectedStatus,"","",nameAccommodation,3L);
+        Call<ArrayList<ReservationDTO>> call = ServiceUtils.guestService.searchedRequests(selectedStatus,"","",nameAccommodation,id);
         call.enqueue(new Callback<ArrayList<ReservationDTO>>() {
             @Override
             public void onResponse(Call<ArrayList<ReservationDTO>> call, Response<ArrayList<ReservationDTO>> response) {

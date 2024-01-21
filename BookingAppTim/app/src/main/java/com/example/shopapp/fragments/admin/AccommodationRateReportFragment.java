@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shopapp.R;
-import com.example.shopapp.adapters.AccommodationTableAdapter;
+import com.example.shopapp.adapters.AccommodationRateTableAdapter;
 import com.example.shopapp.configuration.ServiceUtils;
-import com.example.shopapp.enums.AccommodationStatus;
-import com.example.shopapp.model.accommodation.Accommodation;
+import com.example.shopapp.enums.ReviewStatus;
+import com.example.shopapp.model.review.Review;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,16 +25,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AccommodationApprovalFragment extends Fragment implements AccommodationTableAdapter.OnButtonClickListener {
+public class AccommodationRateReportFragment extends Fragment implements AccommodationRateTableAdapter.OnButtonClickListener{
 
-    private List<Accommodation> accommodations = new ArrayList<>();
-    private AccommodationTableAdapter adapter;
+    private List<Review> reports = new ArrayList<>();
+    private AccommodationRateTableAdapter adapter;
     private RecyclerView recyclerView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_accommodation_approval, container, false);
+        return inflater.inflate(R.layout.fragment_acc_rate_report, container, false);
     }
 
     @Override
@@ -43,50 +43,43 @@ public class AccommodationApprovalFragment extends Fragment implements Accommoda
 
         recyclerView = view.findViewById(R.id.recyclerView);
 
-        loadAccommodations();
+        loadReports();
     }
 
-    private void loadAccommodations() {
+    private void loadReports(){
+        Call<ArrayList<Review>> accReportCall = ServiceUtils.reviewService.getAllAccReviews();
 
-        Call<ArrayList<Accommodation>> accommodationCall = ServiceUtils.accommodationService.getAll();
-
-        accommodationCall.enqueue(new Callback<ArrayList<Accommodation>>() {
+        accReportCall.enqueue(new Callback<ArrayList<Review>>() {
             @Override
-            public void onResponse(Call<ArrayList<Accommodation>> call, Response<ArrayList<Accommodation>> response) {
+            public void onResponse(Call<ArrayList<Review>> call, Response<ArrayList<Review>> response) {
                 if(response.isSuccessful()){
-                    accommodations = response.body().stream()
-                            .filter(accommodation -> accommodation.getAccommodationStatus() != AccommodationStatus.APPROVED && accommodation.getAccommodationStatus() != AccommodationStatus.REJECTED)
-                            .collect(Collectors.toList());
+                    reports = response.body().stream().filter(accReport -> accReport.getStatus() != ReviewStatus.ACTIVE).collect(Collectors.toList());
 
-                    adapter = new AccommodationTableAdapter(accommodations, AccommodationApprovalFragment.this);
+                    adapter = new AccommodationRateTableAdapter(reports, AccommodationRateReportFragment.this);
                     recyclerView.setAdapter(adapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 }
-
-
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Accommodation>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<Review>> call, Throwable t) {
 
             }
         });
 
-
-
-
     }
 
     @Override
-    public void onApproveClick(int position) {
-        Accommodation acc = accommodations.get(position);
-        Call<Void> callApprove = ServiceUtils.accommodationService.approveAccommodation(acc.getId(), acc);
+    public void onDeleteClick(int position) {
+        Review review = reports.get(position);
 
-        callApprove.enqueue(new Callback<Void>() {
+        Call<Void> deleteReviewCall = ServiceUtils.reviewService.deleteReview(review.getId());
+
+        deleteReviewCall.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()){
-                    loadAccommodations();
+                    loadReports();
                 }
             }
 
@@ -98,15 +91,21 @@ public class AccommodationApprovalFragment extends Fragment implements Accommoda
     }
 
     @Override
-    public void onRejectClick(int position) {
-        Accommodation acc = accommodations.get(position);
-        Call<Void> callReject = ServiceUtils.accommodationService.rejectAccommodation(acc.getId(), acc);
+    public void onApproveClick(int position) {
 
-        callReject.enqueue(new Callback<Void>() {
+        //OVDE NOTIFIKACIJE
+
+        Review review = reports.get(position);
+
+
+
+        Call<Void> approveReviewCall = ServiceUtils.reviewService.approveReview(review.getId(), new Review());
+
+        approveReviewCall.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()){
-                    loadAccommodations();
+                    loadReports();
                 }
             }
 

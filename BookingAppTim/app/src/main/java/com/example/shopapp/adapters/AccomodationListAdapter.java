@@ -114,7 +114,9 @@ public class AccomodationListAdapter extends ArrayAdapter<Accommodation> {
         if(accommodation != null){
             List<String> photos = accommodation.getPhotos();
 
-            String firstPhoto = accommodation.getPhotos().get(0);
+            if(accommodation.getPhotos().size() >0) {
+                String firstPhoto = accommodation.getPhotos().get(0);
+            }
 
             productTitle.setText(accommodation.getName());
             productDescription.setText(accommodation.getDescription());

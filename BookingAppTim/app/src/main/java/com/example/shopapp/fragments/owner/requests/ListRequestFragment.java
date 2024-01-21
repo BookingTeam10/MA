@@ -2,6 +2,7 @@ package com.example.shopapp.fragments.owner.requests;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -21,6 +23,7 @@ import com.example.shopapp.configuration.ServiceUtils;
 import com.example.shopapp.dto.ReservationDTO;
 import com.example.shopapp.model.accommodation.Accommodation;
 import com.example.shopapp.model.reservation.Reservation;
+import com.example.shopapp.model.user.Owner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +38,10 @@ public class ListRequestFragment extends Fragment {
     private ReservationListAdapter adapter;
     private List<Reservation> reservationList;
     private List<ReservationDTO> reservationDTOS;
+    private String date1 = "";
+    private String date2 = "";
+    private EditText nameText;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,30 +53,49 @@ public class ListRequestFragment extends Fragment {
                 getResources().getStringArray(R.array.request_status));
         arrayAdapterStatus.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRequestStatus.setAdapter(arrayAdapterStatus);
-        EditText nameAccommodationEditText = view.findViewById(R.id.nameAccommodation);
-        String nameAccommodation = nameAccommodationEditText.getText().toString();
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        Bundle bundle = getArguments();
+        Owner owner = bundle.getParcelable("owner");
+        Log.d("NASAO OWNER USER ACCOMMODATION LISt",owner.toString());
+        CalendarView calendarView1 = view.findViewById(R.id.calendarViewForSearch12);
+        CalendarView calendarView2 = view.findViewById(R.id.calendarViewForSearch22);
 
-        getOwnersRequest();
+        getOwnersRequest(owner.getId());
         buttonSearch.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 Log.i("UDjE OVDE","UDJE OVDE");
                 String selectedStatus = spinnerRequestStatus.getSelectedItem().toString();
-               searchRequests(nameAccommodation,selectedStatus);
+                nameText = view.findViewById(R.id.nameAccommodation);
+                String nameAccommodation = getValueById(nameText);
+                calendarView1.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                    @Override
+                    public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                        Log.i("UDJE OVDE1","UDJE OVDE1");
+                        date1 = handleDateChange(calendarView1, year, month, dayOfMonth);
+                    }
+                });
+                calendarView2.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                    @Override
+                    public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                        // Implement your logic for calendarView2 date change here
+                        date2 = handleDateChange(calendarView2, year, month, dayOfMonth);
+                    }
+                });
+                searchRequests(nameAccommodation,selectedStatus,date1,date2);
             }
         });
 
         return view;
     }
 
-    private void getOwnersRequest(){
+    private void getOwnersRequest(Long id){
         reservationList = new ArrayList<>();
         //ovo ispraviti, treba da bude za ownera
-        Call<ArrayList<ReservationDTO>> call = ServiceUtils.ownerService.getOwnersRequests(1L);
+        Call<ArrayList<ReservationDTO>> call = ServiceUtils.ownerService.getOwnersRequests(id);
         call.enqueue(new Callback<ArrayList<ReservationDTO>>() {
             @Override
             public void onResponse(Call<ArrayList<ReservationDTO>> call, Response<ArrayList<ReservationDTO>> response) {
@@ -91,10 +117,10 @@ public class ListRequestFragment extends Fragment {
             }
         });
     }
-    private void searchRequests(String nameAccommodation, String selectedStatus) {
+    private void searchRequests(String nameAccommodation, String selectedStatus,String date1,String date2) {
         Log.i("CITANJE IZ COMBOBOXA",selectedStatus);
         Log.i("CITANJE IZ TEXTBOXA",nameAccommodation);
-        Call<ArrayList<ReservationDTO>> call = ServiceUtils.ownerService.searchedRequests(selectedStatus,"","",nameAccommodation,1L);
+        Call<ArrayList<ReservationDTO>> call = ServiceUtils.ownerService.searchedRequests(selectedStatus,date1,date2,nameAccommodation,1L);
         call.enqueue(new Callback<ArrayList<ReservationDTO>>() {
             @Override
             public void onResponse(Call<ArrayList<ReservationDTO>> call, Response<ArrayList<ReservationDTO>> response) {
@@ -121,5 +147,14 @@ public class ListRequestFragment extends Fragment {
                 Log.d("REZ", t.getMessage() != null?t.getMessage():"error");
             }
         });
+    }
+
+    private String handleDateChange(CalendarView calendarView, int year, int month, int dayOfMonth) {
+        String formattedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
+        return formattedDate;
+    }
+
+    private String getValueById(EditText editText) {
+        return editText.getText().toString().trim();
     }
 }

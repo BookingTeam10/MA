@@ -2,6 +2,8 @@ package com.example.shopapp.services.interfaces;
 
 
 import com.example.shopapp.model.accommodation.Accommodation;
+import com.example.shopapp.model.accommodation.Amenity;
+import com.example.shopapp.model.accommodation.Location;
 import com.example.shopapp.model.accommodation.Price;
 
 import java.util.ArrayList;
@@ -75,8 +77,16 @@ public interface IAccommodationService {
             @Query("holidayPrice")  double holidayPrice,
             @Query("summerPrice") double summerPrice,
             @Query("isNight") boolean isNight,
-            @Query("cancelDeadline") int cancelDeadline
-    );
+            @Query("cancelDeadline") int cancelDeadline,
+            @Query("name") String name,
+            @Query("minPeople") int minPeople,
+            @Query("maxPeople") int maxPeople,
+            @Query("number") int number,
+            @Query("street") String street,
+            @Query("city") String city,
+            @Query("country") String country,
+            @Query("amenities") List<Amenity> amenities
+            );
 
     @Headers({
             "User-Agent: Mobile-Android",
