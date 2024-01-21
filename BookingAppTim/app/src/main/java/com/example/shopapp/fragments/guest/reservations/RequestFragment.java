@@ -59,8 +59,6 @@ public class RequestFragment extends Fragment {
                 getResources().getStringArray(R.array.request_status));
         arrayAdapterStatus.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRequestStatus.setAdapter(arrayAdapterStatus);
-        EditText nameAccommodationEditText = view.findViewById(R.id.nameAccommodationGuest);
-        String nameAccommodation = nameAccommodationEditText.getText().toString();
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -100,6 +98,8 @@ public class RequestFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.i("UDjE OVDE","UDJE OVDE");
+                EditText nameAccommodationEditText = view.findViewById(R.id.nameAccommodationGuest);
+                String nameAccommodation = nameAccommodationEditText.getText().toString();
                 String selectedStatus = spinnerRequestStatus.getSelectedItem().toString();
                 searchRequests(nameAccommodation,selectedStatus,guest.getId());
             }
